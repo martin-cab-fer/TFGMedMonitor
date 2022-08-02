@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4c5aeab331be48eab7111d96952636a2" Name="Diagram1">
+        <EntityTypeShape EntityType="TFGMedMonitorModel.Analytic" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TFGMedMonitorModel.ChatMessage" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TFGMedMonitorModel.Dose" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TFGMedMonitorModel.Medicine" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TFGMedMonitorModel.Patient" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TFGMedMonitorModel.Prescription" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TFGMedMonitorModel.UserProfile" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_AnalyticA" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_AnalyticP" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_ChatMessageA" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_ChatMessageS" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_DoseP" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_PrescriptionM" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.ForeignKey_PrescriptionP" ManuallyRouted="false" />
+        <AssociationConnector Association="TFGMedMonitorModel.PatientAssign" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

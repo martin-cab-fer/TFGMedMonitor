@@ -13,13 +13,13 @@ namespace Model.AdminService
         IAdminDao AdminDao { set; }
 
         [Transactional]
-        void GetDoctorList();
+        UserBlock GetDoctorList(int startIndex, int count);
 
         [Transactional]
-        void GetEmployeeList();
+        UserBlock GetEmployeeList(int startIndex, int count);
 
         [Transactional]
-        void GetPatientList();
+        PatientBlock GetPatientList(long userId, bool isDoctor, int startIndex, int count);
 
         [Transactional]
         void AssignDoctorToPatient(long doctorId, long patientId);
@@ -27,8 +27,10 @@ namespace Model.AdminService
         [Transactional]
         void AssignEmployeeToPatient(long employeeId, long patientId);
 
+        [Transactional]
         void AddChatMessage(long sender, long addressee, string title, string message);
 
-        void GetChatMessages(long usrId);
+        [Transactional]
+        ChatMessageBlock GetChatMessages(long usrId, int startIndex, int count);
     }
 }

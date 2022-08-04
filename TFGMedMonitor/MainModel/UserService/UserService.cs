@@ -156,52 +156,5 @@ namespace Model.UserService
 
             return true;
         }
-
-        [Transactional]
-        public bool IsFollowing(string userFollowerName, string userFollowedName)
-        {
-            return UserProfileDao.IsFollowing(userFollowerName, userFollowedName);
-        }
-
-        /// <exception cref="InstanceNotFoundException"/>
-        [Transactional]
-        public void AddFollow(long userFollowerId, string userFollowedName)
-        {
-            UserProfileDao.AddFollow(userFollowerId, userFollowedName);
-        }
-
-        /// <exception cref="InstanceNotFoundException"/>
-        [Transactional]
-        public void Unfollow(long userFollowerId, string userFollowedName)
-        {
-            UserProfileDao.Unfollow(userFollowerId, userFollowedName);
-        }
-
-        /// <exception cref="InstanceNotFoundException"/>
-        public FollowsBlock SearchFollowers(string userName, int startIndex, int count)
-        {
-            List<UserProfile> profs = UserProfileDao.SearchFollowers(userName, startIndex, count + 1);
-
-            bool existMoreUsers = (profs.Count == count + 1);
-
-            if (existMoreUsers)
-                profs.RemoveAt(count);
-
-            return new FollowsBlock(profs, existMoreUsers, true);
-        }
-
-        /// <exception cref="InstanceNotFoundException"/>
-        public FollowsBlock SearchFollowed(string userName, int startIndex, int count)
-        {
-            List<UserProfile> profs = UserProfileDao.SearchFollowed(userName, startIndex, count + 1);
-
-            bool existMoreUsers = (profs.Count == count + 1);
-
-            if (existMoreUsers)
-                profs.RemoveAt(count);
-
-            return new FollowsBlock(profs, existMoreUsers, false);
-        }
-
     }
 }

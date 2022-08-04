@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Model.HealthDao;
+using Es.Udc.DotNet.ModelUtil.Transactions;
 
 namespace Model.HealthService
 {
@@ -11,23 +12,29 @@ namespace Model.HealthService
         [Inject]
         IHealthDao HealthDao { set; }
 
-        void GetPatientsAssignedToDoctor(long doctorId, int startIndex, int count);
+        [Transactional]
+        AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count);
 
-        void GetPatientsAssignedToEmployee(long employeeId, int startIndex, int count);
-
-        void GetPatientAnalytics(long patientId, int startIndex, int count);
-
+        [Transactional]
         void AddPatientAnalytic(long patientId, DateTime date);
 
-        void GetPatientPrescription(long patientId);
+        [Transactional]
+        void GetPatientPrescription(long patientId, int startIndex, int count);
 
+        [Transactional]
         void AddPatientPrescription(long patientId);
 
+        [Transactional]
         void RemovePatientPrescription(long patientId);
 
-        void GetMedicineSearch();
+        [Transactional]
+        MedicineBlock GetMedicineSearch(int startIndex, int count);
 
-        void AddPatientDosis(long patientId, DateTime date);
+        [Transactional]
+        DoseBlock GetPatientDoses(long patientId, int startIndex, int count);
+
+        [Transactional]
+        void AddPatientDose(long patientId, DateTime date);
 
     }
 }

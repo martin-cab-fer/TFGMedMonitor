@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Model.AdminDao;
 using Es.Udc.DotNet.ModelUtil.Transactions;
+using Model.HealthDao;
 
 namespace Model.AdminService
 {
     public interface IAdminService
     {
         [Inject]
-        IAdminDao AdminDao { set; }
+        IPatientDao PatientDao { set; }
 
         [Transactional]
         UserBlock GetDoctorList(int startIndex, int count);

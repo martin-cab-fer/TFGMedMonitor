@@ -10,7 +10,16 @@ namespace Model.HealthService
     public interface IHealthService
     {
         [Inject]
-        IHealthDao HealthDao { set; }
+        IAnalyticDao AnalyticDao { set; }
+
+        [Inject]
+        IDoseDao DoseDao { set; }
+
+        [Inject]
+        IMedicineDao MedicineDao { set; }
+
+        [Inject]
+        IPrescriptionDao PrescriptionDao { set; }
 
         [Transactional]
         AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Model.AdminService
+namespace Model.UserService
 {
     public class UserBlock
     {
@@ -9,13 +9,13 @@ namespace Model.AdminService
 
         public bool ExistsMoreUsers { get; private set; }
 
-        public bool AreDoctors { get; private set; }
+        public int UserType { get; private set; }
 
-        public UserBlock(List<UserProfile> users, bool existsMoreUsers, bool areDoctors)
+        public UserBlock(List<UserProfile> users, bool existsMoreUsers, int userType)
         {
             Users = users;
             ExistsMoreUsers = existsMoreUsers;
-            AreDoctors = areDoctors;
+            UserType = userType;
         }
 
     }

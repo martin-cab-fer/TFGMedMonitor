@@ -156,5 +156,22 @@ namespace Model.UserService
 
             return true;
         }
+
+        [Transactional]
+        public UserBlock GetSpecificUserList(int userType, int startIndex, int count)
+        {
+            if (userType > 2 || userType < 0)
+                return null;
+
+            List<UserProfile> users =
+                UserProfileDao.FindByUserType(userType, startIndex, count + 1);
+
+            bool existMoreUsers = (users.Count == count + 1);
+
+            if (existMoreUsers)
+                users.RemoveAt(count);
+
+            return new UserBlock(users, existMoreUsers, userType);
+        }
     }
 }

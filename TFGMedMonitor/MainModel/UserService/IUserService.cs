@@ -82,5 +82,8 @@ namespace Model.UserService
         /// <param name="loginName"> User loginName. </param>
         /// <returns> Boolean to indicate if the loginName exists </returns>
         bool UserExists(string loginName);
+
+        [Transactional]
+        UserBlock GetSpecificUserList(int userType, int startIndex, int count);
     }
 }

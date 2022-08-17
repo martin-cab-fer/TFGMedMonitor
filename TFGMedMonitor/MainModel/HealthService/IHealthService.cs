@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Model.HealthDao;
 using Es.Udc.DotNet.ModelUtil.Transactions;
+using Model.UserProfileDao;
 
 namespace Model.HealthService
 {
@@ -21,29 +22,36 @@ namespace Model.HealthService
         [Inject]
         IPrescriptionDao PrescriptionDao { set; }
 
+        [Inject]
+        IPatientDao PatientDao { set; }
+
+        [Inject]
+        IUserProfileDao UserProfileDao { set; }
+
         [Transactional]
         AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count);
 
         [Transactional]
-        void AddPatientAnalytic(long patientId, DateTime date);
+        Analytic AddPatientAnalytic(long patientId, long attendant, float weight, string procedure,
+            string observations);
 
         [Transactional]
-        void GetPatientPrescription(long patientId, int startIndex, int count);
+        PrescriptionBlock GetPatientPrescription(long patientId, int startIndex, int count);
 
         [Transactional]
-        void AddPatientPrescription(long patientId);
+        Prescription AddPatientPrescription(long patientId, long medicineId, int frequency, string admin);
 
         [Transactional]
-        void RemovePatientPrescription(long patientId);
+        void RemovePatientPrescription(long prescriptionId);
 
         [Transactional]
-        MedicineBlock GetMedicineSearch(int startIndex, int count);
+        MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count);
 
         [Transactional]
-        DoseBlock GetPatientDoses(long patientId, int startIndex, int count);
+        DoseBlock GetPatientDoses(long prescriptionId, int startIndex, int count);
 
         [Transactional]
-        void AddPatientDose(long patientId, DateTime date);
+        Dose AddPatientDose(long prescriptionId, long adminId, string notes);
 
     }
 }

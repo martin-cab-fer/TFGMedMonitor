@@ -135,7 +135,7 @@
     <Compile Include="AdminService\AdminService.cs" />
     <Compile Include="AdminService\ChatMessageBlock.cs" />
     <Compile Include="AdminService\IAdminService.cs" />
-    <Compile Include="AdminService\UserBlock.cs" />
+    <Compile Include="UserService\UserBlock.cs" />
     <Compile Include="AdminService\PatientBlock.cs" />
     <Compile Include="Analytic.cs">
       <DependentUpon>Model1.tt</DependentUpon>

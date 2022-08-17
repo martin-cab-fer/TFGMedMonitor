@@ -41,5 +41,17 @@ namespace Model.UserProfileDao
 
             return userProfile;
         }
+
+        public List<UserProfile> FindByUserType(int userType, int startIndex, int count)
+        {
+            DbSet<UserProfile> userProfiles = Context.Set<UserProfile>();
+
+            var result =
+                (from u in userProfiles
+                 where u.userType == userType
+                 select u).Skip(startIndex).Take(count).ToList();
+
+            return result;
+        }
     }
 }

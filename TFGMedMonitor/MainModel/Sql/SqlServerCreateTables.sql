@@ -95,6 +95,7 @@ GO
 
 CREATE TABLE ChatMessage (
 	messageId bigint IDENTITY(1,1) NOT NULL,
+	creationDate datetime NOT NULL,
 	title varchar(60) NOT NULL,
 	messageText varchar(255) NOT NULL,
 	sender bigint NOT NULL,
@@ -111,21 +112,31 @@ CREATE TABLE Patient (
 	patientId bigint IDENTITY(1,1) NOT NULL,
 	patientName varchar(60) NOT NULL,
 	birthDate datetime NOT NULL,
-	careCenter bigint NOT NULL,
+	info varchar(255) NOT NULL,
 
 	CONSTRAINT [PK_Patient] PRIMARY KEY (patientId)
 )
 
 GO
 
-CREATE TABLE PatientAssign (
+CREATE TABLE PatientDAssign (
 	patient bigint NOT NULL,
 	doctor bigint NOT NULL, 
 
-	CONSTRAINT [PK_PattientAssign] PRIMARY KEY (patient, doctor),
-	CONSTRAINT [ForeignKey_PattientAssignP] FOREIGN KEY (patient) REFERENCES Patient (patientId) ON DELETE CASCADE,
-	CONSTRAINT [ForeignKey_PattientAssignD] FOREIGN KEY (doctor) REFERENCES UserProfile (usrId) ON DELETE CASCADE,
-	CONSTRAINT [UniqueKey_PatientAssign] UNIQUE (patient)
+	CONSTRAINT [PK_PattientDAssign] PRIMARY KEY (patient, doctor),
+	CONSTRAINT [ForeignKey_PattientDAssignP] FOREIGN KEY (patient) REFERENCES Patient (patientId) ON DELETE CASCADE,
+	CONSTRAINT [ForeignKey_PattientDAssignD] FOREIGN KEY (doctor) REFERENCES UserProfile (usrId) ON DELETE CASCADE
+)
+
+GO
+
+CREATE TABLE PatientEAssign (
+	patient bigint NOT NULL,
+	employee bigint NOT NULL, 
+
+	CONSTRAINT [PK_PattientEAssign] PRIMARY KEY (patient, employee),
+	CONSTRAINT [ForeignKey_PattientEAssignP] FOREIGN KEY (patient) REFERENCES Patient (patientId) ON DELETE CASCADE,
+	CONSTRAINT [ForeignKey_PattientEAssignE] FOREIGN KEY (employee) REFERENCES UserProfile (usrId) ON DELETE CASCADE
 )
 
 GO
@@ -184,11 +195,12 @@ CREATE TABLE Prescription (
 CREATE TABLE Dose (
 	prescriptionId bigint NOT NULL,
 	administrationTime datetime NOT NULL,
-	administrator bigint NOT NULL,
+	administrator varchar(30) NOT NULL,
 	notes varchar(60),
 
 	CONSTRAINT [PK_Dose] PRIMARY KEY (prescriptionId, administrationTime),
 	CONSTRAINT [ForeignKey_DoseP] FOREIGN KEY (prescriptionId) REFERENCES Prescription (prescriptionId) ON DELETE CASCADE,
+	CONSTRAINT [ForeignKey_DoseA] FOREIGN KEY (administrator) REFERENCES UserProfile (loginName),
 )
 
 GO

@@ -21,6 +21,7 @@ namespace Model
             this.ChatMessage = new HashSet<ChatMessage>();
             this.ChatMessage1 = new HashSet<ChatMessage>();
             this.Patient = new HashSet<Patient>();
+            this.Patient1 = new HashSet<Patient>();
         }
     
         public long usrId { get; set; }
@@ -41,5 +42,7 @@ namespace Model
         public virtual ICollection<ChatMessage> ChatMessage1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Patient> Patient1 { get; set; }
     }
 }

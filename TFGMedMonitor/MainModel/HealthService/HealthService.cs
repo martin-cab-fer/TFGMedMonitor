@@ -1,4 +1,6 @@
-﻿using Model.HealthDao;
+﻿using Es.Udc.DotNet.ModelUtil.Transactions;
+using Model.HealthDao;
+using Model.UserProfileDao;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,13 @@ namespace Model.HealthService
         [Inject]
         public IPrescriptionDao PrescriptionDao { private get; set; }
 
+        [Inject]
+        public IPatientDao PatientDao { private get; set; }
+
+        [Inject]
+        public IUserProfileDao UserProfileDao { private get; set; }
+
+        [Transactional]
         public AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count)
         {
             List<Analytic> analytics =
@@ -33,39 +42,141 @@ namespace Model.HealthService
             return new AnalyticBlock(analytics, existMoreAnalytics);
         }
 
-        public void AddPatientAnalytic(long patientId, DateTime date)
+        [Transactional]
+        public Analytic AddPatientAnalytic(long patientId, long attendant, float weight,
+            string procedure, string observations)
         {
-            throw new NotImplementedException();
+            Patient p = PatientDao.Find(patientId);
+            UserProfile at = UserProfileDao.Find(attendant);
+            if (p == null)
+                return null;
+            if (at == null)
+                return null;
+
+            Analytic a = new Analytic
+            {
+                Patient = p,
+                measurementTime = DateTime.Now,
+                attendant = attendant,
+                patientWeight = weight,
+                usedProcedure = procedure,
+                observations = observations
+            };
+            AnalyticDao.Create(a);
+            return a;
         }
 
-        public void AddPatientDose(long patientId, DateTime date)
+        [Transactional]
+        public PrescriptionBlock GetPatientPrescription(long patientId, int startIndex, int count)
         {
-            throw new NotImplementedException();
+            Patient p = PatientDao.Find(patientId);
+            if (p == null)
+                return null;
+            
+            List<Prescription> prescriptions =
+               PrescriptionDao.FindByPatientId(patientId, startIndex, count + 1);
+
+            bool existMorePrescriptions = (prescriptions.Count == count + 1);
+
+            if (existMorePrescriptions)
+                prescriptions.RemoveAt(count);
+
+            return new PrescriptionBlock(prescriptions, existMorePrescriptions);
         }
 
-        public void AddPatientPrescription(long patientId)
+        [Transactional]
+        public Prescription AddPatientPrescription(long patientId, long medicineId, int frequency, string admin)
         {
-            throw new NotImplementedException();
+            Patient p = PatientDao.Find(patientId);
+            Medicine m = MedicineDao.Find(medicineId);
+            if (p == null)
+                return null;
+            if (m == null)
+                return null;
+
+            Prescription pr = new Prescription
+            {
+                Patient1 = p,
+                creationDate = DateTime.Now,
+                Medicine1 = m,
+                frequency = (short)frequency,
+                administration = admin
+            };
+
+            PrescriptionDao.Create(pr);
+            return pr;
         }
 
-        public MedicineBlock GetMedicineSearch(int startIndex, int count)
+        [Transactional]
+        public void RemovePatientPrescription(long prescriptionId)
         {
-            throw new NotImplementedException();
+            Prescription pr = PrescriptionDao.Find(prescriptionId);
+            if (pr == null)
+                return;
+            PrescriptionDao.Remove(prescriptionId);
         }
 
-        public DoseBlock GetPatientDoses(long patientId, int startIndex, int count)
+        [Transactional]
+        public MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count)
         {
-            throw new NotImplementedException();
+            if (activePrin == null && name == "")
+                return null;
+
+            List<Medicine> medicines =
+               MedicineDao.GetMedicineSearch(name, activePrin, startIndex, count);
+
+            bool existMoreMedicines = (medicines.Count == count + 1);
+
+            if (existMoreMedicines)
+            {
+                while(medicines.Count >= count + 1)
+                {
+                    medicines.RemoveAt(count);
+                }
+            }
+
+            return new MedicineBlock(medicines, existMoreMedicines);
         }
 
-        public void GetPatientPrescription(long patientId, int startIndex, int count)
+        [Transactional]
+        public DoseBlock GetPatientDoses(long prescriptionId, int startIndex, int count)
         {
-            throw new NotImplementedException();
+            Prescription pr = PrescriptionDao.Find(prescriptionId);
+            if (pr == null)
+                return null;
+
+            List<Dose> doses =
+               DoseDao.FindByPrescriptionId(prescriptionId, startIndex, count + 1);
+
+            bool existMoreDoses = (doses.Count == count + 1);
+
+            if (existMoreDoses)
+                doses.RemoveAt(count);
+
+            return new DoseBlock(doses, existMoreDoses);
+
         }
 
-        public void RemovePatientPrescription(long patientId)
+        [Transactional]
+        public Dose AddPatientDose(long prescriptionId, long adminId, string notes)
         {
-            throw new NotImplementedException();
+            Prescription pr = PrescriptionDao.Find(prescriptionId);
+            UserProfile u = UserProfileDao.Find(adminId);
+            if (pr == null)
+                return null;
+            if (u == null)
+                return null;
+
+            Dose d = new Dose
+            {
+                Prescription = pr,
+                administrationTime = DateTime.Now,
+                administrator = u.loginName,
+                notes = notes
+            };
+
+            DoseDao.Create(d);
+            return d;
         }
     }
 }

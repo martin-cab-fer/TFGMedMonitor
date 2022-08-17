@@ -15,6 +15,7 @@ namespace Model
     public partial class ChatMessage
     {
         public long messageId { get; set; }
+        public System.DateTime creationDate { get; set; }
         public string title { get; set; }
         public string messageText { get; set; }
         public long sender { get; set; }

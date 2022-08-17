@@ -14,17 +14,53 @@ namespace Model.HealthDao
         {
         }
 
-        public List<Medicine> FindByName(string name, int startIndex, int count)
+        public List<Medicine> GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count)
         {
             DbSet<Medicine> medicines = Context.Set<Medicine>();
 
-            var result =
+            if(activePrin == null)
+            {
+                var result =
                  (from a in medicines
-                  where a.medName == name
+                  where a.medName.ToLower().Contains(name.ToLower())
                   orderby a.ATCCode
                   select a).Skip(startIndex).Take(count).ToList();
 
-            return result;
+                return result;
+            } else
+            {
+                var fResult = new List<Medicine>();
+
+                foreach(string prin in activePrin)
+                {
+                    var result = new List<Medicine>();
+
+                    if (name == "")
+                    {
+                        result =
+                        (from a in medicines
+                         where a.activePrinc.ToLower().Contains(prin.ToLower())
+                         orderby a.ATCCode
+                         select a).Skip(startIndex).Take(count).ToList();
+                    } else
+                    {
+                        result =
+                        (from a in medicines
+                         where a.medName.ToLower().Contains(name.ToLower())
+                         && a.activePrinc.ToLower().Contains(prin.ToLower())
+                         orderby a.ATCCode
+                         select a).Skip(startIndex).Take(count).ToList();
+                    }
+
+                    foreach(Medicine m in result)
+                    {
+                        if (!fResult.Contains(m))
+                            fResult.Add(m);
+                    }
+                }
+
+                return fResult;
+            }
         }
     }
 }

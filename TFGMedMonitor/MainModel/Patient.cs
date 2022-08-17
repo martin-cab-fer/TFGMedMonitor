@@ -20,12 +20,13 @@ namespace Model
             this.Analytic = new HashSet<Analytic>();
             this.Prescription = new HashSet<Prescription>();
             this.UserProfile = new HashSet<UserProfile>();
+            this.UserProfile1 = new HashSet<UserProfile>();
         }
     
         public long patientId { get; set; }
         public string patientName { get; set; }
         public System.DateTime birthDate { get; set; }
-        public long careCenter { get; set; }
+        public string info { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Analytic> Analytic { get; set; }
@@ -33,5 +34,7 @@ namespace Model
         public virtual ICollection<Prescription> Prescription { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> UserProfile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserProfile> UserProfile1 { get; set; }
     }
 }

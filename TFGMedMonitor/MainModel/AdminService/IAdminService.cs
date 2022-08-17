@@ -4,31 +4,38 @@ using System.Collections.Generic;
 using System.Text;
 using Es.Udc.DotNet.ModelUtil.Transactions;
 using Model.HealthDao;
+using Model.UserProfileDao;
 
 namespace Model.AdminService
 {
     public interface IAdminService
     {
         [Inject]
+        IUserProfileDao UserProfileDao { set; }
+
+        [Inject]
         IPatientDao PatientDao { set; }
 
-        [Transactional]
-        UserBlock GetDoctorList(int startIndex, int count);
+        [Inject]
+        IChatMessageDao ChatMessageDao { set; }
 
         [Transactional]
-        UserBlock GetEmployeeList(int startIndex, int count);
-
-        [Transactional]
-        PatientBlock GetPatientList(long userId, bool isDoctor, int startIndex, int count);
+        PatientBlock GetPatientList(long userId, int startIndex, int count);
 
         [Transactional]
         void AssignDoctorToPatient(long doctorId, long patientId);
 
         [Transactional]
+        void RemoveDoctorFromPatient(long doctorId, long patientId);
+
+        [Transactional]
         void AssignEmployeeToPatient(long employeeId, long patientId);
 
         [Transactional]
-        void AddChatMessage(long sender, long addressee, string title, string message);
+        void RemoveEmployeeFromPatient(long employeeId, long patientId);
+
+        [Transactional]
+        ChatMessage AddChatMessage(long sender, long addressee, string title, string message);
 
         [Transactional]
         ChatMessageBlock GetChatMessages(long usrId, int startIndex, int count);

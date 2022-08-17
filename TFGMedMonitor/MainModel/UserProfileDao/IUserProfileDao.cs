@@ -15,5 +15,7 @@ namespace Model.UserProfileDao
         /// <returns>The UserProfile</returns>
         /// <exception cref="InstanceNotFoundException"/>
         UserProfile FindByLoginName(String loginName);
+
+        List<UserProfile> FindByUserType(int type, int startIndex, int count);
     }
 }

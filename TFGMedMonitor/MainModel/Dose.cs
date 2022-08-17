@@ -16,7 +16,7 @@ namespace Model
     {
         public long prescriptionId { get; set; }
         public System.DateTime administrationTime { get; set; }
-        public long administrator { get; set; }
+        public string administrator { get; set; }
         public string notes { get; set; }
     
         public virtual Prescription Prescription { get; set; }

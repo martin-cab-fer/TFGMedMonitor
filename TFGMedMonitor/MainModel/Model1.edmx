@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TFGMedMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TFGMedMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Analytic">
           <Key>
             <PropertyRef Name="patientId" />
@@ -22,6 +22,7 @@
             <PropertyRef Name="messageId" />
           </Key>
           <Property Name="messageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="messageText" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="sender" Type="bigint" Nullable="false" />
@@ -34,7 +35,7 @@
           </Key>
           <Property Name="prescriptionId" Type="bigint" Nullable="false" />
           <Property Name="administrationTime" Type="datetime" Nullable="false" />
-          <Property Name="administrator" Type="bigint" Nullable="false" />
+          <Property Name="administrator" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="notes" Type="varchar" MaxLength="60" />
         </EntityType>
         <EntityType Name="Medicine">
@@ -65,15 +66,23 @@
           <Property Name="patientId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="patientName" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="birthDate" Type="datetime" Nullable="false" />
-          <Property Name="careCenter" Type="bigint" Nullable="false" />
+          <Property Name="info" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
-        <EntityType Name="PatientAssign">
+        <EntityType Name="PatientDAssign">
           <Key>
             <PropertyRef Name="patient" />
             <PropertyRef Name="doctor" />
           </Key>
           <Property Name="patient" Type="bigint" Nullable="false" />
           <Property Name="doctor" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientEAssign">
+          <Key>
+            <PropertyRef Name="patient" />
+            <PropertyRef Name="employee" />
+          </Key>
+          <Property Name="patient" Type="bigint" Nullable="false" />
+          <Property Name="employee" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Prescription">
           <Key>
@@ -152,6 +161,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errores durante la generación:
+advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman parte de la clave de la tabla en el lado principal de la relación. Se excluyó la relación.
+        <Association Name="ForeignKey_DoseA" />-->
         <Association Name="ForeignKey_DoseP">
           <End Role="Prescription" Type="Self.Prescription" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -166,30 +178,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ForeignKey_PattientAssignD">
+        <Association Name="ForeignKey_PattientDAssignD">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PatientAssign" Type="Self.PatientAssign" Multiplicity="*" />
+          <End Role="PatientDAssign" Type="Self.PatientDAssign" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
               <PropertyRef Name="usrId" />
             </Principal>
-            <Dependent Role="PatientAssign">
+            <Dependent Role="PatientDAssign">
               <PropertyRef Name="doctor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ForeignKey_PattientAssignP">
+        <Association Name="ForeignKey_PattientDAssignP">
           <End Role="Patient" Type="Self.Patient" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PatientAssign" Type="Self.PatientAssign" Multiplicity="*" />
+          <End Role="PatientDAssign" Type="Self.PatientDAssign" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
               <PropertyRef Name="patientId" />
             </Principal>
-            <Dependent Role="PatientAssign">
+            <Dependent Role="PatientDAssign">
+              <PropertyRef Name="patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ForeignKey_PattientEAssignE">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PatientEAssign" Type="Self.PatientEAssign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="usrId" />
+            </Principal>
+            <Dependent Role="PatientEAssign">
+              <PropertyRef Name="employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ForeignKey_PattientEAssignP">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PatientEAssign" Type="Self.PatientEAssign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="patientId" />
+            </Principal>
+            <Dependent Role="PatientEAssign">
               <PropertyRef Name="patient" />
             </Dependent>
           </ReferentialConstraint>
@@ -228,7 +268,8 @@
           <EntitySet Name="Dose" EntityType="Self.Dose" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PatientAssign" EntityType="Self.PatientAssign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientDAssign" EntityType="Self.PatientDAssign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientEAssign" EntityType="Self.PatientEAssign" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prescription" EntityType="Self.Prescription" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="ForeignKey_AnalyticA" Association="Self.ForeignKey_AnalyticA">
@@ -251,13 +292,21 @@
             <End Role="Prescription" EntitySet="Prescription" />
             <End Role="Dose" EntitySet="Dose" />
           </AssociationSet>
-          <AssociationSet Name="ForeignKey_PattientAssignD" Association="Self.ForeignKey_PattientAssignD">
+          <AssociationSet Name="ForeignKey_PattientDAssignD" Association="Self.ForeignKey_PattientDAssignD">
             <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="PatientAssign" EntitySet="PatientAssign" />
+            <End Role="PatientDAssign" EntitySet="PatientDAssign" />
           </AssociationSet>
-          <AssociationSet Name="ForeignKey_PattientAssignP" Association="Self.ForeignKey_PattientAssignP">
+          <AssociationSet Name="ForeignKey_PattientDAssignP" Association="Self.ForeignKey_PattientDAssignP">
             <End Role="Patient" EntitySet="Patient" />
-            <End Role="PatientAssign" EntitySet="PatientAssign" />
+            <End Role="PatientDAssign" EntitySet="PatientDAssign" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_PattientEAssignE" Association="Self.ForeignKey_PattientEAssignE">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="PatientEAssign" EntitySet="PatientEAssign" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_PattientEAssignP" Association="Self.ForeignKey_PattientEAssignP">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientEAssign" EntitySet="PatientEAssign" />
           </AssociationSet>
           <AssociationSet Name="ForeignKey_PrescriptionM" Association="Self.ForeignKey_PrescriptionM">
             <End Role="Medicine" EntitySet="Medicine" />
@@ -268,11 +317,55 @@
             <End Role="Prescription" EntitySet="Prescription" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TFGMedMonitorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TFGMedMonitorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Analytic" EntityType="TFGMedMonitorModel.Analytic" />
+          <EntitySet Name="ChatMessage" EntityType="TFGMedMonitorModel.ChatMessage" />
+          <EntitySet Name="Dose" EntityType="TFGMedMonitorModel.Dose" />
+          <EntitySet Name="Medicine" EntityType="TFGMedMonitorModel.Medicine" />
+          <EntitySet Name="Patient" EntityType="TFGMedMonitorModel.Patient" />
+          <EntitySet Name="Prescription" EntityType="TFGMedMonitorModel.Prescription" />
+          <EntitySet Name="UserProfile" EntityType="TFGMedMonitorModel.UserProfile" />
+          <AssociationSet Name="ForeignKey_AnalyticA" Association="TFGMedMonitorModel.ForeignKey_AnalyticA">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Analytic" EntitySet="Analytic" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_AnalyticP" Association="TFGMedMonitorModel.ForeignKey_AnalyticP">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Analytic" EntitySet="Analytic" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_ChatMessageA" Association="TFGMedMonitorModel.ForeignKey_ChatMessageA">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_ChatMessageS" Association="TFGMedMonitorModel.ForeignKey_ChatMessageS">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_DoseP" Association="TFGMedMonitorModel.ForeignKey_DoseP">
+            <End Role="Prescription" EntitySet="Prescription" />
+            <End Role="Dose" EntitySet="Dose" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_PrescriptionM" Association="TFGMedMonitorModel.ForeignKey_PrescriptionM">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="Prescription" EntitySet="Prescription" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_PrescriptionP" Association="TFGMedMonitorModel.ForeignKey_PrescriptionP">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Prescription" EntitySet="Prescription" />
+          </AssociationSet>
+          <AssociationSet Name="PatientDAssign" Association="TFGMedMonitorModel.PatientDAssign">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="PatientEAssign" Association="TFGMedMonitorModel.PatientEAssign">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Analytic">
           <Key>
             <PropertyRef Name="patientId" />
@@ -282,22 +375,23 @@
           <Property Name="measurementTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="attendant" Type="Int64" />
           <Property Name="patientWeight" Type="Double" Nullable="false" />
-          <Property Name="usedProcedure" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="observations" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.ForeignKey_AnalyticA" FromRole="Analytic" ToRole="UserProfile" />
-          <NavigationProperty Name="Patient" Relationship="Self.ForeignKey_AnalyticP" FromRole="Analytic" ToRole="Patient" />
+          <Property Name="usedProcedure" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="observations" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserProfile" Relationship="TFGMedMonitorModel.ForeignKey_AnalyticA" FromRole="Analytic" ToRole="UserProfile" />
+          <NavigationProperty Name="Patient" Relationship="TFGMedMonitorModel.ForeignKey_AnalyticP" FromRole="Analytic" ToRole="Patient" />
         </EntityType>
         <EntityType Name="ChatMessage">
           <Key>
             <PropertyRef Name="messageId" />
           </Key>
           <Property Name="messageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="messageText" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="messageText" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="sender" Type="Int64" Nullable="false" />
           <Property Name="addressee" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.ForeignKey_ChatMessageA" FromRole="ChatMessage" ToRole="UserProfile" />
-          <NavigationProperty Name="UserProfile1" Relationship="Self.ForeignKey_ChatMessageS" FromRole="ChatMessage" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="TFGMedMonitorModel.ForeignKey_ChatMessageA" FromRole="ChatMessage" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="TFGMedMonitorModel.ForeignKey_ChatMessageS" FromRole="ChatMessage" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Dose">
           <Key>
@@ -306,9 +400,9 @@
           </Key>
           <Property Name="prescriptionId" Type="Int64" Nullable="false" />
           <Property Name="administrationTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="administrator" Type="Int64" Nullable="false" />
+          <Property Name="administrator" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="notes" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Prescription" Relationship="Self.ForeignKey_DoseP" FromRole="Dose" ToRole="Prescription" />
+          <NavigationProperty Name="Prescription" Relationship="TFGMedMonitorModel.ForeignKey_DoseP" FromRole="Dose" ToRole="Prescription" />
         </EntityType>
         <EntityType Name="Medicine">
           <Key>
@@ -316,33 +410,34 @@
           </Key>
           <Property Name="medicineId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="registerNumber" Type="Int64" Nullable="false" />
-          <Property Name="medName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="labName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="medName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="labName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="authDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="medStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="medStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="statusDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ATCCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="activePrinc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ATCCode" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="activePrinc" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="activePrincN" Type="Int16" Nullable="false" />
-          <Property Name="commercialized" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="yellowTriangle" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="observations" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="commercialized" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="yellowTriangle" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="observations" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="substitutes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="affectsConduction" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="supplyIssues" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Prescription" Relationship="Self.ForeignKey_PrescriptionM" FromRole="Medicine" ToRole="Prescription" />
+          <Property Name="affectsConduction" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="supplyIssues" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Prescription" Relationship="TFGMedMonitorModel.ForeignKey_PrescriptionM" FromRole="Medicine" ToRole="Prescription" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
             <PropertyRef Name="patientId" />
           </Key>
           <Property Name="patientId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="patientName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patientName" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="careCenter" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Analytic" Relationship="Self.ForeignKey_AnalyticP" FromRole="Patient" ToRole="Analytic" />
-          <NavigationProperty Name="Prescription" Relationship="Self.ForeignKey_PrescriptionP" FromRole="Patient" ToRole="Prescription" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.PatientAssign" FromRole="Patient" ToRole="UserProfile" />
+          <Property Name="info" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Analytic" Relationship="TFGMedMonitorModel.ForeignKey_AnalyticP" FromRole="Patient" ToRole="Analytic" />
+          <NavigationProperty Name="Prescription" Relationship="TFGMedMonitorModel.ForeignKey_PrescriptionP" FromRole="Patient" ToRole="Prescription" />
+          <NavigationProperty Name="UserProfile" Relationship="TFGMedMonitorModel.PatientDAssign" FromRole="Patient" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="TFGMedMonitorModel.PatientEAssign" FromRole="Patient" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Prescription">
           <Key>
@@ -353,32 +448,33 @@
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="medicine" Type="Int64" Nullable="false" />
           <Property Name="frequency" Type="Int16" Nullable="false" />
-          <Property Name="administration" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Dose" Relationship="Self.ForeignKey_DoseP" FromRole="Prescription" ToRole="Dose" />
-          <NavigationProperty Name="Medicine1" Relationship="Self.ForeignKey_PrescriptionM" FromRole="Prescription" ToRole="Medicine" />
-          <NavigationProperty Name="Patient1" Relationship="Self.ForeignKey_PrescriptionP" FromRole="Prescription" ToRole="Patient" />
+          <Property Name="administration" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Dose" Relationship="TFGMedMonitorModel.ForeignKey_DoseP" FromRole="Prescription" ToRole="Dose" />
+          <NavigationProperty Name="Medicine1" Relationship="TFGMedMonitorModel.ForeignKey_PrescriptionM" FromRole="Prescription" ToRole="Medicine" />
+          <NavigationProperty Name="Patient1" Relationship="TFGMedMonitorModel.ForeignKey_PrescriptionP" FromRole="Prescription" ToRole="Patient" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="usrId" />
           </Key>
           <Property Name="usrId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="loginName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="enPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="language" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="loginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="enPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="language" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="userType" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Analytic" Relationship="Self.ForeignKey_AnalyticA" FromRole="UserProfile" ToRole="Analytic" />
-          <NavigationProperty Name="ChatMessage" Relationship="Self.ForeignKey_ChatMessageA" FromRole="UserProfile" ToRole="ChatMessage" />
-          <NavigationProperty Name="ChatMessage1" Relationship="Self.ForeignKey_ChatMessageS" FromRole="UserProfile" ToRole="ChatMessage" />
-          <NavigationProperty Name="Patient" Relationship="Self.PatientAssign" FromRole="UserProfile" ToRole="Patient" />
+          <NavigationProperty Name="Analytic" Relationship="TFGMedMonitorModel.ForeignKey_AnalyticA" FromRole="UserProfile" ToRole="Analytic" />
+          <NavigationProperty Name="ChatMessage" Relationship="TFGMedMonitorModel.ForeignKey_ChatMessageA" FromRole="UserProfile" ToRole="ChatMessage" />
+          <NavigationProperty Name="ChatMessage1" Relationship="TFGMedMonitorModel.ForeignKey_ChatMessageS" FromRole="UserProfile" ToRole="ChatMessage" />
+          <NavigationProperty Name="Patient" Relationship="TFGMedMonitorModel.PatientDAssign" FromRole="UserProfile" ToRole="Patient" />
+          <NavigationProperty Name="Patient1" Relationship="TFGMedMonitorModel.PatientEAssign" FromRole="UserProfile" ToRole="Patient" />
         </EntityType>
         <Association Name="ForeignKey_AnalyticA">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
-          <End Role="Analytic" Type="Self.Analytic" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="TFGMedMonitorModel.Analytic" Role="Analytic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
               <PropertyRef Name="usrId" />
@@ -389,10 +485,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ForeignKey_AnalyticP">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="1">
+          <End Type="TFGMedMonitorModel.Patient" Role="Patient" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Analytic" Type="Self.Analytic" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.Analytic" Role="Analytic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
               <PropertyRef Name="patientId" />
@@ -403,8 +499,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ForeignKey_ChatMessageA">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="ChatMessage" Type="Self.ChatMessage" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="TFGMedMonitorModel.ChatMessage" Role="ChatMessage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
               <PropertyRef Name="usrId" />
@@ -415,10 +511,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ForeignKey_ChatMessageS">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ChatMessage" Type="Self.ChatMessage" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.ChatMessage" Role="ChatMessage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
               <PropertyRef Name="usrId" />
@@ -429,10 +525,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ForeignKey_DoseP">
-          <End Role="Prescription" Type="Self.Prescription" Multiplicity="1">
+          <End Type="TFGMedMonitorModel.Prescription" Role="Prescription" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Dose" Type="Self.Dose" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.Dose" Role="Dose" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Prescription">
               <PropertyRef Name="prescriptionId" />
@@ -443,10 +539,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ForeignKey_PrescriptionM">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1">
+          <End Type="TFGMedMonitorModel.Medicine" Role="Medicine" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.Prescription" Role="Prescription" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
               <PropertyRef Name="medicineId" />
@@ -457,10 +553,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ForeignKey_PrescriptionP">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="1">
+          <End Type="TFGMedMonitorModel.Patient" Role="Patient" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.Prescription" Role="Prescription" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
               <PropertyRef Name="patientId" />
@@ -470,52 +566,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PatientAssign">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
-          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+        <Association Name="PatientDAssign">
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.Patient" Role="Patient" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="TFGMedMonitorEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Analytic" EntityType="Self.Analytic" />
-          <EntitySet Name="ChatMessage" EntityType="Self.ChatMessage" />
-          <EntitySet Name="Dose" EntityType="Self.Dose" />
-          <EntitySet Name="Medicine" EntityType="Self.Medicine" />
-          <EntitySet Name="Patient" EntityType="Self.Patient" />
-          <EntitySet Name="Prescription" EntityType="Self.Prescription" />
-          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" />
-          <AssociationSet Name="ForeignKey_AnalyticA" Association="Self.ForeignKey_AnalyticA">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="Analytic" EntitySet="Analytic" />
-          </AssociationSet>
-          <AssociationSet Name="ForeignKey_AnalyticP" Association="Self.ForeignKey_AnalyticP">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="Analytic" EntitySet="Analytic" />
-          </AssociationSet>
-          <AssociationSet Name="ForeignKey_ChatMessageA" Association="Self.ForeignKey_ChatMessageA">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="ChatMessage" EntitySet="ChatMessage" />
-          </AssociationSet>
-          <AssociationSet Name="ForeignKey_ChatMessageS" Association="Self.ForeignKey_ChatMessageS">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="ChatMessage" EntitySet="ChatMessage" />
-          </AssociationSet>
-          <AssociationSet Name="ForeignKey_DoseP" Association="Self.ForeignKey_DoseP">
-            <End Role="Prescription" EntitySet="Prescription" />
-            <End Role="Dose" EntitySet="Dose" />
-          </AssociationSet>
-          <AssociationSet Name="ForeignKey_PrescriptionM" Association="Self.ForeignKey_PrescriptionM">
-            <End Role="Medicine" EntitySet="Medicine" />
-            <End Role="Prescription" EntitySet="Prescription" />
-          </AssociationSet>
-          <AssociationSet Name="ForeignKey_PrescriptionP" Association="Self.ForeignKey_PrescriptionP">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="Prescription" EntitySet="Prescription" />
-          </AssociationSet>
-          <AssociationSet Name="PatientAssign" Association="Self.PatientAssign">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="Patient" EntitySet="Patient" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="PatientEAssign">
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <End Type="TFGMedMonitorModel.Patient" Role="Patient" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -524,101 +583,110 @@
           <EntitySetMapping Name="Analytic">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.Analytic">
               <MappingFragment StoreEntitySet="Analytic">
-                <ScalarProperty Name="patientId" ColumnName="patientId" />
-                <ScalarProperty Name="measurementTime" ColumnName="measurementTime" />
-                <ScalarProperty Name="attendant" ColumnName="attendant" />
-                <ScalarProperty Name="patientWeight" ColumnName="patientWeight" />
-                <ScalarProperty Name="usedProcedure" ColumnName="usedProcedure" />
                 <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="usedProcedure" ColumnName="usedProcedure" />
+                <ScalarProperty Name="patientWeight" ColumnName="patientWeight" />
+                <ScalarProperty Name="attendant" ColumnName="attendant" />
+                <ScalarProperty Name="measurementTime" ColumnName="measurementTime" />
+                <ScalarProperty Name="patientId" ColumnName="patientId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChatMessage">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.ChatMessage">
               <MappingFragment StoreEntitySet="ChatMessage">
-                <ScalarProperty Name="messageId" ColumnName="messageId" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="messageText" ColumnName="messageText" />
-                <ScalarProperty Name="sender" ColumnName="sender" />
                 <ScalarProperty Name="addressee" ColumnName="addressee" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="messageText" ColumnName="messageText" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="messageId" ColumnName="messageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Dose">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.Dose">
               <MappingFragment StoreEntitySet="Dose">
-                <ScalarProperty Name="prescriptionId" ColumnName="prescriptionId" />
-                <ScalarProperty Name="administrationTime" ColumnName="administrationTime" />
-                <ScalarProperty Name="administrator" ColumnName="administrator" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="administrator" ColumnName="administrator" />
+                <ScalarProperty Name="administrationTime" ColumnName="administrationTime" />
+                <ScalarProperty Name="prescriptionId" ColumnName="prescriptionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Medicine">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.Medicine">
               <MappingFragment StoreEntitySet="Medicine">
-                <ScalarProperty Name="medicineId" ColumnName="medicineId" />
-                <ScalarProperty Name="registerNumber" ColumnName="registerNumber" />
-                <ScalarProperty Name="medName" ColumnName="medName" />
-                <ScalarProperty Name="labName" ColumnName="labName" />
-                <ScalarProperty Name="authDate" ColumnName="authDate" />
-                <ScalarProperty Name="medStatus" ColumnName="medStatus" />
-                <ScalarProperty Name="statusDate" ColumnName="statusDate" />
-                <ScalarProperty Name="ATCCode" ColumnName="ATCCode" />
-                <ScalarProperty Name="activePrinc" ColumnName="activePrinc" />
-                <ScalarProperty Name="activePrincN" ColumnName="activePrincN" />
-                <ScalarProperty Name="commercialized" ColumnName="commercialized" />
-                <ScalarProperty Name="yellowTriangle" ColumnName="yellowTriangle" />
-                <ScalarProperty Name="observations" ColumnName="observations" />
-                <ScalarProperty Name="substitutes" ColumnName="substitutes" />
-                <ScalarProperty Name="affectsConduction" ColumnName="affectsConduction" />
                 <ScalarProperty Name="supplyIssues" ColumnName="supplyIssues" />
+                <ScalarProperty Name="affectsConduction" ColumnName="affectsConduction" />
+                <ScalarProperty Name="substitutes" ColumnName="substitutes" />
+                <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="yellowTriangle" ColumnName="yellowTriangle" />
+                <ScalarProperty Name="commercialized" ColumnName="commercialized" />
+                <ScalarProperty Name="activePrincN" ColumnName="activePrincN" />
+                <ScalarProperty Name="activePrinc" ColumnName="activePrinc" />
+                <ScalarProperty Name="ATCCode" ColumnName="ATCCode" />
+                <ScalarProperty Name="statusDate" ColumnName="statusDate" />
+                <ScalarProperty Name="medStatus" ColumnName="medStatus" />
+                <ScalarProperty Name="authDate" ColumnName="authDate" />
+                <ScalarProperty Name="labName" ColumnName="labName" />
+                <ScalarProperty Name="medName" ColumnName="medName" />
+                <ScalarProperty Name="registerNumber" ColumnName="registerNumber" />
+                <ScalarProperty Name="medicineId" ColumnName="medicineId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Patient">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.Patient">
               <MappingFragment StoreEntitySet="Patient">
-                <ScalarProperty Name="patientId" ColumnName="patientId" />
-                <ScalarProperty Name="patientName" ColumnName="patientName" />
+                <ScalarProperty Name="info" ColumnName="info" />
                 <ScalarProperty Name="birthDate" ColumnName="birthDate" />
-                <ScalarProperty Name="careCenter" ColumnName="careCenter" />
+                <ScalarProperty Name="patientName" ColumnName="patientName" />
+                <ScalarProperty Name="patientId" ColumnName="patientId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Prescription">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.Prescription">
               <MappingFragment StoreEntitySet="Prescription">
-                <ScalarProperty Name="prescriptionId" ColumnName="prescriptionId" />
-                <ScalarProperty Name="patient" ColumnName="patient" />
-                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
-                <ScalarProperty Name="medicine" ColumnName="medicine" />
-                <ScalarProperty Name="frequency" ColumnName="frequency" />
                 <ScalarProperty Name="administration" ColumnName="administration" />
+                <ScalarProperty Name="frequency" ColumnName="frequency" />
+                <ScalarProperty Name="medicine" ColumnName="medicine" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="patient" ColumnName="patient" />
+                <ScalarProperty Name="prescriptionId" ColumnName="prescriptionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfile">
             <EntityTypeMapping TypeName="TFGMedMonitorModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
-                <ScalarProperty Name="usrId" ColumnName="usrId" />
-                <ScalarProperty Name="loginName" ColumnName="loginName" />
-                <ScalarProperty Name="enPassword" ColumnName="enPassword" />
-                <ScalarProperty Name="firstName" ColumnName="firstName" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="language" ColumnName="language" />
-                <ScalarProperty Name="country" ColumnName="country" />
                 <ScalarProperty Name="userType" ColumnName="userType" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="enPassword" ColumnName="enPassword" />
+                <ScalarProperty Name="loginName" ColumnName="loginName" />
+                <ScalarProperty Name="usrId" ColumnName="usrId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="PatientAssign" TypeName="TFGMedMonitorModel.PatientAssign" StoreEntitySet="PatientAssign">
+          <AssociationSetMapping Name="PatientDAssign" TypeName="TFGMedMonitorModel.PatientDAssign" StoreEntitySet="PatientDAssign">
+            <EndProperty Name="Patient">
+              <ScalarProperty Name="patientId" ColumnName="patient" />
+            </EndProperty>
             <EndProperty Name="UserProfile">
               <ScalarProperty Name="usrId" ColumnName="doctor" />
             </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PatientEAssign" TypeName="TFGMedMonitorModel.PatientEAssign" StoreEntitySet="PatientEAssign">
             <EndProperty Name="Patient">
               <ScalarProperty Name="patientId" ColumnName="patient" />
+            </EndProperty>
+            <EndProperty Name="UserProfile">
+              <ScalarProperty Name="usrId" ColumnName="employee" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

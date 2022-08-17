@@ -24,5 +24,29 @@ namespace Model.HealthDao
 
             return result;
         }
+
+        public void AssignDoctor(Patient p, UserProfile d)
+        {
+            p.UserProfile.Add(d);
+            Update(p);
+        }
+
+        public void UnassignDoctor(Patient p, UserProfile d)
+        {
+            p.UserProfile.Remove(d);
+            Update(p);
+        }
+
+        public void AssignEmployee(Patient p, UserProfile e)
+        {
+            p.UserProfile1.Add(e);
+            Update(p);
+        }
+
+        public void UnassignEmployee(Patient p, UserProfile e)
+        {
+            p.UserProfile1.Remove(e);
+            Update(p);
+        }
     }
 }

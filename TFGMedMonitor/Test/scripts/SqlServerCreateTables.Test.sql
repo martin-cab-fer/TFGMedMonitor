@@ -1,18 +1,13 @@
-﻿/* 
+﻿ /* 
  * SQL Server Script
- * 
- * This script can be directly executed to configure the test database from
- * PCs located at CECAFI Lab. The database and the corresponding users are 
- * already created in the sql server, so it will create the tables needed 
- * in the samples. 
  * 
  * In a local environment (for example, with the SQLServerExpress instance 
  * included in the VStudio installation) it will be necessary to create the 
  * database and the user required by the connection string. So, the following
  * steps are needed:
  *
- *      Configure within the CREATE DATABASE sql-sentence the path where 
- *      database and log files will be created  
+ *     Configure the @Default_DB_Path variable with the path where 
+ *     database and log files will be created  
  *
  * This script can be executed from MS Sql Server Management Studio Express,
  * but also it is possible to use a command Line syntax:
@@ -20,9 +15,40 @@
  *    > sqlcmd.exe -U [user] -P [password] -I -i SqlServerCreateTables.sql
  *
  */
+
+
+ /******************************************************************************/
+ /*** PATH to store the db files. This path must exists in the local system. ***/
+ /******************************************************************************/
+
+ DECLARE @Default_DB_Path as VARCHAR(64)  
+ SET @Default_DB_Path = N'C:\TFGMedMonitor\db'
+
+ USE [master]
+
+/* Drop database if already exists */
+IF  EXISTS (SELECT name FROM sys.databases WHERE name = 'medmonitor_test')
+	DROP DATABASE [medmonitor_test]
+
+USE [master]
+
+
+/* DataBase Creation */
+
+	                              
+DECLARE @sql nvarchar(500)
+
+SET @sql = 
+  N'CREATE DATABASE [medmonitor_test] 
+    ON PRIMARY ( NAME = medmonitor_test, FILENAME = "' + @Default_DB_Path + N'medmonitor_test.mdf")
+    LOG ON ( NAME = medmonitor_test_log, FILENAME = "' + @Default_DB_Path + N'medmonitor_test_log.ldf")'
+
+EXEC(@sql)
+PRINT N'Database [medmonitor_test] created.'
+GO
+
  
- 
-USE [medmonitor]
+USE [medmonitor_test]
 
 
 /* ********** Drop Tables if already exist *********** */

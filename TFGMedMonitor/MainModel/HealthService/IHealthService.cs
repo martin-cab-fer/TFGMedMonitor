@@ -29,6 +29,12 @@ namespace Model.HealthService
         IUserProfileDao UserProfileDao { set; }
 
         [Transactional]
+        PatientBlock GetPatientList(long userId, int startIndex, int count);
+
+        [Transactional]
+        PatientDetails GetPatientDetails(long patientId);
+
+        [Transactional]
         AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count);
 
         [Transactional]

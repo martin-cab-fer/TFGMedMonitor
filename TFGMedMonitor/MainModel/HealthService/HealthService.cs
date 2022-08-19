@@ -29,6 +29,45 @@ namespace Model.HealthService
         public IUserProfileDao UserProfileDao { private get; set; }
 
         [Transactional]
+        public PatientBlock GetPatientList(long userId, int startIndex, int count)
+        {
+            List<Patient> patients =
+                PatientDao.GetPatientsPaged(startIndex, count + 1);
+
+            bool existMorePatients = (patients.Count == count + 1);
+
+            if (existMorePatients)
+                patients.RemoveAt(count);
+
+            List<PatientDetails> pd = new List<PatientDetails>();
+            foreach (Patient p in patients) {
+                pd.Add(GetPatientDetails(p));
+            }
+
+            return new PatientBlock(pd, existMorePatients);
+        }
+
+        [Transactional]
+        public PatientDetails GetPatientDetails(long patientId)
+        {
+            Patient p =
+                PatientDao.Find(patientId);
+
+            if (p == null)
+                return null;
+
+            return GetPatientDetails(p);
+        }
+
+        private PatientDetails GetPatientDetails(Patient p)
+        {
+            PrescriptionBlock pb = GetPatientPrescription(p.patientId, 0, 3);
+            AnalyticBlock ab = GetPatientAnalytics(p.patientId, 0, 3);
+
+            return new PatientDetails(p, pb, ab);
+        }
+
+        [Transactional]
         public AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count)
         {
             List<Analytic> analytics =

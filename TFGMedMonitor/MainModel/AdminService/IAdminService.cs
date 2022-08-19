@@ -20,9 +20,6 @@ namespace Model.AdminService
         IChatMessageDao ChatMessageDao { set; }
 
         [Transactional]
-        PatientBlock GetPatientList(long userId, int startIndex, int count);
-
-        [Transactional]
         void AssignDoctorToPatient(long doctorId, long patientId);
 
         [Transactional]

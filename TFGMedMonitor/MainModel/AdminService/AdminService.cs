@@ -20,20 +20,6 @@ namespace Model.AdminService
         public IChatMessageDao ChatMessageDao { private get; set; }
 
         [Transactional]
-        public PatientBlock GetPatientList(long userId, int startIndex, int count)
-        {
-            List<Patient> patients =
-                PatientDao.GetPatientsPaged(startIndex, count + 1);
-
-            bool existMorePatients = (patients.Count == count + 1);
-
-            if (existMorePatients)
-                patients.RemoveAt(count);
-
-            return new PatientBlock(patients, existMorePatients);
-        }
-
-        [Transactional]
         public void AssignDoctorToPatient(long doctorId, long patientId)
         {
             Patient p = PatientDao.Find(patientId);

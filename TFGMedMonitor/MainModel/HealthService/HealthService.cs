@@ -1,4 +1,5 @@
 ﻿using Es.Udc.DotNet.ModelUtil.Transactions;
+using Model.AdminDao;
 using Model.HealthDao;
 using Model.UserProfileDao;
 using Ninject;
@@ -153,28 +154,6 @@ namespace Model.HealthService
             if (pr == null)
                 return;
             PrescriptionDao.Remove(prescriptionId);
-        }
-
-        [Transactional]
-        public MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count)
-        {
-            if (activePrin == null && name == "")
-                return null;
-
-            List<Medicine> medicines =
-               MedicineDao.GetMedicineSearch(name, activePrin, startIndex, count);
-
-            bool existMoreMedicines = (medicines.Count == count + 1);
-
-            if (existMoreMedicines)
-            {
-                while(medicines.Count >= count + 1)
-                {
-                    medicines.RemoveAt(count);
-                }
-            }
-
-            return new MedicineBlock(medicines, existMoreMedicines);
         }
 
         [Transactional]

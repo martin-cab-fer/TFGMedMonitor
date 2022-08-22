@@ -1,10 +1,11 @@
 ﻿using Ninject;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Es.Udc.DotNet.ModelUtil.Transactions;
 using Model.HealthDao;
 using Model.UserProfileDao;
+using Model.UserService;
+using Model.AdminDao;
 
 namespace Model.AdminService
 {
@@ -19,6 +20,20 @@ namespace Model.AdminService
         [Inject]
         IChatMessageDao ChatMessageDao { set; }
 
+        [Inject]
+        IMedicineDao MedicineDao { set; }
+
+        [Transactional]
+        long CreateMedicine(int regNum, string mName, string lName, DateTime authDate, string mStatus,
+            DateTime statusDate, string ATCCode, string activePr, int activePrN, bool commerc,
+            bool yellowT, string observ, string subst, bool affectsC, bool supplyI);
+
+        [Transactional]
+        MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count);
+
+        [Transactional]
+        long CreatePatient(string patientName, DateTime birthDate, string info);
+
         [Transactional]
         void AssignDoctorToPatient(long doctorId, long patientId);
 
@@ -32,7 +47,7 @@ namespace Model.AdminService
         void RemoveEmployeeFromPatient(long employeeId, long patientId);
 
         [Transactional]
-        ChatMessage AddChatMessage(long sender, long addressee, string title, string message);
+        ChatMessage SendChatMessage(long sender, long addressee, string title, string message);
 
         [Transactional]
         ChatMessageBlock GetChatMessages(long usrId, int startIndex, int count);

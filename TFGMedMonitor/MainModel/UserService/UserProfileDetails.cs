@@ -22,6 +22,8 @@ namespace Model.UserService
 
         public string Country { get; private set; }
 
+        public int UserType { get; private set; }
+
         #endregion
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace Model.UserService
         /// <param name="language">The language.</param>
         /// <param name="country">The country.</param>
         public UserProfileDetails(String loginName, String firstName, String lastName,
-            String email, String language, String country)
+            String email, String language, String country, int userType)
         {
             this.LoginName = loginName;
             this.FirstName = firstName;
@@ -42,6 +44,7 @@ namespace Model.UserService
             this.Email = email;
             this.Language = language;
             this.Country = country;
+            this.UserType = userType;
         }
 
         public override bool Equals(object obj)
@@ -54,7 +57,8 @@ namespace Model.UserService
                   && (this.Lastname == target.Lastname)
                   && (this.Email == target.Email)
                   && (this.Language == target.Language)
-                  && (this.Country == target.Country);
+                  && (this.Country == target.Country)
+                  && (this.UserType == target.UserType);
         }
 
         // The GetHashCode method is used in hashing algorithms and data 
@@ -82,7 +86,8 @@ namespace Model.UserService
                 "lastName = " + Lastname + " | " +
                 "email = " + Email + " | " +
                 "language = " + Language + " | " +
-                "country = " + Country + " ]";
+                "country = " + Country + " | " +
+                "userType = " + UserType + " ]";
 
 
             return strUserProfileDetails;

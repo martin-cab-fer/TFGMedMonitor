@@ -45,7 +45,7 @@ namespace Model.UserService
             UserProfileDetails userProfileDetails =
                 new UserProfileDetails(userProfile.loginName, userProfile.firstName,
                     userProfile.lastName, userProfile.email,
-                    userProfile.language, userProfile.country);
+                    userProfile.language, userProfile.country, userProfile.userType);
 
             return userProfileDetails;
         }
@@ -59,7 +59,7 @@ namespace Model.UserService
             UserProfileDetails userProfileDetails =
                 new UserProfileDetails(userProfile.loginName, userProfile.firstName,
                     userProfile.lastName, userProfile.email,
-                    userProfile.language, userProfile.country);
+                    userProfile.language, userProfile.country, userProfile.userType);
 
             return userProfileDetails;
         }
@@ -91,7 +91,7 @@ namespace Model.UserService
             }
 
             return new LoginResult(userProfile.usrId, userProfile.firstName,
-                storedPassword, userProfile.language, userProfile.country);
+                storedPassword, userProfile.language, userProfile.country, userProfile.userType);
         }
 
         /// <exception cref="DuplicateInstanceException"/>
@@ -119,6 +119,7 @@ namespace Model.UserService
                 userProfile.email = userProfileDetails.Email;
                 userProfile.language = userProfileDetails.Language;
                 userProfile.country = userProfileDetails.Country;
+                userProfile.userType = (short)userProfileDetails.UserType;
 
                 UserProfileDao.Create(userProfile);
 
@@ -139,6 +140,7 @@ namespace Model.UserService
             userProfile.email = userProfileDetails.Email;
             userProfile.language = userProfileDetails.Language;
             userProfile.country = userProfileDetails.Country;
+            userProfile.userType = (short)userProfileDetails.UserType;
             UserProfileDao.Update(userProfile);
         }
 
@@ -149,7 +151,7 @@ namespace Model.UserService
             {
                 UserProfile userProfile = UserProfileDao.FindByLoginName(loginName);
             }
-            catch (InstanceNotFoundException e)
+            catch (InstanceNotFoundException)
             {
                 return false;
             }
@@ -160,7 +162,7 @@ namespace Model.UserService
         [Transactional]
         public UserBlock GetSpecificUserList(int userType, int startIndex, int count)
         {
-            if (userType > 2 || userType < 0)
+            if (userType > 3 || userType < 0)
                 return null;
 
             List<UserProfile> users =
@@ -171,7 +173,14 @@ namespace Model.UserService
             if (existMoreUsers)
                 users.RemoveAt(count);
 
-            return new UserBlock(users, existMoreUsers, userType);
+            List<UserProfileDetails> ud = new List<UserProfileDetails>();
+            foreach (UserProfile u in users)
+            {
+                ud.Add(new UserProfileDetails(u.loginName, u.firstName, u.lastName, u.email, u.language,
+                    u.country, u.userType));
+            }
+
+            return new UserBlock(ud, existMoreUsers, userType);
         }
     }
 }

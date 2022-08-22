@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Text;
 using System.Linq;
 
-namespace Model.HealthDao
+namespace Model.AdminDao
 {
     public class MedicineDaoEntityFramework :
         GenericDaoEntityFramework<Medicine, Int64>, IMedicineDao
@@ -61,6 +61,11 @@ namespace Model.HealthDao
 
                 return fResult;
             }
+        }
+
+        public List<Medicine> FindByRegisterNumber (int regNumber)
+        {
+            return null;
         }
     }
 }

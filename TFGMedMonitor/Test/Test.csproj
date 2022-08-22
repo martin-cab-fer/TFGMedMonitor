@@ -97,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestManager.cs" />
     <Compile Include="IUserServiceTest.cs" />
     <Compile Include="IHealthServiceTest.cs" />
     <Compile Include="IAdminServiceTest.cs" />

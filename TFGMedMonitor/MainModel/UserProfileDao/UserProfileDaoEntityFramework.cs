@@ -49,6 +49,7 @@ namespace Model.UserProfileDao
             var result =
                 (from u in userProfiles
                  where u.userType == userType
+                 orderby u.loginName
                  select u).Skip(startIndex).Take(count).ToList();
 
             return result;

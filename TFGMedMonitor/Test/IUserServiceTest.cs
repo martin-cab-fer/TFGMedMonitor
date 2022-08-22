@@ -25,7 +25,7 @@ namespace Test
         private const string clearPassword = "password";
         private const string firstName = "name";
         private const string lastName = "lastName";
-        private const string email = "user@udc.es";
+        private const string email = "user@gmail.es";
         private const string language = "es";
         private const string country = "ES";
         private const long NON_EXISTENT_USER_ID = -1;
@@ -41,6 +41,39 @@ namespace Test
         /// </summary>
         public TestContext TestContext { get; set; }
 
+        #region Additional test attributes
+
+        //Use ClassInitialize to run code before running the first test in the class
+        [ClassInitialize]
+        public static void MyClassInitialize(TestContext testContext)
+        {
+            kernel = TestManager.ConfigureNInjectKernel();
+
+            userProfileDao = kernel.Get<IUserProfileDao>();
+            userService = kernel.Get<IUserService>();
+        }
+
+        //Use ClassCleanup to run code after all tests in a class have run
+        [ClassCleanup]
+        public static void MyClassCleanup()
+        {
+            TestManager.ClearNInjectKernel(kernel);
+        }
+
+        //Use TestInitialize to run code before running each test
+        [TestInitialize]
+        public void MyTestInitialize()
+        {
+        }
+
+        //Use TestCleanup to run code after each test has run
+        [TestCleanup]
+        public void MyTestCleanup()
+        {
+        }
+
+        #endregion Additional test attributes
+
         /// <summary>
         /// A test for RegisterUser
         /// </summary>
@@ -52,7 +85,7 @@ namespace Test
                 // Register user and find profile
                 var userId =
                     userService.RegisterUser(loginName, clearPassword,
-                        new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                        new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 var userProfile = userProfileDao.Find(userId);
 
@@ -65,6 +98,7 @@ namespace Test
                 Assert.AreEqual(email, userProfile.email);
                 Assert.AreEqual(language, userProfile.language);
                 Assert.AreEqual(country, userProfile.country);
+                Assert.AreEqual(0, userProfile.userType);
 
                 // transaction.Complete() is not called, so Rollback is executed.
             }
@@ -81,11 +115,11 @@ namespace Test
             {
                 // Register user
                 userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 // Register the same user
                 userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 // transaction.Complete() is not called, so Rollback is executed.
             }
@@ -101,10 +135,10 @@ namespace Test
             {
                 // Register user
                 var userId = userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 var expected = new LoginResult(userId, firstName,
-                    PasswordEncrypter.Crypt(clearPassword), language, country);
+                    PasswordEncrypter.Crypt(clearPassword), language, country, 0);
 
                 // Login with clear password
                 var actual =
@@ -128,10 +162,10 @@ namespace Test
             {
                 // Register user
                 var userId = userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 var expected = new LoginResult(userId, firstName,
-                    PasswordEncrypter.Crypt(clearPassword), language, country);
+                    PasswordEncrypter.Crypt(clearPassword), language, country, 0);
 
                 // Login with encrypted password
                 var obtained =
@@ -156,7 +190,7 @@ namespace Test
             {
                 // Register user
                 var userId = userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 // Login with incorrect (clear) password
                 var actual =
@@ -187,7 +221,7 @@ namespace Test
             using (var scope = new TransactionScope())
             {
                 var expected =
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country);
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0);
 
                 var userId =
                     userService.RegisterUser(loginName, clearPassword, expected);
@@ -222,11 +256,11 @@ namespace Test
             {
                 // Register user and update profile details
                 var userId = userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 var expected =
                     new UserProfileDetails(loginName, firstName + "X", lastName + "X",
-                        email + "X", "XX", "XX");
+                        email + "X", "XX", "XX", 0);
 
                 userService.UpdateUserProfileDetails(userId, expected);
 
@@ -250,7 +284,7 @@ namespace Test
             using (var scope = new TransactionScope())
             {
                 userService.UpdateUserProfileDetails(NON_EXISTENT_USER_ID,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 // transaction.Complete() is not called, so Rollback is executed.
             }
@@ -266,7 +300,7 @@ namespace Test
             {
                 // Register user
                 var userId = userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 // Change password
                 var newClearPassword = clearPassword + "X";
@@ -291,7 +325,7 @@ namespace Test
             {
                 // Register user
                 var userId = userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 // Change password
                 var newClearPassword = clearPassword + "X";
@@ -322,7 +356,7 @@ namespace Test
             {
                 // Register user
                 userService.RegisterUser(loginName, clearPassword,
-                    new UserProfileDetails(loginName, firstName, lastName, email, language, country));
+                    new UserProfileDetails(loginName, firstName, lastName, email, language, country, 0));
 
                 bool userExists = userService.UserExists(loginName);
 
@@ -345,6 +379,37 @@ namespace Test
                 bool userExists = userService.UserExists(invalidLoginName);
 
                 Assert.IsFalse(userExists);
+
+                // transaction.Complete() is not called, so Rollback is executed.
+            }
+        }
+
+
+        [TestMethod]
+        public void TestGetSpecificUser()
+        {
+            using (var scope = new TransactionScope())
+            {
+                long user1Id = userService.RegisterUser("doc", clearPassword,
+                    new UserProfileDetails("doc", firstName, lastName, email, language, country, 1));
+
+                long user2Id = userService.RegisterUser("emp", clearPassword,
+                    new UserProfileDetails("emp", firstName, lastName, email, language, country, 2));
+
+                UserProfileDetails u1 = userService.FindUserProfileDetails(user1Id);
+                UserProfileDetails u2 = userService.FindUserProfileDetails(user2Id);
+
+                UserBlock s = userService.GetSpecificUserList(1, 0, 10);
+
+                Assert.AreEqual(s.Users.Count, 1);
+                Assert.IsTrue(s.Users.Contains(u1));
+                Assert.IsFalse(s.Users.Contains(u2));
+
+                s = userService.GetSpecificUserList(2, 0, 10);
+
+                Assert.AreEqual(s.Users.Count, 1);
+                Assert.IsTrue(s.Users.Contains(u2));
+                Assert.IsFalse(s.Users.Contains(u1));
 
                 // transaction.Complete() is not called, so Rollback is executed.
             }

@@ -1,4 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <module name="ninjectConfiguration">
 
+  <bind service="Model.UserProfileDao.IUserProfileDao, TFGMedMonitor.Model"
+		  to="Model.UserProfileDao.UserProfileDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.UserService.IUserService, TFGMedMonitor.Model"
+		  to="Model.UserService.UserService, TFGMedMonitor.Model" />
+
+  <bind service="Model.AdminDao.IChatMessageDao, TFGMedMonitor.Model"
+		  to="Model.AdminDao.ChatMessageDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.AdminDao.IMedicineDao, TFGMedMonitor.Model"
+		  to="Model.AdminDao.MedicineDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.AdminDao.IPatientDao, TFGMedMonitor.Model"
+		  to="Model.AdminDao.PatientDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.AdminService.IAdminService, TFGMedMonitor.Model"
+		  to="Model.AdminService.AdminService, TFGMedMonitor.Model" />
+
+  <bind service="Model.HealthDao.IAnalyticDao, TFGMedMonitor.Model"
+		  to="Model.HealthDao.AnalyticDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.HealthDao.IPrescriptionDao, TFGMedMonitor.Model"
+		  to="Model.HealthDao.PrescriptionDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.HealthDao.IDoseDao, TFGMedMonitor.Model"
+		  to="Model.HealthDao.DoseDaoEntityFramework, TFGMedMonitor.Model" />
+
+  <bind service="Model.HealthService.IHealthService, TFGMedMonitor.Model"
+		  to="Model.HealthService.HealthService, TFGMedMonitor.Model" />
+  
+  <bind
+	  service="System.Data.Entity.DbConnection, EntityFramework"
+	  to="System.Data.Entity.DbConnection, EntityFramework" />
+
+  <bind
+		service="System.Data.Entity.DbContext, EntityFramework"
+		to="System.Data.Entity.DbContext, EntityFramework"
+		scope="singleton">
+    <metadata key="nameOrConnectionString" value="metadata=res://*/MiniPortal.Model.csdl|res://*/MiniPortal.Model.ssdl|res://*/MiniPortal.Model.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=localhost\SQLExpress;Initial Catalog=miniportal_test;Integrated Security=True;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient"    />
+  </bind>
+
 </module>

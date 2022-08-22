@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Model.HealthService
+namespace Model.AdminService
 {
     public class MedicineBlock
     {

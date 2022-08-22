@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Text;
 using System.Linq;
 
-namespace Model.HealthDao
+namespace Model.AdminDao
 {
     public class ChatMessageDaoEntityFramework :
         GenericDaoEntityFramework<ChatMessage, Int64>, IChatMessageDao

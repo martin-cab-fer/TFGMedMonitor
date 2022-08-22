@@ -16,14 +16,16 @@ namespace Model.UserService
         /// <param name="encryptedPassword">The encrypted password.</param>
         /// <param name="language">The language.</param>
         /// <param name="country">The country.</param>
+        /// <param name="userType">The user type.</param>
         public LoginResult(long userProfileId, String firstName,
-            String encryptedPassword, String language, String country)
+            String encryptedPassword, String language, String country, int userType)
         {
             this.UserProfileId = userProfileId;
             this.FirstName = firstName;
             this.EncryptedPassword = encryptedPassword;
             this.Language = language;
             this.Country = country;
+            this.UserType = userType;
         }
 
         #region Properties Region
@@ -53,6 +55,12 @@ namespace Model.UserService
         public string Language { get; private set; }
 
         /// <summary>
+        /// Gets the user type.
+        /// </summary>
+        /// <value>The user type.</value>
+        public int UserType { get; private set; }
+
+        /// <summary>
         /// Gets the user profile id.
         /// </summary>
         /// <value>The user profile id.</value>
@@ -68,7 +76,8 @@ namespace Model.UserService
                    && (this.FirstName == target.FirstName)
                    && (this.EncryptedPassword == target.EncryptedPassword)
                    && (this.Language == target.Language)
-                   && (this.Country == target.Country);
+                   && (this.Country == target.Country)
+                   && (this.UserType == target.UserType);
         }
 
         // The GetHashCode method is used in hashing algorithms and data
@@ -96,7 +105,8 @@ namespace Model.UserService
                 "firstName = " + FirstName + " | " +
                 "encryptedPassword = " + EncryptedPassword + " | " +
                 "language = " + Language + " | " +
-                "country = " + Country + " ]";
+                "country = " + Country + " | " +
+                "userType = " + UserType + " ]";
 
             return strLoginResult;
         }

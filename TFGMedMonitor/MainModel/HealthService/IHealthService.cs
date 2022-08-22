@@ -5,6 +5,7 @@ using System.Text;
 using Model.HealthDao;
 using Es.Udc.DotNet.ModelUtil.Transactions;
 using Model.UserProfileDao;
+using Model.AdminDao;
 
 namespace Model.HealthService
 {
@@ -49,9 +50,6 @@ namespace Model.HealthService
 
         [Transactional]
         void RemovePatientPrescription(long prescriptionId);
-
-        [Transactional]
-        MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count);
 
         [Transactional]
         DoseBlock GetPatientDoses(long prescriptionId, int startIndex, int count);

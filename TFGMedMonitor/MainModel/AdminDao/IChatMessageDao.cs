@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.HealthDao
+namespace Model.AdminDao
 {
     public interface IChatMessageDao : IGenericDao<ChatMessage,Int64>
     {

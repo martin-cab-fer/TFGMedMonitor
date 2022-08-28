@@ -8,6 +8,12 @@ namespace Model.UserService
     [Serializable()]
     public class UserProfileDetails
     {
+        private string v;
+        private string text1;
+        private string text2;
+        private string text3;
+        private string selectedValue1;
+        private string selectedValue2;
         #region Properties Region
 
         public String LoginName { get; private set; }
@@ -45,6 +51,16 @@ namespace Model.UserService
             this.Language = language;
             this.Country = country;
             this.UserType = userType;
+        }
+
+        public UserProfileDetails(string v, string text1, string text2, string text3, string selectedValue1, string selectedValue2)
+        {
+            this.v = v;
+            this.text1 = text1;
+            this.text2 = text2;
+            this.text3 = text3;
+            this.selectedValue1 = selectedValue1;
+            this.selectedValue2 = selectedValue2;
         }
 
         public override bool Equals(object obj)

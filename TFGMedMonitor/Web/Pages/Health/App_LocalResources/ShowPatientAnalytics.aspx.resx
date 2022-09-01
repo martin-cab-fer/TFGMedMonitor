@@ -117,28 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblWelcome.Text" xml:space="preserve">
-    <value>Welcome to Agarimo</value>
+  <data name="lblNoAnalytics" xml:space="preserve">
+    <value>No analytics found</value>
   </data>
-  <data name="lblWelcomeHello.Text" xml:space="preserve">
-    <value>Hello</value>
+  <data name="Page.Title" xml:space="preserve">
+    <value>Agarimo - Patient Analytics</value>
   </data>
-  <data name="lclFooter.Text" xml:space="preserve">
-    <value>Martín Cabana Fernández</value>
-  </data>
-  <data name="lclPageTitle.Text" xml:space="preserve">
-    <value>Agarimo</value>
-  </data>
-  <data name="lnkAuthenticate.Text" xml:space="preserve">
-    <value>Authentication</value>
-  </data>
-  <data name="lnkLogout.Text" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="lnkMessages.Text" xml:space="preserve">
-    <value>My messages</value>
-  </data>
-  <data name="lnkProfile.Text" xml:space="preserve">
-    <value>My profile</value>
+  <data name="procedure" xml:space="preserve">
+    <value>Procedure</value>
   </data>
 </root>

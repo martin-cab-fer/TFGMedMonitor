@@ -16,7 +16,7 @@
                 <span class="label">
                     <asp:Localize ID="lclSender" runat="server" meta:resourcekey="lclSender" /></span>
                     <span class="entry">
-                        <asp:Label ID="txtSender" runat="server" Width="100px" Height="20px"
+                        <asp:Label ID="txtSender" runat="server" Width="200px" Height="20px"
                             meta:resourcekey="txtSenderResource1"/>
                 </span>
             </div>
@@ -25,7 +25,7 @@
                     <asp:Localize ID="lclTitle" runat="server" meta:resourcekey="lclTitle" /></span><span
                         class="entry">
                         <asp:TextBox ID="txtTitle" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtTitleResource1"></asp:TextBox>
+                            Width="200px" Height="20px" Columns="16" meta:resourcekey="txtTitleResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvTitle" runat="server" ControlToValidate="txtTitle"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
                             meta:resourcekey="rfvTitleResource1"></asp:RequiredFieldValidator></span>
@@ -34,8 +34,8 @@
                 <span class="label">
                     <asp:Localize ID="lclMessage" runat="server" meta:resourcekey="lclMessage" /></span><span
                         class="entry">
-                        <asp:TextBox ID="txtMessage" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtMessageResource1"></asp:TextBox>
+                        <asp:TextBox TextMode="MultiLine" ID="txtMessage" runat="server"
+                            Width="300px" Height="100px" Columns="16" Rows="5" meta:resourcekey="txtMessageResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvMessage" runat="server" ControlToValidate="txtMessage"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
                             meta:resourcekey="rfvMessageResource1"></asp:RequiredFieldValidator></span>

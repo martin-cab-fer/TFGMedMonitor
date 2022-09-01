@@ -9,15 +9,17 @@
             AutoGenerateColumns="False" >
             <Columns>
                 <asp:HyperLinkField DataTextField="sender" DataNavigateUrlFields="userName"
-                    HeaderText="<%$ Resources:, user %>" ItemStyle-Width="100px"
+                    HeaderText="<%$ Resources:, sender %>" ItemStyle-Width="100px"
                     DataNavigateUrlFormatString="~/Pages/User/Profile.aspx?userName={0}"/>
                 <asp:HyperLinkField DataTextField="adressee" DataNavigateUrlFields="userName"
-                    HeaderText="<%$ Resources:, user %>" ItemStyle-Width="100px"
+                    HeaderText="<%$ Resources:, adressee %>" ItemStyle-Width="100px"
                     DataNavigateUrlFormatString="~/Pages/User/Profile.aspx?userName={0}"/>
+                <asp:BoundField DataField="date" HeaderText="<%$ Resources:, date %>"
+                    ItemStyle-Width="100px"/>
                 <asp:BoundField DataField="title" HeaderText="<%$ Resources:, title %>"
                     ItemStyle-Width="100px"/>
                 <asp:BoundField DataField="message" HeaderText="<%$ Resources:, message %>"
-                    ItemStyle-Width="100px"/>
+                    ItemStyle-Width="300px" ItemStyle-Height="100px"/>
             </Columns>
         </asp:GridView>
     </form>

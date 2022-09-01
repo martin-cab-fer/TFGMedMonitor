@@ -37,27 +37,20 @@ namespace Web.Pages.Admin
                 count = 10;
             }
 
-            try
-            {
-                Session["selectedUser"] = SessionManager.FindUserProfileDetails(Context);
-            }
-            catch (ArgumentNullException)
-            {
-                return;
-            }
+            UserSession uS = SessionManager.GetUserSession(Context);
 
-            //UserProfileDetails uDets = (UserProfileDetails)Session["selectedUser"];
+            if (uS == null)
+                return;
 
             IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
             IAdminService adminService = iocManager.Resolve<IAdminService>();
 
             ChatMessageBlock messages;
-            messages = adminService.GetChatMessages(0, startIndex, count);
-            //messages = adminService.GetChatMessages(uDets.LoginName, startIndex, count);
+            messages = adminService.GetChatMessages(uS.UserProfileId, startIndex, count);
 
             Session["messageSearch"] = messages;
 
-            if (messages == null)
+            if (messages == null || messages.Messages.Count == 0)
             {
                 lblNoMessages.Visible = true;
                 return;
@@ -74,6 +67,7 @@ namespace Web.Pages.Admin
 
             dt.Columns.Add(new DataColumn("sender", typeof(String)));
             dt.Columns.Add(new DataColumn("adressee", typeof(String)));
+            dt.Columns.Add(new DataColumn("date", typeof(String)));
             dt.Columns.Add(new DataColumn("title", typeof(String)));
             dt.Columns.Add(new DataColumn("message", typeof(long)));
 
@@ -82,6 +76,7 @@ namespace Web.Pages.Admin
                 DataRow dr = dt.NewRow();
                 dr["sender"] = cM.sender.ToString();
                 dr["adressee"] = cM.addressee.ToString();
+                dr["date"] = cM.creationDate.ToString();
                 dr["title"] = cM.title;
                 dr["message"] = cM.messageText;
 

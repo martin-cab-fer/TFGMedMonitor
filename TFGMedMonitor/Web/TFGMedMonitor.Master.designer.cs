@@ -132,6 +132,15 @@ namespace Web
         protected global::System.Web.UI.WebControls.HyperLink lnkProfile;
 
         /// <summary>
+        /// Control lnkMessages.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkMessages;
+
+        /// <summary>
         /// Control ContentPlaceHolder_BodyContent.
         /// </summary>
         /// <remarks>

@@ -14,7 +14,12 @@ namespace Web.Pages.Health
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            PatientDetails p = (PatientDetails)Session["selectedPatient"];
 
+            if (p == null)
+                return;
+
+            txtPatient.Text = p.FullName;
         }
 
         protected void BtnSendClick(object sender, EventArgs e)
@@ -23,7 +28,7 @@ namespace Web.Pages.Health
             {
                 try
                 {
-                    Int32 weight = Convert.ToInt32(txtWeight.Text);
+                    float weight = Convert.ToSingle(txtWeight.Text);
 
                     PatientDetails p = (PatientDetails)Session["selectedPatient"];
 

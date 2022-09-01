@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblWelcome.Text" xml:space="preserve">
-    <value>Welcome to Agarimo</value>
+  <data name="btnAnalytics.Text" xml:space="preserve">
+    <value>Analytics</value>
   </data>
-  <data name="lblWelcomeHello.Text" xml:space="preserve">
-    <value>Hello</value>
+  <data name="btnPrescription.Text" xml:space="preserve">
+    <value>Prescription</value>
   </data>
-  <data name="lclFooter.Text" xml:space="preserve">
-    <value>Martín Cabana Fernández</value>
+  <data name="lclAssDoctors.Text" xml:space="preserve">
+    <value>Assigned doctors</value>
   </data>
-  <data name="lclPageTitle.Text" xml:space="preserve">
-    <value>Agarimo</value>
+  <data name="lclAssEmployees.Text" xml:space="preserve">
+    <value>Assigned employees</value>
   </data>
-  <data name="lnkAuthenticate.Text" xml:space="preserve">
-    <value>Authentication</value>
+  <data name="lclBirthDate.Text" xml:space="preserve">
+    <value>Birth date</value>
   </data>
-  <data name="lnkLogout.Text" xml:space="preserve">
-    <value>Logout</value>
+  <data name="lclFullName.Text" xml:space="preserve">
+    <value>Full name</value>
   </data>
-  <data name="lnkMessages.Text" xml:space="preserve">
-    <value>My messages</value>
+  <data name="lclInfo.Text" xml:space="preserve">
+    <value>Additional information</value>
   </data>
-  <data name="lnkProfile.Text" xml:space="preserve">
-    <value>My profile</value>
+  <data name="Page.Title" xml:space="preserve">
+    <value>Agarimo - Patient Profile</value>
   </data>
 </root>

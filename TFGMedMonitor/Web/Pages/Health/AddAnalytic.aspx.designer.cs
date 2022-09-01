@@ -51,24 +51,6 @@ namespace Web.Pages.Health
         protected global::System.Web.UI.WebControls.Label txtPatient;
 
         /// <summary>
-        /// Control lclAttendant.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Localize lclAttendant;
-
-        /// <summary>
-        /// Control txtAttendant.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtAttendant;
-
-        /// <summary>
         /// Control lclWeight.
         /// </summary>
         /// <remarks>
@@ -94,24 +76,6 @@ namespace Web.Pages.Health
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTitle;
-
-        /// <summary>
-        /// Control typeValidator1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator typeValidator1;
-
-        /// <summary>
-        /// Control lblIdentifierError1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdentifierError1;
 
         /// <summary>
         /// Control lclProcedure.

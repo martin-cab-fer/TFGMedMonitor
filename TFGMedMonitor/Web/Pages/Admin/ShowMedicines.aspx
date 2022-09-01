@@ -8,7 +8,7 @@
         <asp:GridView ID="GVMedicines" runat="server" GridLines="Both" HorizontalAlign="Center"
             AutoGenerateColumns="False" >
             <Columns>
-                <asp:BoundField DataField="name" HeaderText="<%$ Resources:, name %>"
+                <asp:BoundField DataField="medName" HeaderText="<%$ Resources:, medName %>"
                     ItemStyle-Width="100px"/>
             </Columns>
         </asp:GridView>

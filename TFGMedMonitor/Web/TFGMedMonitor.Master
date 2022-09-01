@@ -54,6 +54,10 @@
                     <asp:HyperLink ID="lnkProfile" runat="server"
                     meta:resourcekey="lnkProfile" NavigateUrl="~/Pages/User/Profile.aspx?userName=" />
                 </li>
+                <li>
+                    <asp:HyperLink ID="lnkMessages" runat="server"
+                    meta:resourcekey="lnkMessages" NavigateUrl="~/Pages/Admin/ShowMessages.aspx" />
+                </li>
             </ul>
         </div>  
         <div id="content">

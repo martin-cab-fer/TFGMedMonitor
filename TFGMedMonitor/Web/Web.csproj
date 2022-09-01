@@ -155,6 +155,15 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EmbeddedResource Include="Pages\Health\App_LocalResources\AddPrescription.aspx.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddPrescription.aspx.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="Pages\Health\App_LocalResources\ShowPatientAnalytics.aspx.resx" />
+    <Content Include="Pages\Health\App_LocalResources\ShowPatientDetails.aspx.resx" />
+    <Content Include="Pages\Health\App_LocalResources\ShowPatientDoses.aspx.resx" />
+    <Content Include="Pages\Health\App_LocalResources\ShowPatientPrescription.resx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\Admin\DoctorAssignation.aspx" />
     <Content Include="Pages\Admin\EmployeeAssignation.aspx" />
@@ -308,6 +317,11 @@
     <Compile Include="Pages\Health\AddPrescription.aspx.designer.cs">
       <DependentUpon>AddPrescription.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Health\App_LocalResources\AddPrescription.aspx.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddPrescription.aspx.resx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Health\ShowPatientAnalytics.aspx.cs">
       <DependentUpon>ShowPatientAnalytics.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -410,7 +424,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\App_LocalResources\" />
-    <Folder Include="Pages\Health\App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -436,25 +449,55 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\User\App_LocalResources\Authentication.resx" />
+    <Content Include="Pages\User\App_LocalResources\Authentication.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\User\App_LocalResources\ChangePassword.resx" />
+    <Content Include="Pages\User\App_LocalResources\ChangePassword.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\User\App_LocalResources\Profile.resx" />
+    <Content Include="Pages\User\App_LocalResources\Profile.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\User\App_LocalResources\UpdateUserProfile.resx" />
+    <Content Include="Pages\User\App_LocalResources\UpdateUserProfile.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\User\App_LocalResources\CreateUser.resx" />
+    <Content Include="Pages\User\App_LocalResources\CreateUser.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\Admin\App_LocalResources\SendMessage.resx" />
+    <Content Include="Pages\Admin\App_LocalResources\SendMessage.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\TFGMedMonitor.Master.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Health\App_LocalResources\ShowPatients.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Health\App_LocalResources\AddAnalytic.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\FindMedicine.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\AddPatient.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\ShowMessages.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\AddMedicine.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\DoctorAssignation.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\EmployeeAssignation.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\App_LocalResources\ShowMedicines.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Health\App_LocalResources\AddDose.aspx.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

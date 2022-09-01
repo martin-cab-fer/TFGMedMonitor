@@ -52,7 +52,7 @@ namespace Web.Pages.Admin
 
             Session["medicineSearch"] = medicines;
 
-            if (medicines == null)
+            if (medicines == null || medicines.Medicines.Count == 0)
             {
                 lblNoMedicines.Visible = true;
                 return;

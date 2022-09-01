@@ -123,6 +123,9 @@
   <data name="mandatoryField" xml:space="preserve">
     <value>Mandatory field</value>
   </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>

@@ -15,7 +15,6 @@ namespace Web.Pages.Health
         protected void Page_Load(object sender, EventArgs e)
         {
             UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
-
             if (uD == null)
                 return;          
 
@@ -53,12 +52,6 @@ namespace Web.Pages.Health
             {
                 btnAnalytics.Visible = false;
                 btnPrescription.Visible = false;
-            }
-
-            if(uD.UserType == 3)
-            {
-                btnManageDocs.Visible = true;
-                btnManageEmps.Visible = true;
             }
         }
 

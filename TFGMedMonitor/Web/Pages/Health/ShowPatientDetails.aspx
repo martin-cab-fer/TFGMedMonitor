@@ -33,7 +33,7 @@
                     <asp:Repeater id="empLinks" runat="server">
                         <ItemTemplate>
                             <asp:HyperLink runat="server" NavigateUrl='<%# "~/Pages/User/Profile.aspx?userName=" + Container.DataItem.ToString() %>'
-                                Text="empLinks" />
+                                Text='<%#Container.DataItem.ToString() %>' />
                         </ItemTemplate>
                     </asp:Repeater>
                     <asp:Button ID="btnManageEmps" runat="server" OnClick="BtnManageEmpsClick" Visible="false" meta:resourcekey="btnManageEmps" />
@@ -44,7 +44,7 @@
                     <asp:Repeater id="docLinks" runat="server">
                         <ItemTemplate>
                             <asp:HyperLink runat="server" NavigateUrl='<%# "~/Pages/User/Profile.aspx?userName=" + Container.DataItem.ToString() %>'
-                                Text="docLinks" />
+                                Text='<%#Container.DataItem.ToString() %>' CssClass="repeater"/>
                         </ItemTemplate>
                     </asp:Repeater>
                     <asp:Button ID="btnManageDocs" runat="server" OnClick="BtnManageDocsClick" Visible="false" meta:resourcekey="btnManageDocs" />

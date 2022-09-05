@@ -15,6 +15,8 @@
         <asp:GridView ID="GVMedicines" runat="server" GridLines="Both" HorizontalAlign="Center"
             AutoGenerateColumns="False" >
             <Columns>
+                <asp:BoundField DataField="regNum" HeaderText="<%$ Resources:, regNum %>"
+                    ItemStyle-Width="100px"/>
                 <asp:BoundField DataField="medName" HeaderText="<%$ Resources:, medName %>"
                     ItemStyle-Width="100px"/>
                 <asp:BoundField DataField="labName" HeaderText="<%$ Resources:, labName %>"

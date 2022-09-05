@@ -144,6 +144,9 @@
   <data name="lclInfo.Text" xml:space="preserve">
     <value>Additional information</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="Page.Title" xml:space="preserve">
     <value>Agarimo - Patient Profile</value>
   </data>

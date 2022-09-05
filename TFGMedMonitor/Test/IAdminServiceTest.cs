@@ -191,8 +191,8 @@ namespace Test
         {
             using (var scope = new TransactionScope())
             {
-                long doctorId1 = CreateValidUser("doc1", 1);
-                long doctorId2 = CreateValidUser("doc2", 1);
+                long doctorId1 = CreateValidUser("doc1", 2);
+                long doctorId2 = CreateValidUser("doc2", 2);
                 long patientId = CreateValidPatient("patient");
 
                 UserProfileDetails doc1 = userService.FindUserProfileDetails(doctorId1);
@@ -224,8 +224,8 @@ namespace Test
         {
             using (var scope = new TransactionScope())
             {
-                long employeeId1 = CreateValidUser("emp1", 2);
-                long employeeId2 = CreateValidUser("emp2", 2);
+                long employeeId1 = CreateValidUser("emp1", 1);
+                long employeeId2 = CreateValidUser("emp2", 1);
                 long patientId = CreateValidPatient("patient");
 
                 UserProfileDetails emp1 = userService.FindUserProfileDetails(employeeId1);

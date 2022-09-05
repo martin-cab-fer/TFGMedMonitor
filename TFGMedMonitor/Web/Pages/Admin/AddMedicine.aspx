@@ -50,7 +50,11 @@
                     <asp:Localize ID="lclAuthDate" runat="server" meta:resourcekey="lclAuthDate" /></span><span
                         class="entry">
                         <asp:TextBox TextMode="Date" ID="txtAuthDate" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtAuthDateResource1"></asp:TextBox></span>
+                            Width="100px" Columns="16" meta:resourcekey="txtAuthDateResource1"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvAuthDate" runat="server" ControlToValidate="txtAuthDate"
+                            Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
+                            meta:resourcekey="rfvAuthDateResource1"></asp:RequiredFieldValidator>
+                       </span>
             </div>
             <div class="field">
                 <span class="label">
@@ -67,7 +71,11 @@
                     <asp:Localize ID="lclStatusDate" runat="server" meta:resourcekey="lclStatusDate" /></span><span
                         class="entry">
                         <asp:TextBox TextMode="Date" ID="txtStatusDate" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtStatusDateResource1"></asp:TextBox></span>
+                            Width="100px" Columns="16" meta:resourcekey="txtStatusDateResource1"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvStatusDate" runat="server" ControlToValidate="txtStatusDate"
+                            Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
+                            meta:resourcekey="rfvStatusDateResource1"></asp:RequiredFieldValidator>
+                       </span>
             </div>
             <div class="field">
                 <span class="label">
@@ -83,7 +91,7 @@
                 <span class="label">
                     <asp:Localize ID="lclActivePrin" runat="server" meta:resourcekey="lclActivePrin" /></span>
                     <span class="entry">
-                        <asp:Label ID="txtActivePrin" runat="server" Width="100px" Height="20px"
+                        <asp:Label ID="txtActivePrin" runat="server" Width="200px" Height="20px"
                             meta:resourcekey="txtActivePrinResource1"/>
                         <asp:Button ID="btnRemovePrin" runat="server" OnClick="BtnRemovePrinClick"
                             CausesValidation="false" meta:resourcekey="btnRemovePrin" />

@@ -29,12 +29,14 @@ namespace Web.Pages.Admin
                 List<string> l = (List<string>)Session["actPrinList"];
                 if (l == null)
                     l = new List<string>();
-                if (l.Contains(s))
-                    return;
-                l.Add(s);
-                Session["actPrinList"] = l;
-                txtActivePrin.Text += (" " + s);
-                btnRemovePrin.Visible = true;
+                if (!l.Contains(s))
+                {
+                    l.Add(s);
+                    Session["actPrinList"] = l;
+                    txtActivePrin.Text += (" " + s);
+                    btnRemovePrin.Visible = true;
+                } else if (l.Count > 0)
+                    btnRemovePrin.Visible = true;
             }
         }
 
@@ -57,7 +59,8 @@ namespace Web.Pages.Admin
 
                     if (actPrinList.Count == 0)
                     {
-                        throw new Exception();
+                        txtActivePrin.Text = (string)this.GetLocalResourceObject("actPrinReq");
+                        return;
                     }
 
                     IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];

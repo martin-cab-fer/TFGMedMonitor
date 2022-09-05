@@ -60,14 +60,15 @@ namespace Model.AdminService
         [Transactional]
         public MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count)
         {
-            if (name == null)
-                return null;
+            string n = (name == null) ? "" : name;
 
-            if (activePrin == null && name == "")
+            List<string> aP = (activePrin == null) ? new List<string>() : activePrin;
+
+            if (aP.Count == 0 && n == "")
                 return null;
 
             List<Medicine> medicines =
-               MedicineDao.GetMedicineSearch(name, activePrin, startIndex, count);
+               MedicineDao.GetMedicineSearch(n, aP, startIndex, count);
 
             bool existMoreMedicines = (medicines.Count == count + 1);
 
@@ -96,51 +97,59 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public void AssignDoctorToPatient(string doctor, string patient)
+        public bool AssignDoctorToPatient(string doctor, string patient)
         {
             Patient p = PatientDao.FindByFullName(patient);
             UserProfile d = UserProfileDao.FindByLoginName(doctor);
             if(p != null && d != null)
             {
-                if (d.userType != 1)
-                    return;
+                if (d.userType != 2)
+                    return false;
                 PatientDao.AssignDoctor(p, d);
             }
+            return true;
         }
 
         [Transactional]
-        public void RemoveDoctorFromPatient(string doctor, string patient)
+        public bool RemoveDoctorFromPatient(string doctor, string patient)
         {
             Patient p = PatientDao.FindByFullName(patient);
             UserProfile d = UserProfileDao.FindByLoginName(doctor);
             if (p != null && d != null)
             {
                 PatientDao.UnassignDoctor(p, d);
+                return true;
             }
+            else
+                return false;
         }
 
         [Transactional]
-        public void AssignEmployeeToPatient(string employee, string patient)
+        public bool AssignEmployeeToPatient(string employee, string patient)
         {
             Patient p = PatientDao.FindByFullName(patient);
             UserProfile e = UserProfileDao.FindByLoginName(employee);
             if (p != null && e != null)
             {
-                if (e.userType != 2)
-                    return;
+                if (e.userType != 1)
+                    return false;
                 PatientDao.AssignEmployee(p, e);
             }
+            return true;
         }
 
         [Transactional]
-        public void RemoveEmployeeFromPatient(string employee, string patient)
+        public bool RemoveEmployeeFromPatient(string employee, string patient)
         {
             Patient p = PatientDao.FindByFullName(patient);
             UserProfile e = UserProfileDao.FindByLoginName(employee);
             if (p != null && e != null)
             {
                 PatientDao.UnassignEmployee(p, e);
+                return true;
             }
+            else
+                return false;
         }
 
         [Transactional]

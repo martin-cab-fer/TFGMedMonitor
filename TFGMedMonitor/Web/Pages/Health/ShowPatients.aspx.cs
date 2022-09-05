@@ -53,7 +53,7 @@ namespace Web.Pages.Health
             else
                 lblNoPatients.Visible = false;
 
-            bool loggedIn = false;
+            bool loggedIn = SessionManager.IsUserAuthenticated(Context);
             if (!Page.IsPostBack)
             {
                 try
@@ -62,7 +62,6 @@ namespace Web.Pages.Health
                     if (uD != null && uD.UserType == 3)
                     {
                         btnCreatePatient.Visible = true;
-                        loggedIn = true;
                     }
                 }
                 catch (Exception)
@@ -70,8 +69,6 @@ namespace Web.Pages.Health
 
                 }
             }
-            else
-                loggedIn = SessionManager.IsUserAuthenticated(Context);
 
             FillPatientList(patients, startIndex, count, loggedIn);
         }
@@ -95,6 +92,9 @@ namespace Web.Pages.Health
 
                 dt.Rows.Add(dr);
             }
+
+            if (!l)
+                GVPatients.Columns[3].Visible = false;
 
             GVPatients.DataSource = new DataView(dt);
             GVPatients.DataBind();

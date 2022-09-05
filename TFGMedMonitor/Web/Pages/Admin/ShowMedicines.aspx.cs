@@ -67,14 +67,18 @@ namespace Web.Pages.Admin
                 
             }
 
+            bool loggedIn = SessionManager.IsUserAuthenticated(Context);
+            if (loggedIn)
+            {
+                UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                if (uD != null && uD.UserType >= 2)
+                    btnCreate.Visible = true;
+            }
+
             MedicineBlock medicines;
             medicines = adminService.GetMedicineSearch(medName, actPrin, startIndex, count);
 
             Session["medicineSearch"] = medicines;
-
-            UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
-            if (uD != null && uD.UserType == 3)
-                btnCreate.Visible = true;
 
             if (medicines == null || medicines.Medicines.Count == 0)
             {
@@ -91,6 +95,7 @@ namespace Web.Pages.Admin
         {
             DataTable dt = new DataTable();
 
+            dt.Columns.Add(new DataColumn("regNum", typeof(String)));
             dt.Columns.Add(new DataColumn("medName", typeof(String)));
             dt.Columns.Add(new DataColumn("labName", typeof(String)));
             dt.Columns.Add(new DataColumn("prescripting", typeof(bool)));
@@ -98,6 +103,7 @@ namespace Web.Pages.Admin
             foreach (Medicine m in mB.Medicines)
             {
                 DataRow dr = dt.NewRow();
+                dr["regNum"] = m.registerNumber.ToString();
                 dr["medName"] = m.medName;
                 dr["labName"] = m.labName;
                 dr["prescripting"] = presc;
@@ -105,6 +111,7 @@ namespace Web.Pages.Admin
                 dt.Rows.Add(dr);
             }
 
+            GVMedicines.Columns[3].Visible = presc;
             GVMedicines.DataSource = new DataView(dt);
             GVMedicines.DataBind();
 

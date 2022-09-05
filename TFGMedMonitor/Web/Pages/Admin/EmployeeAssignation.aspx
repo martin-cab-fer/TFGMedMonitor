@@ -18,7 +18,7 @@
                 <asp:TemplateField ShowHeader="False">
                     <ItemTemplate>
                         <asp:Button ID="btnToggle" runat="server" CausesValidation="false" CommandName="Toggle"
-                            Text="<%$ Resources:, Toggle %>" OnClick="BtnToggleClick"/>
+                            CommandArgument='<%#Eval("userName") %>' Text="<%$ Resources:, Toggle %>" OnClick="BtnToggleClick"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

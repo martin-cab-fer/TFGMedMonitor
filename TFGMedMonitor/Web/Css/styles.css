@@ -146,6 +146,10 @@ div.button {
     font-size: 18px;
 }
 
+.repeater {
+    text-align: left;
+}
+
 input, select, textarea {
     background-color: #f4f4f4;
 }
@@ -183,12 +187,4 @@ table.Accounts {
     margin: 0 auto;
     text-align: center;
     width: 35%;
-}
-
-/* Comments. */
-
-table.Comments {
-    margin: 0 auto;
-    text-align: center;
-    width: 80%;
 }

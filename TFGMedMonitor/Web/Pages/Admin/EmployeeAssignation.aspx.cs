@@ -116,11 +116,7 @@ namespace Web.Pages.Admin
             try
             {
                 Button b = (Button)sender;
-                GridViewRow gVR = (GridViewRow)b.NamingContainer;
-                if (b == null)
-                    return;
-
-                string eName = gVR.Cells[0].Text;
+                string eName = b.CommandArgument;
                 PatientDetails pD = (PatientDetails)Session["selectedPatient"];
                 if (pD == null)
                     return;
@@ -128,19 +124,31 @@ namespace Web.Pages.Admin
                 IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                 IAdminService adminService = iocManager.Resolve<IAdminService>();
 
+                bool success;
+
                 if (pD.assignedDoctors.Contains(eName))
                 {
-                    adminService.RemoveEmployeeFromPatient(eName, pD.FullName);
+                    success = adminService.RemoveEmployeeFromPatient(eName, pD.FullName);
+                    if (success)
+                    {
+                        pD.assignedEmployees.Remove(eName);
+                        Session["selectedPatient"] = pD;
+                    }
                 }
                 else
                 {
-                    adminService.AssignEmployeeToPatient(eName, pD.FullName);
+                    success = adminService.AssignEmployeeToPatient(eName, pD.FullName);
+                    if (success)
+                    {
+                        pD.assignedEmployees.Add(eName);
+                        Session["selectedPatient"] = pD;
+                    }
                 }
                 Response.Redirect(Request.RawUrl);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return;
+                throw ex;
             }
         }
     }

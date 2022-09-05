@@ -135,6 +135,9 @@
   <data name="Page.Title" xml:space="preserve">
     <value>Agarimo - Medicine search</value>
   </data>
+  <data name="regNum" xml:space="preserve">
+    <value>Register nº</value>
+  </data>
   <data name="select" xml:space="preserve">
     <value>Select</value>
   </data>

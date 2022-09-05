@@ -18,12 +18,12 @@ namespace Model.AdminDao
         {
             DbSet<Medicine> medicines = Context.Set<Medicine>();
 
-            if(activePrin == null)
+            if(activePrin.Count == 0)
             {
                 var result =
                  (from a in medicines
                   where a.medName.ToLower().Contains(name.ToLower())
-                  orderby a.ATCCode
+                  orderby a.registerNumber
                   select a).Skip(startIndex).Take(count).ToList();
 
                 return result;
@@ -40,7 +40,7 @@ namespace Model.AdminDao
                         result =
                         (from a in medicines
                          where a.activePrinc.ToLower().Contains(prin.ToLower())
-                         orderby a.ATCCode
+                         orderby a.registerNumber
                          select a).Skip(startIndex).Take(count).ToList();
                     } else
                     {
@@ -48,7 +48,7 @@ namespace Model.AdminDao
                         (from a in medicines
                          where a.medName.ToLower().Contains(name.ToLower())
                          && a.activePrinc.ToLower().Contains(prin.ToLower())
-                         orderby a.ATCCode
+                         orderby a.registerNumber
                          select a).Skip(startIndex).Take(count).ToList();
                     }
 

@@ -124,17 +124,30 @@ namespace Web.Pages.Admin
                 IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                 IAdminService adminService = iocManager.Resolve<IAdminService>();
 
+                bool success;
+
                 if (pD.assignedDoctors.Contains(dName))
                 {
-                    adminService.RemoveDoctorFromPatient(dName, pD.FullName);
+                    success = adminService.RemoveDoctorFromPatient(dName, pD.FullName);
+                    if (success)
+                    {
+                        pD.assignedDoctors.Remove(dName);
+                        Session["selectedPatient"] = pD;
+                    }
                 } else
                 {
-                    adminService.AssignDoctorToPatient(dName, pD.FullName);
+                    success = adminService.AssignDoctorToPatient(dName, pD.FullName);
+                    if (success)
+                    {
+                        pD.assignedDoctors.Add(dName);
+                        Session["selectedPatient"] = pD;
+                    }
                 }
+                Response.Redirect(Request.RawUrl);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return;
+                throw ex;
             }
         }
     }

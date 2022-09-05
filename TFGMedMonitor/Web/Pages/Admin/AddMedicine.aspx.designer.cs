@@ -132,6 +132,15 @@ namespace Web.Pages.Admin
         protected global::System.Web.UI.WebControls.TextBox txtAuthDate;
 
         /// <summary>
+        /// Control rfvAuthDate.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAuthDate;
+
+        /// <summary>
         /// Control lclMedStatus.
         /// </summary>
         /// <remarks>
@@ -175,6 +184,15 @@ namespace Web.Pages.Admin
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtStatusDate;
+
+        /// <summary>
+        /// Control rfvStatusDate.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStatusDate;
 
         /// <summary>
         /// Control lclATCCode.

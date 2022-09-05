@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/TFGMedMonitor.Master" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="Web.Pages.User.Logout" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="Web.Pages.User.Logout" %>
 
 <!DOCTYPE html>
 

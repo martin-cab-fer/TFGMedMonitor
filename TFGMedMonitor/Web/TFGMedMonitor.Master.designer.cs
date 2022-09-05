@@ -123,6 +123,24 @@ namespace Web
         protected global::System.Web.UI.WebControls.HyperLink lnkLogout;
 
         /// <summary>
+        /// Control lnkMedicineSearch.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkMedicineSearch;
+
+        /// <summary>
+        /// Control lnkPatientSearch.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkPatientSearch;
+
+        /// <summary>
         /// Control lnkProfile.
         /// </summary>
         /// <remarks>

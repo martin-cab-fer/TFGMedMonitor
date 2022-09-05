@@ -10,6 +10,7 @@ using Model.UserService;
 using Model.UserProfileDao;
 using Model;
 using Model.AdminDao;
+using Model.HealthService;
 
 namespace Test
 {
@@ -45,6 +46,7 @@ namespace Test
         private static IKernel kernel;
         private static IAdminService adminService;
         private static IUserService userService;
+        private static IHealthService healthService;
         private static IUserProfileDao userDao;
         private static IMedicineDao medicineDao;
         private static IPatientDao patientDao;
@@ -79,6 +81,7 @@ namespace Test
             adminService = kernel.Get<IAdminService>();
             userDao = kernel.Get<IUserProfileDao>();
             userService = kernel.Get<IUserService>();
+            healthService = kernel.Get<IHealthService>();
             medicineDao = kernel.Get<IMedicineDao>();
             patientDao = kernel.Get<IPatientDao>();
         }
@@ -192,9 +195,13 @@ namespace Test
                 long doctorId2 = CreateValidUser("doc2", 1);
                 long patientId = CreateValidPatient("patient");
 
+                UserProfileDetails doc1 = userService.FindUserProfileDetails(doctorId1);
+                UserProfileDetails doc2 = userService.FindUserProfileDetails(doctorId2);
+                PatientDetails pat = healthService.GetPatientDetails(patientId);
+
                 //Doctor assignation
-                adminService.AssignDoctorToPatient(doctorId1, patientId);
-                adminService.AssignDoctorToPatient(doctorId2, patientId);
+                adminService.AssignDoctorToPatient(doc1.LoginName, pat.FullName);
+                adminService.AssignDoctorToPatient(doc2.LoginName, pat.FullName);
 
                 UserProfile user1 = userDao.Find(doctorId1);
                 UserProfile user2 = userDao.Find(doctorId2);
@@ -205,7 +212,7 @@ namespace Test
                 Assert.IsTrue(p.UserProfile.Contains(user1));
 
                 //We remove the second doctor and check proper removal
-                adminService.RemoveDoctorFromPatient(doctorId2, patientId);
+                adminService.RemoveDoctorFromPatient(doc2.LoginName, pat.FullName);
 
                 p = patientDao.Find(patientId);
                 Assert.IsFalse(p.UserProfile.Contains(user2));
@@ -221,9 +228,13 @@ namespace Test
                 long employeeId2 = CreateValidUser("emp2", 2);
                 long patientId = CreateValidPatient("patient");
 
+                UserProfileDetails emp1 = userService.FindUserProfileDetails(employeeId1);
+                UserProfileDetails emp2 = userService.FindUserProfileDetails(employeeId2);
+                PatientDetails pat = healthService.GetPatientDetails(patientId);
+
                 //Employee assignation
-                adminService.AssignEmployeeToPatient(employeeId1, patientId);
-                adminService.AssignEmployeeToPatient(employeeId2, patientId);
+                adminService.AssignEmployeeToPatient(emp1.LoginName, pat.FullName);
+                adminService.AssignEmployeeToPatient(emp2.LoginName, pat.FullName);
 
                 UserProfile user1 = userDao.Find(employeeId1);
                 UserProfile user2 = userDao.Find(employeeId2);
@@ -234,7 +245,7 @@ namespace Test
                 Assert.IsTrue(p.UserProfile1.Contains(user1));
 
                 //We remove the second employee and check proper removal
-                adminService.RemoveEmployeeFromPatient(employeeId2, patientId);
+                adminService.RemoveEmployeeFromPatient(emp2.LoginName, pat.FullName);
 
                 p = patientDao.Find(patientId);
                 Assert.IsFalse(p.UserProfile1.Contains(user2));
@@ -249,11 +260,14 @@ namespace Test
                 long doctorId = CreateValidUser("doc", 1);
                 long employeeId = CreateValidUser("emp", 2);
 
-                ChatMessage m1 = adminService.SendChatMessage(doctorId, employeeId, "hello", "hi");
-                ChatMessage m2 = adminService.SendChatMessage(employeeId, doctorId, "hello2", "hello");
+                UserProfileDetails doctor = userService.FindUserProfileDetails(doctorId);
+                UserProfileDetails employee = userService.FindUserProfileDetails(employeeId);
 
-                ChatMessageBlock ms1 = adminService.GetChatMessages(doctorId, 0, 10);
-                ChatMessageBlock ms2 = adminService.GetChatMessages(employeeId, 0, 10);
+                ChatMessage m1 = adminService.SendChatMessage(doctor.LoginName, employee.LoginName, "hello", "hi");
+                ChatMessage m2 = adminService.SendChatMessage(employee.LoginName, doctor.LoginName, "hello2", "hello");
+
+                ChatMessageBlock ms1 = adminService.GetChatMessages(doctor.LoginName, 0, 10);
+                ChatMessageBlock ms2 = adminService.GetChatMessages(employee.LoginName, 0, 10);
 
                 Assert.AreEqual(ms1.Messages.Count, 2);
                 Assert.AreEqual(ms2.Messages.Count, 2);

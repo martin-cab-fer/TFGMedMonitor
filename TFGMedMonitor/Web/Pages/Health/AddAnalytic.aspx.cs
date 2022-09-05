@@ -1,5 +1,6 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,6 @@ namespace Web.Pages.Health
         protected void Page_Load(object sender, EventArgs e)
         {
             PatientDetails p = (PatientDetails)Session["selectedPatient"];
-
             if (p == null)
                 return;
 
@@ -29,18 +29,23 @@ namespace Web.Pages.Health
                 try
                 {
                     float weight = Convert.ToSingle(txtWeight.Text);
+                    if (weight <= 0)
+                        return;
 
                     PatientDetails p = (PatientDetails)Session["selectedPatient"];
-
                     if (p == null)
                         return;
+
+                    UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                    if (uD == null)
+                        Response.Redirect(Response.ApplyAppPathModifier("~/Pages/User/Authentication.aspx"));
 
                     IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                     IHealthService healthService = iocManager.Resolve<IHealthService>();
 
-                    healthService.AddPatientAnalytic(0, 0, weight, txtProcedure.Text, txtObservations.Text);
+                    healthService.AddPatientAnalytic(p.FullName, uD.LoginName, weight, txtProcedure.Text, txtObservations.Text);
 
-                    Response.Redirect(Response.ApplyAppPathModifier("./ShowPatientAnalytics.aspx"));
+                    Response.Redirect(Response.ApplyAppPathModifier("./ShowPatientAnalytics.aspx?startIndex=0&count=10"));
 
                 } catch (Exception)
                 {

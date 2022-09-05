@@ -87,6 +87,15 @@ namespace Web.Pages.Health
         protected global::System.Web.UI.WebControls.Repeater empLinks;
 
         /// <summary>
+        /// Control btnManageEmps.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnManageEmps;
+
+        /// <summary>
         /// Control lclAssDoctors.
         /// </summary>
         /// <remarks>
@@ -103,6 +112,15 @@ namespace Web.Pages.Health
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater docLinks;
+
+        /// <summary>
+        /// Control btnManageDocs.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnManageDocs;
 
         /// <summary>
         /// Control btnAnalytics.

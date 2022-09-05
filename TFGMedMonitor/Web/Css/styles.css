@@ -2,16 +2,17 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     margin: 10px 20px;
     background-color: #dddde0;
+    align-content: center;
 }
 
 /* Sidebar. */
 
 #sidebar {
     float: left;
-    background-color: #5c0606;
+    background-color: #6681d9;
     width: 20%;
 }
 
@@ -25,16 +26,15 @@ body {
 
     #sidebar ul {
         list-style: none;
-        padding-top: 0px;
+        padding-top: px;
         /* Hack for correct indentation (the following three lines). */
         margin-left: 0;
-        padding-left: 1em;
-        text-indent: -1em;
+        text-indent: -2em;
     }
 
     #sidebar li {
         padding: 0 0 3px 5px;
-        height: 17px;
+        height: 20px;
     }
 
 /* Links. */
@@ -61,7 +61,7 @@ a {
 /* Page title. */
 
 #pageTitle {
-    background-color: #5c0606;
+    background-color: #8bbae8;
     color: #fff;
     text-align: center;
     font-weight: bold;
@@ -74,8 +74,8 @@ a {
 /* Menu. */
 
 #menu {
-    background-color: #541d1f;
-    color: #fff;
+    background-color: #6681d9;
+    color: #fffb94;
     text-align: left;
     padding: 5px 0 5px 5px;
     width: 99%;
@@ -86,15 +86,15 @@ a {
 }
 
 #menuLinks a {
-    color: #fffac6;
+    color: #fffb94;
 }
 
 /* Content. */
 
 #content {
-    margin: 10px 0;
+    margin: 30px 0;
     text-align: center;
-    width: 80%;
+    width: 90%;
 }
 
 p.info {
@@ -118,7 +118,7 @@ div.field {
         text-align: right;
         font-weight: bold;
         vertical-align: middle;
-        padding-top: 0.3em;
+        
         width: 49.5%;
     }
 
@@ -139,7 +139,11 @@ div.button {
     clear: both;
     padding-top: 1em;
     text-align: center;
-    width: 100%;
+    width: 110%;
+}
+
+.button {
+    font-size: 18px;
 }
 
 input, select, textarea {
@@ -170,6 +174,7 @@ table.userAccounts {
     text-align: center;
     width: 100%;
     padding-top: 5px;
+    font-size: 12px;
 }
 
 /* Accounts. */

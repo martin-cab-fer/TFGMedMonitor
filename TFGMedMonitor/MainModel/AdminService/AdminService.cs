@@ -96,10 +96,10 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public void AssignDoctorToPatient(long doctorId, long patientId)
+        public void AssignDoctorToPatient(string doctor, string patient)
         {
-            Patient p = PatientDao.Find(patientId);
-            UserProfile d = UserProfileDao.Find(doctorId);
+            Patient p = PatientDao.FindByFullName(patient);
+            UserProfile d = UserProfileDao.FindByLoginName(doctor);
             if(p != null && d != null)
             {
                 if (d.userType != 1)
@@ -109,10 +109,10 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public void RemoveDoctorFromPatient(long doctorId, long patientId)
+        public void RemoveDoctorFromPatient(string doctor, string patient)
         {
-            Patient p = PatientDao.Find(patientId);
-            UserProfile d = UserProfileDao.Find(doctorId);
+            Patient p = PatientDao.FindByFullName(patient);
+            UserProfile d = UserProfileDao.FindByLoginName(doctor);
             if (p != null && d != null)
             {
                 PatientDao.UnassignDoctor(p, d);
@@ -120,10 +120,10 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public void AssignEmployeeToPatient(long employeeId, long patientId)
+        public void AssignEmployeeToPatient(string employee, string patient)
         {
-            Patient p = PatientDao.Find(patientId);
-            UserProfile e = UserProfileDao.Find(employeeId);
+            Patient p = PatientDao.FindByFullName(patient);
+            UserProfile e = UserProfileDao.FindByLoginName(employee);
             if (p != null && e != null)
             {
                 if (e.userType != 2)
@@ -133,10 +133,10 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public void RemoveEmployeeFromPatient(long employeeId, long patientId)
+        public void RemoveEmployeeFromPatient(string employee, string patient)
         {
-            Patient p = PatientDao.Find(patientId);
-            UserProfile e = UserProfileDao.Find(employeeId);
+            Patient p = PatientDao.FindByFullName(patient);
+            UserProfile e = UserProfileDao.FindByLoginName(employee);
             if (p != null && e != null)
             {
                 PatientDao.UnassignEmployee(p, e);
@@ -144,10 +144,10 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public ChatMessage SendChatMessage(long sender, long addressee, string title, string message)
+        public ChatMessage SendChatMessage(string sender, string addressee, string title, string message)
         {
-            UserProfile s = UserProfileDao.Find(sender);
-            UserProfile a = UserProfileDao.Find(addressee);
+            UserProfile s = UserProfileDao.FindByLoginName(sender);
+            UserProfile a = UserProfileDao.FindByLoginName(addressee);
             if (s == null)
                 return null;
             if (a == null)
@@ -159,8 +159,8 @@ namespace Model.AdminService
 
             ChatMessage c = new ChatMessage
             {
-                UserProfile = s,
-                UserProfile1 = a,
+                UserProfile = a,
+                UserProfile1 = s,
                 creationDate = DateTime.Now,
                 title = title,
                 messageText = message
@@ -171,10 +171,14 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public ChatMessageBlock GetChatMessages(long usrId, int startIndex, int count)
+        public ChatMessageBlock GetChatMessages(string userName, int startIndex, int count)
         {
+            UserProfile u = UserProfileDao.FindByLoginName(userName);
+            if (u == null)
+                return null;
+
             List<ChatMessage> messages =
-                ChatMessageDao.FindMessagesByUser(usrId, startIndex, count + 1);
+                ChatMessageDao.FindMessagesByUser(u.usrId, startIndex, count + 1);
 
             bool existMoreMessages = (messages.Count == count + 1);
 

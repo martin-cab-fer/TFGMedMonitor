@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Text;
 using System.Linq;
+using Es.Udc.DotNet.ModelUtil.Exceptions;
 
 namespace Model.HealthDao
 {
@@ -14,12 +15,33 @@ namespace Model.HealthDao
         {
         }
 
+        public Patient FindByFullName(string fullName)
+        {
+            Patient patient = null;
+
+            DbSet<Patient> patients = Context.Set<Patient>();
+
+            var result =
+                (from p in patients
+                 where p.patientName == fullName
+                 select p);
+
+            patient = result.FirstOrDefault();
+
+            if (patient == null)
+                throw new InstanceNotFoundException(fullName,
+                    typeof(Patient).FullName);
+
+            return patient;
+        }
+
         public List<Patient> GetPatientsPaged(int startIndex, int count)
         {
             DbSet<Patient> patients = Context.Set<Patient>();
 
             var result =
                  (from a in patients
+                  orderby a.patientName descending
                   select a).Skip(startIndex).Take(count).ToList();
 
             return result;
@@ -47,6 +69,30 @@ namespace Model.HealthDao
         {
             p.UserProfile1.Remove(e);
             Update(p);
+        }
+
+        public List<string> GetAssignedDoctors(Patient p)
+        {
+            List<string> d = new List<string>();
+
+            foreach (UserProfile u in p.UserProfile)
+            {
+                d.Add(u.loginName);
+            }
+
+            return d;
+        }
+
+        public List<string> GetAssignedEmployees(Patient p)
+        {
+            List<string> e = new List<string>();
+
+            foreach (UserProfile u in p.UserProfile1)
+            {
+               e.Add(u.loginName);
+            }
+
+            return e;
         }
     }
 }

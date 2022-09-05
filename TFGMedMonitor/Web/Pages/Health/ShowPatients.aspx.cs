@@ -1,5 +1,6 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -52,16 +53,37 @@ namespace Web.Pages.Health
             else
                 lblNoPatients.Visible = false;
 
-            FillPatientList(patients, startIndex, count);
+            bool loggedIn = false;
+            if (!Page.IsPostBack)
+            {
+                try
+                {
+                    UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                    if (uD != null && uD.UserType == 3)
+                    {
+                        btnCreatePatient.Visible = true;
+                        loggedIn = true;
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            else
+                loggedIn = SessionManager.IsUserAuthenticated(Context);
+
+            FillPatientList(patients, startIndex, count, loggedIn);
         }
 
-        protected void FillPatientList(PatientBlock p, int stI, int c)
+        protected void FillPatientList(PatientBlock p, int stI, int c, bool l)
         {
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("FullName", typeof(String)));
             dt.Columns.Add(new DataColumn("BirthDate", typeof(String)));
             dt.Columns.Add(new DataColumn("Info", typeof(String)));
+            dt.Columns.Add(new DataColumn("loggedIn", typeof(bool)));
 
             foreach (PatientDetails pD in p.Patients)
             {
@@ -69,6 +91,7 @@ namespace Web.Pages.Health
                 dr["FullName"] = pD.FullName;
                 dr["BirthDate"] = pD.BirthDate.ToString();
                 dr["Info"] = pD.Info;
+                dr["loggedIn"] = l;
 
                 dt.Rows.Add(dr);
             }
@@ -135,6 +158,11 @@ namespace Web.Pages.Health
             {
                 return;
             }         
+        }
+
+        protected void BtnCreatePatientClick(object sender, EventArgs e)
+        {
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Admin/AddPatient.aspx"));
         }
     }
 }

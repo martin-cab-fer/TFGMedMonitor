@@ -132,6 +132,9 @@
   <data name="lclEmail.Text" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="lclFirstName.Text" xml:space="preserve">
+    <value>First name</value>
+  </data>
   <data name="lclLanguage.Text" xml:space="preserve">
     <value>Language</value>
   </data>

@@ -7,6 +7,8 @@ namespace Model.HealthDao
 {
     public interface IPatientDao : IGenericDao<Patient,Int64>
     {
+        Patient FindByFullName(String fullName);
+
         List<Patient> GetPatientsPaged(int startIndex, int count);
 
         void AssignDoctor(Patient p, UserProfile d);
@@ -16,5 +18,9 @@ namespace Model.HealthDao
         void AssignEmployee(Patient p, UserProfile e);
 
         void UnassignEmployee(Patient p, UserProfile e);
+
+        List<string> GetAssignedDoctors(Patient p);
+
+        List<string> GetAssignedEmployees(Patient p);
     }
 }

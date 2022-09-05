@@ -1,6 +1,7 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +33,17 @@ namespace Web.Pages.Health
                 try
                 {
                     p = (Prescription)Session["selectedPrescription"];
-
                     if (p == null)
+                        return;
+
+                    UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                    if (uD == null)
                         return;
 
                     IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                     IHealthService healthService = iocManager.Resolve<IHealthService>();
 
-                    healthService.AddPatientDose(p.prescriptionId, 0, txtNotes.Text);
+                    healthService.AddPatientDose(p.prescriptionId, uD.LoginName, txtNotes.Text);
 
                     Response.Redirect(Response.ApplyAppPathModifier("./ShowPatientDoses.aspx"));
                 }

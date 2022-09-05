@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="btnMessage.Text" xml:space="preserve">
+    <value>Send message</value>
+  </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>Doctor</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
+  </data>
   <data name="lclFirstName.Text" xml:space="preserve">
     <value>First Name</value>
   </data>
+  <data name="lclSurname.Text" xml:space="preserve">
+    <value>Surname</value>
+  </data>
   <data name="lclUserName.Text" xml:space="preserve">
     <value>User Login Name</value>
+  </data>
+  <data name="lclUserType.Text" xml:space="preserve">
+    <value>User type</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
     <value>Agarimo - Profile</value>

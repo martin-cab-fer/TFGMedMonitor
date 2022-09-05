@@ -117,10 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="admin" xml:space="preserve">
+    <value>Administration method</value>
+  </data>
+  <data name="btnCreate.Text" xml:space="preserve">
+    <value>Create new</value>
+  </data>
+  <data name="creationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="Doses" xml:space="preserve">
+    <value>Doses</value>
+  </data>
+  <data name="frequency" xml:space="preserve">
+    <value>Frequency (hours)</value>
+  </data>
   <data name="lblNoPrescriptions.Text" xml:space="preserve">
     <value>No prescriptions found</value>
   </data>
-  <data name="medName" xml:space="preserve">
+  <data name="medicineName" xml:space="preserve">
     <value>Medicine name</value>
   </data>
   <data name="Page.Title" xml:space="preserve">

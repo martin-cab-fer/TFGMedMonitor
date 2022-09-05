@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lblWelcome.Hello.Text" xml:space="preserve">
+    <value>Hello</value>
+  </data>
   <data name="lblWelcome.Text" xml:space="preserve">
     <value>Welcome to Agarimo</value>
-  </data>
-  <data name="lblWelcomeHello.Text" xml:space="preserve">
-    <value>Hello</value>
   </data>
   <data name="lclFooter.Text" xml:space="preserve">
     <value>Martín Cabana Fernández</value>
@@ -135,8 +135,14 @@
   <data name="lnkLogout.Text" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="lnkMedicineSearch.Text" xml:space="preserve">
+    <value>Find medicines</value>
+  </data>
   <data name="lnkMessages.Text" xml:space="preserve">
     <value>My messages</value>
+  </data>
+  <data name="lnkPatientSearch.Text" xml:space="preserve">
+    <value>Search patients</value>
   </data>
   <data name="lnkProfile.Text" xml:space="preserve">
     <value>My profile</value>

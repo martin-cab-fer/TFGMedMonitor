@@ -120,6 +120,12 @@
   <data name="btnAnalytics.Text" xml:space="preserve">
     <value>Analytics</value>
   </data>
+  <data name="btnManageDocs.Text" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="btnManageEmps.Text" xml:space="preserve">
+    <value>Manage</value>
+  </data>
   <data name="btnPrescription.Text" xml:space="preserve">
     <value>Prescription</value>
   </data>

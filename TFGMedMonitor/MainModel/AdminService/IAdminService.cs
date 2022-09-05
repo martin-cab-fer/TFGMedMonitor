@@ -35,21 +35,21 @@ namespace Model.AdminService
         long CreatePatient(string patientName, DateTime birthDate, string info);
 
         [Transactional]
-        void AssignDoctorToPatient(long doctorId, long patientId);
+        void AssignDoctorToPatient(string doctor, string patient);
 
         [Transactional]
-        void RemoveDoctorFromPatient(long doctorId, long patientId);
+        void RemoveDoctorFromPatient(string doctor, string patient);
 
         [Transactional]
-        void AssignEmployeeToPatient(long employeeId, long patientId);
+        void AssignEmployeeToPatient(string employee, string patient);
 
         [Transactional]
-        void RemoveEmployeeFromPatient(long employeeId, long patientId);
+        void RemoveEmployeeFromPatient(string employee, string patient);
 
         [Transactional]
-        ChatMessage SendChatMessage(long sender, long addressee, string title, string message);
+        ChatMessage SendChatMessage(string sender, string addressee, string title, string message);
 
         [Transactional]
-        ChatMessageBlock GetChatMessages(long usrId, int startIndex, int count);
+        ChatMessageBlock GetChatMessages(string userName, int startIndex, int count);
     }
 }

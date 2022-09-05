@@ -106,7 +106,7 @@
                         </asp:DropDownList></span>
             </div>
             <div class="button">
-                <asp:Button ID="btnRegister" runat="server" OnClick="BtnRegisterClick" meta:resourcekey="btnRegister" />
+                <asp:Button ID="btnRegister" CssClass="button" runat="server" OnClick="BtnRegisterClick" meta:resourcekey="btnRegister" />
             </div>
         </form>
     </div>

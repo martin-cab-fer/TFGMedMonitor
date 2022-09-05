@@ -38,7 +38,7 @@
                 <asp:CheckBox ID="checkRememberPassword" runat="server" TextAlign="Left" meta:resourcekey="checkRememberPassword" />
             </div>
             <div class="button">
-                <asp:Button ID="btnLogin" runat="server" OnClick="BtnLoginClick" meta:resourcekey="btnLogin" />
+                <asp:Button ID="btnLogin" CssClass="button" runat="server" OnClick="BtnLoginClick" meta:resourcekey="btnLogin" />
             </div>
         </form>
     </div>

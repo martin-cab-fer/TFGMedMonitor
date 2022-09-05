@@ -4,12 +4,21 @@
     <form runat="server">    
     <p>
         <asp:Label ID="lblNoDoses" meta:resourcekey="lblNoDoses" runat="server"></asp:Label>
-    </p>     
+    </p>   
+    <p>
+        <asp:Button ID="btnCreate" CssClass="button" runat="server" CausesValidation="false" Visible="false"
+            meta:resourcekey="btnCreate" OnClick="BtnCreateClick"/>
+    </p> 
         <asp:GridView ID="GVDoses" runat="server" GridLines="Both" HorizontalAlign="Center"
             AutoGenerateColumns="False" >
             <Columns>
-                <asp:BoundField DataField="notes" HeaderText="<%$ Resources:, name %>"
+                <asp:HyperLinkField DataTextField="administrator" DataNavigateUrlFields="administrator"
+                    HeaderText="<%$ Resources:, administrator %>" ItemStyle-Width="150px"
+                    DataNavigateUrlFormatString="~/Pages/User/Profile.aspx?userName={0}"/>
+                <asp:BoundField DataField="date" HeaderText="<%$ Resources:, date %>"
                     ItemStyle-Width="100px"/>
+                <asp:BoundField DataField="notes" HeaderText="<%$ Resources:, notes %>"
+                    ItemStyle-Width="200px"/>
             </Columns>
         </asp:GridView>
     </form>

@@ -1,6 +1,8 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model;
 using Model.AdminService;
+using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +21,7 @@ namespace Web.Pages.Admin
         {
             int startIndex;
             int count;
+            bool presc;
 
             try
             {
@@ -37,20 +40,41 @@ namespace Web.Pages.Admin
             {
                 count = 10;
             }
+            try
+            {
+                presc = Boolean.Parse(Request.Params.Get("prescripting"));
+            }
+            catch (ArgumentNullException)
+            {
+                presc = false;
+            }
 
             IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
             IAdminService adminService = iocManager.Resolve<IAdminService>();
 
             string medName = (string)Session["selectedMedName"];
-            List<string> actPrin = (List<string>)Session["selectedActivePrinciples"];
+            List<string> actPrin = (List<string>)Session["actPrinList"];
 
             if(medName == null || actPrin == null)
                 return;
+
+            PatientDetails pD = (PatientDetails)Session["selectedPatient"];
+            if (presc && pD != null)
+                lblPrescripting.Text += (" " + pD.FullName);
+            else
+            {
+                lblPrescripting.Visible = false;
+                
+            }
 
             MedicineBlock medicines;
             medicines = adminService.GetMedicineSearch(medName, actPrin, startIndex, count);
 
             Session["medicineSearch"] = medicines;
+
+            UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+            if (uD != null && uD.UserType == 3)
+                btnCreate.Visible = true;
 
             if (medicines == null || medicines.Medicines.Count == 0)
             {
@@ -60,19 +84,23 @@ namespace Web.Pages.Admin
             else
                 lblNoMedicines.Visible = false;
 
-            FillMedicineList(medicines, startIndex, count);
+            FillMedicineList(medicines, startIndex, count, presc);           
         }
 
-        protected void FillMedicineList(MedicineBlock mB, int stI, int c)
+        protected void FillMedicineList(MedicineBlock mB, int stI, int c, bool presc)
         {
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("medName", typeof(String)));
+            dt.Columns.Add(new DataColumn("labName", typeof(String)));
+            dt.Columns.Add(new DataColumn("prescripting", typeof(bool)));
 
             foreach (Medicine m in mB.Medicines)
             {
                 DataRow dr = dt.NewRow();
                 dr["medName"] = m.medName;
+                dr["labName"] = m.labName;
+                dr["prescripting"] = presc;
 
                 dt.Rows.Add(dr);
             }
@@ -80,12 +108,14 @@ namespace Web.Pages.Admin
             GVMedicines.DataSource = new DataView(dt);
             GVMedicines.DataBind();
 
+            string p = "&prescripting=" + presc.ToString();
+
             /* "Previous" link */
             if ((stI - c) >= 0)
             {
                 string url;
                 url = "~/Pages/Admin/ShowMedicines.aspx" + "?startIndex=" + (stI - c)
-                        + "&count=" + c;
+                        + "&count=" + c + p;
 
                 lnkPrevious.NavigateUrl =
                     Response.ApplyAppPathModifier(url);
@@ -97,12 +127,43 @@ namespace Web.Pages.Admin
             {
                 string url;
                 url = "~/Pages/Admin/ShowMedicines.aspx" + "?startIndex=" + (stI + c)
-                        + "&count=" + c;
+                        + "&count=" + c + p;
 
                 lnkNext.NavigateUrl =
                     Response.ApplyAppPathModifier(url);
                 lnkNext.Visible = true;
             }
+        }
+
+        protected void BtnCreateClick(object sender, EventArgs e)
+        {
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Admin/AddMedicine.aspx"));
+        }
+
+        protected void BtnSelectClick(object sender, EventArgs e)
+        {
+            Button b = (Button)sender;
+            string mN = b.CommandArgument;
+            MedicineBlock mB = (MedicineBlock)Session["medicineSearch"];
+            if (mB == null)
+                return;
+
+            Medicine targetM = null;
+            foreach (Medicine m in mB.Medicines)
+            {
+                if (mN == m.medName)
+                {
+                    targetM = m;
+                    break;
+                }
+            }
+
+            if (targetM == null)
+                return;
+            
+            Session["selectedMedicine"] = targetM;
+
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/AddPrescription.aspx"));
         }
     }
 }

@@ -36,6 +36,7 @@
                                 Text="empLinks" />
                         </ItemTemplate>
                     </asp:Repeater>
+                    <asp:Button ID="btnManageEmps" runat="server" OnClick="BtnManageEmpsClick" Visible="false" meta:resourcekey="btnManageEmps" />
         </div>
         <div class="field">
                 <span class="label">
@@ -46,12 +47,13 @@
                                 Text="docLinks" />
                         </ItemTemplate>
                     </asp:Repeater>
+                    <asp:Button ID="btnManageDocs" runat="server" OnClick="BtnManageDocsClick" Visible="false" meta:resourcekey="btnManageDocs" />
         </div>
         <div class="button">
-            <asp:Button ID="btnAnalytics" runat="server" OnClick="BtnAnalyticsClick" meta:resourcekey="btnAnalytics" />
+            <asp:Button ID="btnAnalytics" CssClass="button" runat="server" OnClick="BtnAnalyticsClick" meta:resourcekey="btnAnalytics" />
         </div>
         <div class="button">
-            <asp:Button ID="btnPrescription" runat="server" OnClick="BtnPrescriptionClick" meta:resourcekey="btnPrescription" />
+            <asp:Button ID="btnPrescription" CssClass="button" runat="server" OnClick="BtnPrescriptionClick" meta:resourcekey="btnPrescription" />
         </div>
         <br/>
     </form>

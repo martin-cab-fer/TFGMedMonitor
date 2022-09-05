@@ -14,10 +14,10 @@
         <form id="SendMessageForm" method="post" runat="server">
             <div class="field">
                 <span class="label">
-                    <asp:Localize ID="lclSender" runat="server" meta:resourcekey="lclSender" /></span>
+                    <asp:Localize ID="lclAdressee" runat="server" meta:resourcekey="lclAdressee" /></span>
                     <span class="entry">
-                        <asp:Label ID="txtSender" runat="server" Width="200px" Height="20px"
-                            meta:resourcekey="txtSenderResource1"/>
+                        <asp:Label ID="txtAdressee" runat="server" Width="200px" Height="20px"
+                            meta:resourcekey="txtAdresseeResource1"/>
                 </span>
             </div>
             <div class="field">
@@ -41,7 +41,7 @@
                             meta:resourcekey="rfvMessageResource1"></asp:RequiredFieldValidator></span>
             </div>        
             <div class="button">
-                <asp:Button ID="btnSend" runat="server" OnClick="BtnSendClick" meta:resourcekey="btnSend" />
+                <asp:Button ID="btnSend" CssClass="button" runat="server" OnClick="BtnSendClick" meta:resourcekey="btnSend" />
             </div>
         </form>
     </div>

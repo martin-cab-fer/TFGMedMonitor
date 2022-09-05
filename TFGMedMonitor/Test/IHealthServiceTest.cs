@@ -99,16 +99,22 @@ namespace Test
 
                 long doctorId = CreateValidUser("juan", 2);
 
-                Prescription pr1 = healthService.AddPatientPrescription(patientId1, medicineId,
+                PatientDetails pat1 = healthService.GetPatientDetails(patientId1);
+
+                PatientDetails pat2 = healthService.GetPatientDetails(patientId2);
+
+                UserProfileDetails doc = userService.FindUserProfileDetails(doctorId);
+
+                Prescription pr1 = healthService.AddPatientPrescription(pat1.FullName, medicineId,
                     2, "pills");
 
-                Prescription pr2 = healthService.AddPatientPrescription(patientId2, medicineId,
+                Prescription pr2 = healthService.AddPatientPrescription(pat2.FullName, medicineId,
                     2, "intravenous");
 
-                Prescription pr3 = healthService.AddPatientPrescription(patientId2, medicineId,
+                Prescription pr3 = healthService.AddPatientPrescription(pat2.FullName, medicineId,
                     4, "pills");
 
-                Analytic a = healthService.AddPatientAnalytic(patientId1, doctorId, 55, "bloodletting", "all ok");
+                Analytic a = healthService.AddPatientAnalytic(pat1.FullName, doc.LoginName, 55, "bloodletting", "all ok");
 
                 PatientDetails p1 = healthService.GetPatientDetails(patientId1);
                 PatientDetails p2 = healthService.GetPatientDetails(patientId2);
@@ -152,9 +158,13 @@ namespace Test
 
                 long doctorId = CreateValidUser("juan", 2);
 
-                Analytic a = healthService.AddPatientAnalytic(patientId, doctorId, 55, "bloodletting", "all ok");
+                UserProfileDetails doc = userService.FindUserProfileDetails(doctorId);
 
                 PatientDetails p = healthService.GetPatientDetails(patientId);
+
+                Analytic a = healthService.AddPatientAnalytic(p.FullName, doc.LoginName, 55, "bloodletting", "all ok");
+
+                p = healthService.GetPatientDetails(patientId);
 
                 Assert.IsTrue(p.LastAnalytics.Analytics.Count == 1);
                 Analytic fa = p.LastAnalytics.Analytics.ToArray()[0];
@@ -176,7 +186,9 @@ namespace Test
 
                 long medicineId = CreateValidMedicine();
 
-                Prescription pr = healthService.AddPatientPrescription(patientId, medicineId,
+                PatientDetails pat = healthService.GetPatientDetails(patientId);
+
+                Prescription pr = healthService.AddPatientPrescription(pat.FullName, medicineId,
                     2, "pills");
 
                 PatientDetails p = healthService.GetPatientDetails(patientId);
@@ -198,10 +210,14 @@ namespace Test
 
                 long doctorId = CreateValidUser("juan", 2);
 
-                Prescription pr = healthService.AddPatientPrescription(patientId, medicineId,
+                UserProfileDetails doctor = userService.FindUserProfileDetails(doctorId);
+
+                PatientDetails pat = healthService.GetPatientDetails(patientId);
+
+                Prescription pr = healthService.AddPatientPrescription(pat.FullName, medicineId,
                     2, "pills");
 
-                Dose d = healthService.AddPatientDose(pr.prescriptionId, doctorId, "all ok");
+                Dose d = healthService.AddPatientDose(pr.prescriptionId, doctor.LoginName, "all ok");
 
                 DoseBlock db = healthService.GetPatientDoses(pr.prescriptionId, 0, 10);
 

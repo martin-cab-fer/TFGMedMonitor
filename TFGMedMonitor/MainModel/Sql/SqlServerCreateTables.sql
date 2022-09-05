@@ -47,8 +47,13 @@ DROP TABLE [Analytic]
 
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('[PatientAssign]') AND type in ('U'))
-DROP TABLE [PatientAssign]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('[PatientEAssign]') AND type in ('U'))
+DROP TABLE [PatientEAssign]
+
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('[PatientDAssign]') AND type in ('U'))
+DROP TABLE [PatientDAssign]
 
 GO
 
@@ -114,7 +119,8 @@ CREATE TABLE Patient (
 	birthDate datetime NOT NULL,
 	info varchar(255) NOT NULL,
 
-	CONSTRAINT [PK_Patient] PRIMARY KEY (patientId)
+	CONSTRAINT [PK_Patient] PRIMARY KEY (patientId),
+	CONSTRAINT [UniqueKey_Patient] UNIQUE (patientName)
 )
 
 GO
@@ -195,12 +201,12 @@ CREATE TABLE Prescription (
 CREATE TABLE Dose (
 	prescriptionId bigint NOT NULL,
 	administrationTime datetime NOT NULL,
-	administrator varchar(30) NOT NULL,
+	administrator bigint NOT NULL,
 	notes varchar(60),
 
 	CONSTRAINT [PK_Dose] PRIMARY KEY (prescriptionId, administrationTime),
 	CONSTRAINT [ForeignKey_DoseP] FOREIGN KEY (prescriptionId) REFERENCES Prescription (prescriptionId) ON DELETE CASCADE,
-	CONSTRAINT [ForeignKey_DoseA] FOREIGN KEY (administrator) REFERENCES UserProfile (loginName),
+	CONSTRAINT [ForeignKey_DoseA] FOREIGN KEY (administrator) REFERENCES UserProfile (usrId),
 )
 
 GO

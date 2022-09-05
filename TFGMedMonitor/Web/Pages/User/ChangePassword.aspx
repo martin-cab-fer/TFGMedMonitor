@@ -45,7 +45,7 @@
                     </span>
             </div>
             <div class="button">
-                <asp:Button ID="btnChangePassword" runat="server" OnClick="BtnChangePasswordClick"
+                <asp:Button ID="btnChangePassword" CssClass="button" runat="server" OnClick="BtnChangePasswordClick"
                     meta:resourcekey="btnChangePassword" />
             </div>
         </form>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Model.HealthService
 {
@@ -20,15 +21,21 @@ namespace Model.HealthService
 
         public AnalyticBlock LastAnalytics;
 
+        public List<string> assignedDoctors { get; private set; }
+
+        public List<string> assignedEmployees { get; private set; }
+
         #endregion
 
-        public PatientDetails(Patient p, PrescriptionBlock pb, AnalyticBlock ab)
+        public PatientDetails(Patient p, PrescriptionBlock pb, AnalyticBlock ab, List<string> aD, List<string> aE)
         {
             FullName = p.patientName;
             BirthDate = p.birthDate;
             Info = p.info;
             Prescriptions = pb;
             LastAnalytics = ab;
+            assignedDoctors = aD;
+            assignedEmployees = aE;
         }
 
         public override bool Equals(object obj)

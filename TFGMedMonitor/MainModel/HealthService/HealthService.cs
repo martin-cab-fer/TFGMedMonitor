@@ -62,10 +62,13 @@ namespace Model.HealthService
 
         private PatientDetails GetPatientDetails(Patient p)
         {
-            PrescriptionBlock pb = GetPatientPrescription(p.patientId, 0, 3);
+            PrescriptionBlock pb = GetPatientPrescription(p.patientName, 0, 3);
             AnalyticBlock ab = GetPatientAnalytics(p.patientId, 0, 3);
 
-            return new PatientDetails(p, pb, ab);
+            List<string> docs = PatientDao.GetAssignedDoctors(p);
+            List<string> emps = PatientDao.GetAssignedEmployees(p);
+
+            return new PatientDetails(p, pb, ab, docs, emps);
         }
 
         [Transactional]
@@ -83,11 +86,11 @@ namespace Model.HealthService
         }
 
         [Transactional]
-        public Analytic AddPatientAnalytic(long patientId, long attendant, float weight,
+        public Analytic AddPatientAnalytic(string patient, string attendant, float weight,
             string procedure, string observations)
         {
-            Patient p = PatientDao.Find(patientId);
-            UserProfile at = UserProfileDao.Find(attendant);
+            Patient p = PatientDao.FindByFullName(patient);
+            UserProfile at = UserProfileDao.FindByLoginName(attendant);
             if (p == null)
                 return null;
             if (at == null)
@@ -97,7 +100,7 @@ namespace Model.HealthService
             {
                 Patient = p,
                 measurementTime = DateTime.Now,
-                attendant = attendant,
+                UserProfile = at,
                 patientWeight = weight,
                 usedProcedure = procedure,
                 observations = observations
@@ -107,14 +110,14 @@ namespace Model.HealthService
         }
 
         [Transactional]
-        public PrescriptionBlock GetPatientPrescription(long patientId, int startIndex, int count)
+        public PrescriptionBlock GetPatientPrescription(string patient, int startIndex, int count)
         {
-            Patient p = PatientDao.Find(patientId);
+            Patient p = PatientDao.FindByFullName(patient);
             if (p == null)
                 return null;
             
             List<Prescription> prescriptions =
-               PrescriptionDao.FindByPatientId(patientId, startIndex, count + 1);
+               PrescriptionDao.FindByPatientId(p.patientId, startIndex, count + 1);
 
             bool existMorePrescriptions = (prescriptions.Count == count + 1);
 
@@ -125,9 +128,9 @@ namespace Model.HealthService
         }
 
         [Transactional]
-        public Prescription AddPatientPrescription(long patientId, long medicineId, int frequency, string admin)
+        public Prescription AddPatientPrescription(string patient, long medicineId, int frequency, string admin)
         {
-            Patient p = PatientDao.Find(patientId);
+            Patient p = PatientDao.FindByFullName(patient);
             Medicine m = MedicineDao.Find(medicineId);
             if (p == null)
                 return null;
@@ -176,20 +179,18 @@ namespace Model.HealthService
         }
 
         [Transactional]
-        public Dose AddPatientDose(long prescriptionId, long adminId, string notes)
+        public Dose AddPatientDose(long prescriptionId, string admin, string notes)
         {
             Prescription pr = PrescriptionDao.Find(prescriptionId);
-            UserProfile u = UserProfileDao.Find(adminId);
-            if (pr == null)
-                return null;
-            if (u == null)
+            UserProfile u = UserProfileDao.FindByLoginName(admin);
+            if (pr == null || u == null)
                 return null;
 
             Dose d = new Dose
             {
                 Prescription = pr,
                 administrationTime = DateTime.Now,
-                administrator = u.loginName,
+                UserProfile = u,
                 notes = notes
             };
 

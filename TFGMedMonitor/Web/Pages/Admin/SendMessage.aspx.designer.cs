@@ -33,22 +33,22 @@ namespace Web.Pages.Admin
         protected global::System.Web.UI.HtmlControls.HtmlForm SendMessageForm;
 
         /// <summary>
-        /// Control lclSender.
+        /// Control lclAdressee.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Localize lclSender;
+        protected global::System.Web.UI.WebControls.Localize lclAdressee;
 
         /// <summary>
-        /// Control txtSender.
+        /// Control txtAdressee.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtSender;
+        protected global::System.Web.UI.WebControls.Label txtAdressee;
 
         /// <summary>
         /// Control lclTitle.

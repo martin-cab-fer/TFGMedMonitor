@@ -51,6 +51,14 @@
         <div id="sidebar">
             <ul>
                 <li>
+                    <asp:HyperLink ID="lnkMedicineSearch" runat="server"
+                    meta:resourcekey="lnkMedicineSearch" NavigateUrl="~/Pages/Admin/FindMedicine.aspx" />
+                </li>
+                <li>
+                    <asp:HyperLink ID="lnkPatientSearch" runat="server"
+                    meta:resourcekey="lnkPatientSearch" NavigateUrl="~/Pages/Health/ShowPatients.aspx" />
+                </li>
+                <li>
                     <asp:HyperLink ID="lnkProfile" runat="server"
                     meta:resourcekey="lnkProfile" NavigateUrl="~/Pages/User/Profile.aspx?userName=" />
                 </li>

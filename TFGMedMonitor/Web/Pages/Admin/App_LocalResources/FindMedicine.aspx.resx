@@ -126,6 +126,9 @@
   <data name="btnSearch.Text" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="lblPrescripting.Text" xml:space="preserve">
+    <value>Searching medicine for patient</value>
+  </data>
   <data name="lclActivePrin.Text" xml:space="preserve">
     <value>Active principles</value>
   </data>

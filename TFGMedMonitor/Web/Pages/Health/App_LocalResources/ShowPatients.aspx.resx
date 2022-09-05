@@ -120,6 +120,12 @@
   <data name="BirthDate" xml:space="preserve">
     <value>Birthdate</value>
   </data>
+  <data name="btnCreatePatient.Text" xml:space="preserve">
+    <value>Create new patient</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>Full name</value>
   </data>

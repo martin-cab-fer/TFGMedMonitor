@@ -13,7 +13,7 @@ using Web.HTTP.View.AplicationObjects;
 
 namespace Web.Pages.User
 {
-    public enum UserTypes { DOCTOR, EMPLOYEE, ADMIN};
+    public enum UserTypes { EMPLOYEE, DOCTOR, ADMIN};
 
     public partial class CreateUser : SpecificCulturePage
     {
@@ -101,11 +101,8 @@ namespace Web.Pages.User
 
         private void UpdateComboUserType()
         {
-            //this.comboUserType.DataSource = Languages.GetLanguages();
-            this.comboUserType.DataTextField = "text";
-            this.comboUserType.DataValueField = "value";
-            this.comboUserType.DataBind();
-            //this.comboUserType.SelectedValue = selectedLanguage;
+            comboUserType.DataSource = Enum.GetNames(typeof(UserTypes));
+            comboUserType.DataBind();
         }
 
         /// <summary>
@@ -121,7 +118,7 @@ namespace Web.Pages.User
                 try
                 {
                     UserProfileDetails userProfileDetailsVO =
-                        new UserProfileDetails("", txtFirstName.Text, txtSurname.Text,
+                        new UserProfileDetails(txtLogin.Text, txtFirstName.Text, txtSurname.Text,
                             txtEmail.Text, comboLanguage.SelectedValue,
                             comboCountry.SelectedValue, comboUserType.SelectedIndex + 1);
 

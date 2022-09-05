@@ -8,10 +8,10 @@
         <asp:GridView ID="GVMessages" runat="server" GridLines="Both" HorizontalAlign="Center"
             AutoGenerateColumns="False" >
             <Columns>
-                <asp:HyperLinkField DataTextField="sender" DataNavigateUrlFields="userName"
+                <asp:HyperLinkField DataTextField="sender" DataNavigateUrlFields="sender"
                     HeaderText="<%$ Resources:, sender %>" ItemStyle-Width="100px"
                     DataNavigateUrlFormatString="~/Pages/User/Profile.aspx?userName={0}"/>
-                <asp:HyperLinkField DataTextField="adressee" DataNavigateUrlFields="userName"
+                <asp:HyperLinkField DataTextField="adressee" DataNavigateUrlFields="adressee"
                     HeaderText="<%$ Resources:, adressee %>" ItemStyle-Width="100px"
                     DataNavigateUrlFormatString="~/Pages/User/Profile.aspx?userName={0}"/>
                 <asp:BoundField DataField="date" HeaderText="<%$ Resources:, date %>"
@@ -19,7 +19,7 @@
                 <asp:BoundField DataField="title" HeaderText="<%$ Resources:, title %>"
                     ItemStyle-Width="100px"/>
                 <asp:BoundField DataField="message" HeaderText="<%$ Resources:, message %>"
-                    ItemStyle-Width="300px" ItemStyle-Height="100px"/>
+                    ItemStyle-Width="500px" ItemStyle-Height="60px"/>
             </Columns>
         </asp:GridView>
     </form>

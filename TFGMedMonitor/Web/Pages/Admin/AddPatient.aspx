@@ -34,14 +34,14 @@
                 <span class="label">
                     <asp:Localize ID="lclPatientInfo" runat="server" meta:resourcekey="lclPatientInfo" /></span><span
                         class="entry">
-                        <asp:TextBox ID="txtPatientInfo" runat="server" Width="300px" Height="100px"
+                        <asp:TextBox ID="txtPatientInfo" runat="server" Width="300px" Height="60px" TextMode="MultiLine" Rows="3"
                             Columns="16" meta:resourcekey="txtPatientInfoResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvPatientInfo" runat="server" ControlToValidate="txtPatientInfo"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
                             meta:resourcekey="rfvPatientInfoResource1"></asp:RequiredFieldValidator></span>
             </div>           
             <div class="button">
-                <asp:Button ID="btnAdd" runat="server" OnClick="BtnAddClick" meta:resourcekey="btnAdd"/>
+                <asp:Button ID="btnAdd" CssClass="button" runat="server" OnClick="BtnAddClick" meta:resourcekey="btnAdd"/>
             </div>
         </form>
     </div>

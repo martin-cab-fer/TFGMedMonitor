@@ -1,6 +1,7 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,10 +9,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Web.HTTP.Session;
 
 namespace Web.Pages.Health
 {
-    public partial class ShowPatientDoses : System.Web.UI.Page
+    public partial class ShowPatientDoses : SpecificCulturePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,7 +46,11 @@ namespace Web.Pages.Health
             IHealthService healthService = iocManager.Resolve<IHealthService>();
 
             DoseBlock dB = healthService.GetPatientDoses(p.prescriptionId, startIndex, count);
- 
+
+            UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+            if (uD != null && uD.UserType > 0)
+                btnCreate.Visible = true;
+
             if (dB.Doses == null || dB.Doses.Count == 0)
             {
                 lblNoDoses.Visible = true;
@@ -60,13 +66,16 @@ namespace Web.Pages.Health
         {
             DataTable dt = new DataTable();
 
+            dt.Columns.Add(new DataColumn("administrator", typeof(String)));
+            dt.Columns.Add(new DataColumn("date", typeof(String)));
             dt.Columns.Add(new DataColumn("notes", typeof(String)));
 
             foreach (Dose d in dB.Doses)
             {
                 DataRow dr = dt.NewRow();
+                dr["administrator"] = d.UserProfile.loginName;
+                dr["date"] = d.administrationTime.ToString();
                 dr["notes"] = d.notes;
-
                 dt.Rows.Add(dr);
             }
 
@@ -96,6 +105,11 @@ namespace Web.Pages.Health
                     Response.ApplyAppPathModifier(url);
                 lnkNext.Visible = true;
             }
+        }
+
+        protected void BtnCreateClick(object sender, EventArgs e)
+        {
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/AddDose.aspx"));
         }
     }
 }

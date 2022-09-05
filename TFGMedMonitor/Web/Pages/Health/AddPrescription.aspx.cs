@@ -24,7 +24,7 @@ namespace Web.Pages.Health
             txtMedicine.Text = m.medName;
         }
 
-        protected void BtnCreateClick(object sender, EventArgs e)
+        protected void BtnSendClick(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
@@ -35,19 +35,24 @@ namespace Web.Pages.Health
 
                     UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
 
-                    if (uD.UserType != 2)
+                    if (uD.UserType < 2)
                         return;
 
                     Medicine m = (Medicine)Session["selectedMedicine"];
-
                     if (m == null)
                         return;
 
+                    PatientDetails pD = (PatientDetails)Session["selectedPatient"];
+                    if (pD == null)
+                        return;
+
                     int freq = Convert.ToInt32(txtFrequency.Text);
+                    if (freq <= 0)
+                        return;
 
-                    healthService.AddPatientPrescription(0, m.medicineId, freq, txtAdmin.Text);
+                    healthService.AddPatientPrescription(pD.FullName, m.medicineId, freq, txtAdmin.Text);
 
-                    Response.Redirect(Response.ApplyAppPathModifier("./ShowPatientDetails.aspx"));
+                    Response.Redirect(Response.ApplyAppPathModifier("./ShowPatientPrescription.aspx?startIndex=0&count=10"));
                 }
                 catch (Exception)
                 {

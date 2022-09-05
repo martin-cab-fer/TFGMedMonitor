@@ -40,7 +40,7 @@
                             meta:resourcekey="rfvAdminResource1"></asp:RequiredFieldValidator></span>
             </div>   
             <div class="button">
-                <asp:Button ID="btnSend" runat="server" OnClick="BtnSendClick" meta:resourcekey="btnSend" />
+                <asp:Button ID="btnSend" CssClass="button" runat="server" OnClick="BtnSendClick" meta:resourcekey="btnSend" />
             </div>
         </form>
     </div>

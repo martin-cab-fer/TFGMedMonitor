@@ -1,6 +1,7 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,8 +42,15 @@ namespace Web.Pages.Health
             if (pD == null)
                 return;
 
+            UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+            if (uD == null)
+                Response.Redirect(Response.ApplyAppPathModifier("~/Pages/User/Authentication.aspx"));
+
+            if (pD.assignedDoctors.Contains(uD.LoginName) || pD.assignedEmployees.Contains(uD.LoginName) || uD.UserType == 3)
+                btnCreate.Visible = true;
+
             AnalyticBlock aB;
-            if (startIndex > 0)
+            if (startIndex > 0 || count != 3)
             {
                 IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                 IHealthService healthService = iocManager.Resolve<IHealthService>();
@@ -67,12 +75,18 @@ namespace Web.Pages.Health
         {
             DataTable dt = new DataTable();
 
+            dt.Columns.Add(new DataColumn("attendant", typeof(String)));
+            dt.Columns.Add(new DataColumn("time", typeof(String)));
             dt.Columns.Add(new DataColumn("procedure", typeof(String)));
+            dt.Columns.Add(new DataColumn("observations", typeof(String)));
 
             foreach (Analytic a in aB.Analytics)
             {
                 DataRow dr = dt.NewRow();
+                dr["attendant"] = a.UserProfile.loginName;
+                dr["time"] = a.measurementTime.ToString();
                 dr["procedure"] = a.usedProcedure;
+                dr["observations"] = a.observations;
 
                 dt.Rows.Add(dr);
             }
@@ -103,6 +117,11 @@ namespace Web.Pages.Health
                     Response.ApplyAppPathModifier(url);
                 lnkNext.Visible = true;
             }
+        }
+
+        protected void BtnCreateClick(object sender, EventArgs e)
+        {
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/AddAnalytic.aspx"));
         }
     }
 }

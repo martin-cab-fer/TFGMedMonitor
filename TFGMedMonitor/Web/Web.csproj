@@ -163,7 +163,7 @@
     <Content Include="Pages\Health\App_LocalResources\ShowPatientAnalytics.aspx.resx" />
     <Content Include="Pages\Health\App_LocalResources\ShowPatientDetails.aspx.resx" />
     <Content Include="Pages\Health\App_LocalResources\ShowPatientDoses.aspx.resx" />
-    <Content Include="Pages\Health\App_LocalResources\ShowPatientPrescription.resx" />
+    <Content Include="Pages\Health\App_LocalResources\ShowPatientPrescription.aspx.resx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\Admin\DoctorAssignation.aspx" />
     <Content Include="Pages\Admin\EmployeeAssignation.aspx" />

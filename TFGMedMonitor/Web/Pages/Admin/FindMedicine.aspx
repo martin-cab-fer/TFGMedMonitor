@@ -11,6 +11,8 @@
     runat="server">
     <div id="form">
         <form id="FindMedicineForm" method="post" runat="server">
+            <span class="label">
+                <asp:Localize ID="lblPrescripting" runat="server" meta:resourcekey="lblPrescripting" /></span>
             <div class="field">
                 <span class="label">
                     <asp:Localize ID="lclName" runat="server" meta:resourcekey="lclName" /></span>
@@ -36,9 +38,9 @@
                             Width="100px" Columns="16" meta:resourcekey="txtNewActPrinResource1"></asp:TextBox> 
                         <asp:Button ID="btnAddPrin" runat="server" OnClick="BtnAddPrinClick" meta:resourcekey="btnAddPrin" />
                     </span>
-            </div>              
+            </div>
             <div class="button">
-                <asp:Button ID="btnSearch" runat="server" OnClick="BtnSearchClick" meta:resourcekey="btnSearch" />
+                <asp:Button ID="btnSearch" CssClass="button" runat="server" OnClick="BtnSearchClick" meta:resourcekey="btnSearch" />
             </div>
         </form>
     </div>

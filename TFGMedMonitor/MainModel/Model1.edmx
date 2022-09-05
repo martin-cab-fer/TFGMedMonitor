@@ -35,7 +35,7 @@
           </Key>
           <Property Name="prescriptionId" Type="bigint" Nullable="false" />
           <Property Name="administrationTime" Type="datetime" Nullable="false" />
-          <Property Name="administrator" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="administrator" Type="bigint" Nullable="false" />
           <Property Name="notes" Type="varchar" MaxLength="60" />
         </EntityType>
         <EntityType Name="Medicine">
@@ -161,9 +161,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errores durante la generación:
-advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman parte de la clave de la tabla en el lado principal de la relación. Se excluyó la relación.
-        <Association Name="ForeignKey_DoseA" />-->
+        <Association Name="ForeignKey_DoseA">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="Dose" Type="Self.Dose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="usrId" />
+            </Principal>
+            <Dependent Role="Dose">
+              <PropertyRef Name="administrator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ForeignKey_DoseP">
           <End Role="Prescription" Type="Self.Prescription" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -288,6 +297,10 @@ advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman p
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="ChatMessage" EntitySet="ChatMessage" />
           </AssociationSet>
+          <AssociationSet Name="ForeignKey_DoseA" Association="Self.ForeignKey_DoseA">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Dose" EntitySet="Dose" />
+          </AssociationSet>
           <AssociationSet Name="ForeignKey_DoseP" Association="Self.ForeignKey_DoseP">
             <End Role="Prescription" EntitySet="Prescription" />
             <End Role="Dose" EntitySet="Dose" />
@@ -345,6 +358,10 @@ advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman p
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="ChatMessage" EntitySet="ChatMessage" />
           </AssociationSet>
+          <AssociationSet Name="ForeignKey_DoseA" Association="TFGMedMonitorModel.ForeignKey_DoseA">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Dose" EntitySet="Dose" />
+          </AssociationSet>
           <AssociationSet Name="ForeignKey_DoseP" Association="TFGMedMonitorModel.ForeignKey_DoseP">
             <End Role="Prescription" EntitySet="Prescription" />
             <End Role="Dose" EntitySet="Dose" />
@@ -400,8 +417,9 @@ advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman p
           </Key>
           <Property Name="prescriptionId" Type="Int64" Nullable="false" />
           <Property Name="administrationTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="administrator" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="administrator" Type="Int64" Nullable="false" />
           <Property Name="notes" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserProfile" Relationship="TFGMedMonitorModel.ForeignKey_DoseA" FromRole="Dose" ToRole="UserProfile" />
           <NavigationProperty Name="Prescription" Relationship="TFGMedMonitorModel.ForeignKey_DoseP" FromRole="Dose" ToRole="Prescription" />
         </EntityType>
         <EntityType Name="Medicine">
@@ -469,6 +487,7 @@ advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman p
           <NavigationProperty Name="Analytic" Relationship="TFGMedMonitorModel.ForeignKey_AnalyticA" FromRole="UserProfile" ToRole="Analytic" />
           <NavigationProperty Name="ChatMessage" Relationship="TFGMedMonitorModel.ForeignKey_ChatMessageA" FromRole="UserProfile" ToRole="ChatMessage" />
           <NavigationProperty Name="ChatMessage1" Relationship="TFGMedMonitorModel.ForeignKey_ChatMessageS" FromRole="UserProfile" ToRole="ChatMessage" />
+          <NavigationProperty Name="Dose" Relationship="TFGMedMonitorModel.ForeignKey_DoseA" FromRole="UserProfile" ToRole="Dose" />
           <NavigationProperty Name="Patient" Relationship="TFGMedMonitorModel.PatientDAssign" FromRole="UserProfile" ToRole="Patient" />
           <NavigationProperty Name="Patient1" Relationship="TFGMedMonitorModel.PatientEAssign" FromRole="UserProfile" ToRole="Patient" />
         </EntityType>
@@ -521,6 +540,18 @@ advertencia 6035: La relación 'ForeignKey_DoseA' tiene columnas que no forman p
             </Principal>
             <Dependent Role="ChatMessage">
               <PropertyRef Name="sender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ForeignKey_DoseA">
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="TFGMedMonitorModel.Dose" Role="Dose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="usrId" />
+            </Principal>
+            <Dependent Role="Dose">
+              <PropertyRef Name="administrator" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

@@ -120,11 +120,11 @@
   <data name="btnSend.Text" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="lclAdressee.Text" xml:space="preserve">
+    <value>Adressee</value>
+  </data>
   <data name="lclMessage.Text" xml:space="preserve">
     <value>Body</value>
-  </data>
-  <data name="lclSender.Text" xml:space="preserve">
-    <value>Sender</value>
   </data>
   <data name="lclTitle.Text" xml:space="preserve">
     <value>Title</value>

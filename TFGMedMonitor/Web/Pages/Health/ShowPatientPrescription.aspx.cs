@@ -1,6 +1,7 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -42,14 +43,19 @@ namespace Web.Pages.Health
                 return;
 
             PrescriptionBlock pB;
-            if (startIndex > 0)
+            if (startIndex > 0 || count != 3)
             {
                 IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                 IHealthService healthService = iocManager.Resolve<IHealthService>();
 
-                pB = healthService.GetPatientPrescription(0, startIndex, count);
-            } else
+                pB = healthService.GetPatientPrescription(pD.FullName, startIndex, count);
+            }
+            else
                 pB = pD.Prescriptions;
+
+            UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+            if (uD != null && uD.UserType > 1)
+                btnCreate.Visible = true;
 
             if (pB.Prescriptions == null || pB.Prescriptions.Count == 0)
             {
@@ -59,6 +65,8 @@ namespace Web.Pages.Health
             else
                 lblNoPrescriptions.Visible = false;
 
+            Session["prescriptionSearch"] = pB;
+
             FillPrescriptionsList(pB, startIndex, count);
         }
 
@@ -67,11 +75,17 @@ namespace Web.Pages.Health
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("medName", typeof(String)));
+            dt.Columns.Add(new DataColumn("frequency", typeof(String)));
+            dt.Columns.Add(new DataColumn("creationDate", typeof(String)));
+            dt.Columns.Add(new DataColumn("admin", typeof(String)));
 
             foreach (Prescription p in pB.Prescriptions)
             {
                 DataRow dr = dt.NewRow();
-                dr["medName"] = p.medicine.ToString();
+                dr["medName"] = p.Medicine1.medName;
+                dr["frequency"] = p.frequency;
+                dr["creationDate"] = p.creationDate.ToString();
+                dr["admin"] = p.administration;
 
                 dt.Rows.Add(dr);
             }
@@ -102,6 +116,48 @@ namespace Web.Pages.Health
                     Response.ApplyAppPathModifier(url);
                 lnkNext.Visible = true;
             }
+        }
+
+        protected void BtnSeeDoses(object sender, EventArgs e)
+        {
+            try
+            {
+                Button b = (Button)sender;
+                GridViewRow gVR = (GridViewRow)b.NamingContainer;
+                if (b == null)
+                    return;
+
+                string mName = gVR.Cells[0].Text;
+                PrescriptionBlock prescriptions = (PrescriptionBlock)Session["prescriptionSearch"];
+                if (prescriptions == null)
+                    return;
+
+                Prescription targetP = null;
+                foreach (Prescription p in prescriptions.Prescriptions)
+                {
+                    if (mName == p.Medicine1.medName)
+                    {
+                        targetP = p;
+                        break;
+                    }
+                }
+
+                if (targetP != null)
+                {
+                    Session["selectedPrescription"] = targetP;
+
+                    Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/ShowPatientDoses.aspx"));
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        protected void BtnCreateClick(object sender, EventArgs e)
+        {
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Admin/FindMedicine.aspx?prescripting=true"));
         }
     }
 }

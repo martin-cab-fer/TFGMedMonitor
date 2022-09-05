@@ -35,6 +35,41 @@ namespace Web.Pages.User
 
             txtUserName.Text = uDets.LoginName;
             txtFirstName.Text = uDets.FirstName;
+            txtSurname.Text = uDets.Lastname;
+            switch (uDets.UserType)
+            {
+                case 1:
+                    txtUserType.Text = (string)this.GetLocalResourceObject("Employee");
+                    break;
+
+                case 2:
+                    txtUserType.Text = (string)this.GetLocalResourceObject("Doctor");
+                    break;
+
+                case 3:
+                    txtUserType.Text = (string)this.GetLocalResourceObject("Admin");
+                    break;
+
+                default:
+                    break;
+            }
+
+            try
+            {
+                UserProfileDetails loggedUser = SessionManager.FindUserProfileDetails(Context);
+
+                if (uDets.LoginName != loggedUser.LoginName)
+                    btnMessage.Visible = true;
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        protected void BtnMessageClick(object sender, EventArgs e)
+        {
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Admin/SendMessage.aspx"));
         }
     }
 }

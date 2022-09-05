@@ -33,6 +33,15 @@ namespace Web.Pages.Admin
         protected global::System.Web.UI.HtmlControls.HtmlForm FindMedicineForm;
 
         /// <summary>
+        /// Control lblPrescripting.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Localize lblPrescripting;
+
+        /// <summary>
         /// Control lclName.
         /// </summary>
         /// <remarks>

@@ -1,6 +1,7 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model;
 using Model.AdminService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,16 +38,16 @@ namespace Web.Pages.Admin
                 count = 10;
             }
 
-            UserSession uS = SessionManager.GetUserSession(Context);
+            UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
 
-            if (uS == null)
+            if (uD == null)
                 return;
 
             IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
             IAdminService adminService = iocManager.Resolve<IAdminService>();
 
             ChatMessageBlock messages;
-            messages = adminService.GetChatMessages(uS.UserProfileId, startIndex, count);
+            messages = adminService.GetChatMessages(uD.LoginName, startIndex, count);
 
             Session["messageSearch"] = messages;
 
@@ -69,13 +70,13 @@ namespace Web.Pages.Admin
             dt.Columns.Add(new DataColumn("adressee", typeof(String)));
             dt.Columns.Add(new DataColumn("date", typeof(String)));
             dt.Columns.Add(new DataColumn("title", typeof(String)));
-            dt.Columns.Add(new DataColumn("message", typeof(long)));
+            dt.Columns.Add(new DataColumn("message", typeof(String)));
 
             foreach (ChatMessage cM in cmB.Messages)
             {                
                 DataRow dr = dt.NewRow();
-                dr["sender"] = cM.sender.ToString();
-                dr["adressee"] = cM.addressee.ToString();
+                dr["sender"] = cM.UserProfile1.loginName;
+                dr["adressee"] = cM.UserProfile.loginName;
                 dr["date"] = cM.creationDate.ToString();
                 dr["title"] = cM.title;
                 dr["message"] = cM.messageText;

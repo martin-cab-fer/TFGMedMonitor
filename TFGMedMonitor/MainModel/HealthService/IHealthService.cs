@@ -39,14 +39,14 @@ namespace Model.HealthService
         AnalyticBlock GetPatientAnalytics(long patientId, int startIndex, int count);
 
         [Transactional]
-        Analytic AddPatientAnalytic(long patientId, long attendant, float weight, string procedure,
+        Analytic AddPatientAnalytic(string patient, string attendant, float weight, string procedure,
             string observations);
 
         [Transactional]
-        PrescriptionBlock GetPatientPrescription(long patientId, int startIndex, int count);
+        PrescriptionBlock GetPatientPrescription(string patient, int startIndex, int count);
 
         [Transactional]
-        Prescription AddPatientPrescription(long patientId, long medicineId, int frequency, string admin);
+        Prescription AddPatientPrescription(string patient, long medicineId, int frequency, string admin);
 
         [Transactional]
         void RemovePatientPrescription(long prescriptionId);
@@ -55,7 +55,7 @@ namespace Model.HealthService
         DoseBlock GetPatientDoses(long prescriptionId, int startIndex, int count);
 
         [Transactional]
-        Dose AddPatientDose(long prescriptionId, long adminId, string notes);
+        Dose AddPatientDose(long prescriptionId, string admin, string notes);
 
     }
 }

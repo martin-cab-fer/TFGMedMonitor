@@ -120,6 +120,9 @@
   <data name="btnCreate.Text" xml:space="preserve">
     <value>Create new</value>
   </data>
+  <data name="details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="labName" xml:space="preserve">
     <value>Lab name</value>
   </data>

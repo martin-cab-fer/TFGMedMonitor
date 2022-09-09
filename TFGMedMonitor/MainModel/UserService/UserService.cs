@@ -162,9 +162,6 @@ namespace Model.UserService
         [Transactional]
         public UserBlock GetSpecificUserList(int userType, int startIndex, int count)
         {
-            if (userType > 3 || userType < 0)
-                return null;
-
             List<UserProfile> users =
                 UserProfileDao.FindByUserType(userType, startIndex, count + 1);
 

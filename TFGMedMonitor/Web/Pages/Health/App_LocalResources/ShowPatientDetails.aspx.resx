@@ -142,7 +142,7 @@
     <value>Full name</value>
   </data>
   <data name="lclInfo.Text" xml:space="preserve">
-    <value>Additional information</value>
+    <value>Diagnostic info</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>

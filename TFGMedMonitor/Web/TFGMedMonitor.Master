@@ -59,6 +59,10 @@
                     meta:resourcekey="lnkPatientSearch" NavigateUrl="~/Pages/Health/ShowPatients.aspx" />
                 </li>
                 <li>
+                    <asp:HyperLink ID="lnkUserSearch" runat="server"
+                    meta:resourcekey="lnkUserSearch" NavigateUrl="~/Pages/User/ShowUsers.aspx" />
+                </li>
+                <li>
                     <asp:HyperLink ID="lnkProfile" runat="server"
                     meta:resourcekey="lnkProfile" NavigateUrl="~/Pages/User/Profile.aspx?userName=" />
                 </li>

@@ -36,7 +36,7 @@
                                 Text='<%#Container.DataItem.ToString() %>' />
                         </ItemTemplate>
                     </asp:Repeater>
-                    <asp:Button ID="btnManageEmps" runat="server" OnClick="BtnManageEmpsClick" Visible="false" meta:resourcekey="btnManageEmps" />
+                    <asp:Button ID="btnManageEmps" runat="server" OnClick="BtnManageEmpsClick" meta:resourcekey="btnManageEmps" />
         </div>
         <div class="field">
                 <span class="label">
@@ -47,7 +47,7 @@
                                 Text='<%#Container.DataItem.ToString() %>' CssClass="repeater"/>
                         </ItemTemplate>
                     </asp:Repeater>
-                    <asp:Button ID="btnManageDocs" runat="server" OnClick="BtnManageDocsClick" Visible="false" meta:resourcekey="btnManageDocs" />
+                    <asp:Button ID="btnManageDocs" runat="server" OnClick="BtnManageDocsClick" meta:resourcekey="btnManageDocs" />
         </div>
         <div class="button">
             <asp:Button ID="btnAnalytics" CssClass="button" runat="server" OnClick="BtnAnalyticsClick" meta:resourcekey="btnAnalytics" />

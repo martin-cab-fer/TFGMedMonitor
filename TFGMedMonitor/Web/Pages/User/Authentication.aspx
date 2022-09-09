@@ -8,6 +8,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder_BodyContent"
     runat="server">
+    <asp:HyperLink ID="lnkRegister" runat="server" NavigateUrl="~/Pages/User/CreateUser.aspx" meta:resourcekey="lnkRegister" />
     <div id="form">
         <form id="AuthenticationForm" method="POST" runat="server">
             <div class="field">

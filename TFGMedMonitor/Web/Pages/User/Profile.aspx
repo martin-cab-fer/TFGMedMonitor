@@ -28,6 +28,14 @@
         </div>
         <div class="field">
                 <span class="label">
+                    <asp:Localize ID="lclContact" runat="server" meta:resourcekey="lclContact" /></span>
+                    <span class="entry">
+                        <asp:Label ID="txtContact" runat="server"
+                            meta:resourcekey="txtContactResource1"/>
+                </span>
+        </div>
+        <div class="field">
+                <span class="label">
                     <asp:Localize ID="lclUserType" runat="server" meta:resourcekey="lclUserType" /></span>
                     <span class="entry">
                         <asp:Label ID="txtUserType" runat="server"
@@ -35,6 +43,9 @@
                 </span>
         </div>
         <br/>
+        <br/>
+        <asp:Button ID="btnChangePassword" CssClass="button" runat="server" CausesValidation="false" Visible="false"
+            meta:resourcekey="btnMessage" OnClick="BtnMessageClick"/>
         <br/>
         <asp:Button ID="btnMessage" CssClass="button" runat="server" CausesValidation="false" Visible="false"
             meta:resourcekey="btnMessage" OnClick="BtnMessageClick"/>

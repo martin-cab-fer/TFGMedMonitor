@@ -17,7 +17,7 @@
                 <span class="label">
                     <asp:Localize ID="lclName" runat="server" meta:resourcekey="lclName" /></span>
                     <span class="entry">
-                        <asp:TextBox ID="txtName" runat="server" Width="100px" Height="20px"
+                        <asp:TextBox ID="txtName" runat="server" Width="200px"
                             meta:resourcekey="txtNameResource1"/>
                 </span>
             </div>
@@ -25,7 +25,7 @@
                 <span class="label">
                     <asp:Localize ID="lclActivePrin" runat="server" meta:resourcekey="lclActivePrin" /></span>
                     <span class="entry">
-                        <asp:Label ID="txtActivePrin" runat="server" Width="100px" Height="20px"
+                        <asp:Label ID="txtActivePrin" runat="server" Width="200px"
                             meta:resourcekey="txtActivePrinResource1"/>
                         <asp:Button ID="btnRemovePrin" runat="server" OnClick="BtnRemovePrinClick" meta:resourcekey="btnRemovePrin" />
                 </span>
@@ -35,7 +35,7 @@
                     <asp:Localize ID="lclNewActPrin" runat="server" meta:resourcekey="lclNewActPrin" /></span>
                     <span class="entry">
                         <asp:TextBox ID="txtNewActPrin" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtNewActPrinResource1"></asp:TextBox> 
+                            Width="150px" Columns="16" meta:resourcekey="txtNewActPrinResource1"></asp:TextBox> 
                         <asp:Button ID="btnAddPrin" runat="server" OnClick="BtnAddPrinClick" meta:resourcekey="btnAddPrin" />
                     </span>
             </div>

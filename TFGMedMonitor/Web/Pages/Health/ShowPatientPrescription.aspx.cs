@@ -53,9 +53,13 @@ namespace Web.Pages.Health
             else
                 pB = pD.Prescriptions;
 
+            bool qual = false;
             UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
             if (uD != null && uD.UserType > 1)
+            {
                 btnCreate.Visible = true;
+                qual = true;
+            }
 
             if (pB.Prescriptions == null || pB.Prescriptions.Count == 0)
             {
@@ -67,10 +71,10 @@ namespace Web.Pages.Health
 
             Session["prescriptionSearch"] = pB;
 
-            FillPrescriptionsList(pB, startIndex, count);
+            FillPrescriptionsList(pB, startIndex, count, qual);
         }
 
-        protected void FillPrescriptionsList(PrescriptionBlock pB, int stI, int c)
+        protected void FillPrescriptionsList(PrescriptionBlock pB, int stI, int c, bool q)
         {
             DataTable dt = new DataTable();
 
@@ -90,6 +94,7 @@ namespace Web.Pages.Health
                 dt.Rows.Add(dr);
             }
 
+            GVPrescriptions.Columns[(GVPrescriptions.Columns.Count - 1)].Visible = q;
             GVPrescriptions.DataSource = new DataView(dt);
             GVPrescriptions.DataBind();
 
@@ -147,6 +152,48 @@ namespace Web.Pages.Health
                     Session["selectedPrescription"] = targetP;
 
                     Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/ShowPatientDoses.aspx"));
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        protected void BtnRemoveClick(object sender, EventArgs e)
+        {
+            try
+            {
+                Button b = (Button)sender;
+                GridViewRow gVR = (GridViewRow)b.NamingContainer;
+                if (b == null)
+                    return;
+
+                string mName = gVR.Cells[0].Text;
+                PrescriptionBlock prescriptions = (PrescriptionBlock)Session["prescriptionSearch"];
+                if (prescriptions == null)
+                    return;
+
+                Prescription targetP = null;
+                foreach (Prescription p in prescriptions.Prescriptions)
+                {
+                    if (mName == p.Medicine1.medName)
+                    {
+                        targetP = p;
+                        break;
+                    }
+                }
+
+                if (targetP != null)
+                {
+                    Session["selectedPrescription"] = null;
+
+                    IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
+                    IHealthService healthService = iocManager.Resolve<IHealthService>();
+
+                    healthService.RemovePatientPrescription(targetP.prescriptionId);
+
+                    Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/ShowPatientPrescription.aspx?startIndex=0&count=10"));
                 }
             }
             catch (Exception)

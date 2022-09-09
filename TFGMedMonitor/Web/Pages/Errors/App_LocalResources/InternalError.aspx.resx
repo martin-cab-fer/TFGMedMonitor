@@ -117,31 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnChangePassword.Text" xml:space="preserve">
-    <value>Update</value>
+  <data name="lblErrorTitle.Text" xml:space="preserve">
+    <value>Internal Error</value>
   </data>
-  <data name="cvCreateNewPassword.ErrorMessage" xml:space="preserve">
-    <value>Passwords must be different</value>
+  <data name="lblRetryLater.Text" xml:space="preserve">
+    <value>Please, check if the operation has been performed, and retry if it is necessary</value>
   </data>
-  <data name="cvPasswordCheck.Text" xml:space="preserve">
-    <value>Passwords do not match</value>
-  </data>
-  <data name="lblOldPasswordError.Text" xml:space="preserve">
-    <value>Incorrect password</value>
-  </data>
-  <data name="lclMenuExplanation.Text" xml:space="preserve">
-    <value>Change password</value>
-  </data>
-  <data name="lclNewPassword.Text" xml:space="preserve">
-    <value>New password</value>
-  </data>
-  <data name="lclOldPassword.Text" xml:space="preserve">
-    <value>Old password</value>
-  </data>
-  <data name="lclRetypePassword.Text" xml:space="preserve">
-    <value>Retype password</value>
-  </data>
-  <data name="Page Title" xml:space="preserve">
-    <value>Agarimo - Change Password</value>
+  <data name="Page.Title" xml:space="preserve">
+    <value>Agarimo - Internal Error</value>
   </data>
 </root>

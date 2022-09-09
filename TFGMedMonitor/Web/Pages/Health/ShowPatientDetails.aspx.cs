@@ -26,6 +26,8 @@ namespace Web.Pages.Health
             txtBirthDate.Text = pD.BirthDate.ToString();
             txtInfo.Text = pD.Info;
 
+            
+
             if(pD.assignedEmployees.Count > 0)
             {
                 empLinks.DataSource = pD.assignedEmployees;
@@ -38,18 +40,15 @@ namespace Web.Pages.Health
                 docLinks.DataBind();
             }
 
-            if (pD.assignedDoctors.Contains(uD.LoginName) || uD.UserType == 3)
+            bool admin = (uD.UserType == 3);
+            btnManageEmps.Visible = admin;
+            btnManageDocs.Visible = admin;
+
+            if (pD.assignedDoctors.Contains(uD.LoginName) || pD.assignedEmployees.Contains(uD.LoginName) || admin)
             {
                 btnPrescription.Visible = true;
                 btnAnalytics.Visible = true;
-            }
-            else if (pD.assignedEmployees.Contains(uD.LoginName))
-            {
-                btnAnalytics.Visible = true;
-                btnPrescription.Visible = false;
-            }
-            else
-            {
+            } else {
                 btnAnalytics.Visible = false;
                 btnPrescription.Visible = false;
             }

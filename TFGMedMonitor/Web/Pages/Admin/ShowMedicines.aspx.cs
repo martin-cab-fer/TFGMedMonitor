@@ -111,7 +111,7 @@ namespace Web.Pages.Admin
                 dt.Rows.Add(dr);
             }
 
-            GVMedicines.Columns[3].Visible = presc;
+            GVMedicines.Columns[(GVMedicines.Columns.Count - 1)].Visible = presc;
             GVMedicines.DataSource = new DataView(dt);
             GVMedicines.DataBind();
 
@@ -147,7 +147,7 @@ namespace Web.Pages.Admin
             Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Admin/AddMedicine.aspx"));
         }
 
-        protected void BtnSelectClick(object sender, EventArgs e)
+        protected void BtnDetailsClick(object sender, EventArgs e)
         {
             Button b = (Button)sender;
             string mN = b.CommandArgument;
@@ -168,6 +168,32 @@ namespace Web.Pages.Admin
             if (targetM == null)
                 return;
             
+            Session["selectedMedicine"] = targetM;
+
+            Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Admin/ShowMedicineDetails.aspx"));
+        }
+
+        protected void BtnSelectClick(object sender, EventArgs e)
+        {
+            Button b = (Button)sender;
+            string mN = b.CommandArgument;
+            MedicineBlock mB = (MedicineBlock)Session["medicineSearch"];
+            if (mB == null)
+                return;
+
+            Medicine targetM = null;
+            foreach (Medicine m in mB.Medicines)
+            {
+                if (mN == m.medName)
+                {
+                    targetM = m;
+                    break;
+                }
+            }
+
+            if (targetM == null)
+                return;
+
             Session["selectedMedicine"] = targetM;
 
             Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/AddPrescription.aspx"));

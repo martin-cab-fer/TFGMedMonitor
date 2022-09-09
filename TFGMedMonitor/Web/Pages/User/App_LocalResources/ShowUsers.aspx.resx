@@ -117,31 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnChangePassword.Text" xml:space="preserve">
-    <value>Update</value>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
   </data>
-  <data name="cvCreateNewPassword.ErrorMessage" xml:space="preserve">
-    <value>Passwords must be different</value>
+  <data name="lblNoUsers.Text" xml:space="preserve">
+    <value>No users found</value>
   </data>
-  <data name="cvPasswordCheck.Text" xml:space="preserve">
-    <value>Passwords do not match</value>
+  <data name="LoginName" xml:space="preserve">
+    <value>Login name</value>
   </data>
-  <data name="lblOldPasswordError.Text" xml:space="preserve">
-    <value>Incorrect password</value>
+  <data name="Page.Title" xml:space="preserve">
+    <value>Agarimo - User List</value>
   </data>
-  <data name="lclMenuExplanation.Text" xml:space="preserve">
-    <value>Change password</value>
-  </data>
-  <data name="lclNewPassword.Text" xml:space="preserve">
-    <value>New password</value>
-  </data>
-  <data name="lclOldPassword.Text" xml:space="preserve">
-    <value>Old password</value>
-  </data>
-  <data name="lclRetypePassword.Text" xml:space="preserve">
-    <value>Retype password</value>
-  </data>
-  <data name="Page Title" xml:space="preserve">
-    <value>Agarimo - Change Password</value>
+  <data name="Surname" xml:space="preserve">
+    <value>Surname</value>
   </data>
 </root>

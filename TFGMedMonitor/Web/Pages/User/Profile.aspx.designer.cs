@@ -69,6 +69,24 @@ namespace Web.Pages.User
         protected global::System.Web.UI.WebControls.Label txtSurname;
 
         /// <summary>
+        /// Control lclContact.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Localize lclContact;
+
+        /// <summary>
+        /// Control txtContact.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtContact;
+
+        /// <summary>
         /// Control lclUserType.
         /// </summary>
         /// <remarks>
@@ -85,6 +103,15 @@ namespace Web.Pages.User
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label txtUserType;
+
+        /// <summary>
+        /// Control btnChangePassword.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChangePassword;
 
         /// <summary>
         /// Control btnMessage.

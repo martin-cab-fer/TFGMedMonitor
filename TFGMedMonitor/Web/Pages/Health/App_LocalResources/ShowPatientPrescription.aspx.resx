@@ -141,4 +141,7 @@
   <data name="Page.Title" xml:space="preserve">
     <value>Agarimo - Patient Prescription</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
 </root>

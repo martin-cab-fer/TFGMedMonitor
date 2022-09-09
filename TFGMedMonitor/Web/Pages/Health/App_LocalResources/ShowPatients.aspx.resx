@@ -130,7 +130,7 @@
     <value>Full name</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Info</value>
+    <value>Diagnostic info</value>
   </data>
   <data name="lblNoPatients.Text" xml:space="preserve">
     <value>No patients found</value>

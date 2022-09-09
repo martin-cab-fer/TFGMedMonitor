@@ -147,4 +147,10 @@
   <data name="lnkProfile.Text" xml:space="preserve">
     <value>My profile</value>
   </data>
+  <data name="lnkUpdate.Text" xml:space="preserve">
+    <value>Update User</value>
+  </data>
+  <data name="lnkUserSearch.Text" xml:space="preserve">
+    <value>User search</value>
+  </data>
 </root>

@@ -28,7 +28,7 @@
                     <asp:Localize ID="lclMedName" runat="server" meta:resourcekey="lclMedName" />
                 </span><span
                         class="entry">
-                        <asp:TextBox ID="txtMedName" runat="server" Width="100px" Columns="16"
+                        <asp:TextBox ID="txtMedName" runat="server" Width="200px" Columns="16"
                             meta:resourcekey="txtMedNameResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvMedName" runat="server" ControlToValidate="txtMedName"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
@@ -39,7 +39,7 @@
                     <asp:Localize ID="lclLabName" runat="server" meta:resourcekey="lclLabName" />
                 </span><span
                         class="entry">
-                        <asp:TextBox ID="txtLabName" runat="server" Width="100px" Columns="16"
+                        <asp:TextBox ID="txtLabName" runat="server" Width="200px" Columns="16"
                             meta:resourcekey="txtLabNameResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvLabName" runat="server" ControlToValidate="txtLabName"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
@@ -102,7 +102,7 @@
                     <asp:Localize ID="lclNewActPrin" runat="server" meta:resourcekey="lclNewActPrin" /></span>
                     <span class="entry">
                         <asp:TextBox ID="txtNewActPrin" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtNewActPrinResource1"></asp:TextBox> 
+                            Width="150px" Columns="16" meta:resourcekey="txtNewActPrinResource1"></asp:TextBox> 
                         <asp:Button ID="btnAddPrin" runat="server" OnClick="BtnAddPrinClick"
                             CausesValidation="false" meta:resourcekey="btnAddPrin" />
                     </span>
@@ -125,7 +125,7 @@
                 <span class="label">
                     <asp:Localize ID="lclObservations" runat="server" meta:resourcekey="lclObservations" /></span><span
                         class="entry">
-                        <asp:TextBox ID="txtObservations" runat="server" Width="100px"
+                        <asp:TextBox ID="txtObservations" runat="server" Width="300px"
                             Columns="16" meta:resourcekey="txtObservationsResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvObservations" runat="server" ControlToValidate="txtObservations"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
@@ -135,7 +135,7 @@
                 <span class="label">
                     <asp:Localize ID="lclSubst" runat="server" meta:resourcekey="lclSubst" /></span><span
                         class="entry">
-                        <asp:TextBox ID="txtSubst" runat="server" Width="100px"
+                        <asp:TextBox ID="txtSubst" runat="server" Width="300px"
                             Columns="16" meta:resourcekey="txtSubstResource1"></asp:TextBox></span>
             </div>
             <div class="field">

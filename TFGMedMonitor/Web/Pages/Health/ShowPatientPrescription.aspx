@@ -26,6 +26,12 @@
                             Text="<%$ Resources:, Doses %>" OnClick="BtnSeeDoses"/>
                     </ItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField ShowHeader="False">
+                    <ItemTemplate>
+                        <asp:Button ID="btnRemove" runat="server" CausesValidation="false" CommandName="Remove"
+                            Text="<%$ Resources:, Remove %>" OnClick="BtnRemoveClick"/>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
         <br/>

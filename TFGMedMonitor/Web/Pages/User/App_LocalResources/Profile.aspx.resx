@@ -129,6 +129,9 @@
   <data name="Employee" xml:space="preserve">
     <value>Employee</value>
   </data>
+  <data name="lclContact.Text" xml:space="preserve">
+    <value>Contact email</value>
+  </data>
   <data name="lclFirstName.Text" xml:space="preserve">
     <value>First Name</value>
   </data>

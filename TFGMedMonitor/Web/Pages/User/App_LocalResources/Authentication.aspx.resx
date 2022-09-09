@@ -138,6 +138,9 @@
   <data name="lclPassword.Text" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="lnkRegister.Text" xml:space="preserve">
+    <value>Create new user</value>
+  </data>
   <data name="Page.Title" xml:space="preserve">
     <value>Agarimo - User Authentication</value>
   </data>

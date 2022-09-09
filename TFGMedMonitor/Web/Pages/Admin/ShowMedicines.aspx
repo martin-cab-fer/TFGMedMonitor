@@ -23,10 +23,16 @@
                     ItemStyle-Width="100px"/>
                 <asp:TemplateField>
                         <ItemTemplate>
+                            <asp:Button runat="server" CommandArgument='<%#Eval("medName") %>'  OnClick="BtnDetailsClick"
+                                 text="<%$ Resources:, details %>" CausesValidation="false"/> 
+                        </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                        <ItemTemplate>
                             <asp:Button runat="server" CommandArgument='<%#Eval("medName") %>'  OnClick="BtnSelectClick"
                                 Visible='<%# Eval("prescripting") %>' text="<%$ Resources:, select %>" CausesValidation="false"/> 
                         </ItemTemplate>
-                    </asp:TemplateField>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
         <br/>

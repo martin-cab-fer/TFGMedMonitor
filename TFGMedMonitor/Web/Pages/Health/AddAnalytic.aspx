@@ -34,7 +34,7 @@
                     <asp:Localize ID="lclProcedure" runat="server" meta:resourcekey="lclProcedure" /></span><span
                         class="entry">
                         <asp:TextBox ID="txtProcedure" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtProcedureResource1"></asp:TextBox>
+                            Width="300px" Columns="16" meta:resourcekey="txtProcedureResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvProcedure" runat="server" ControlToValidate="txtProcedure"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
                             meta:resourcekey="rfvProcedureResource1"></asp:RequiredFieldValidator></span>
@@ -43,8 +43,8 @@
                 <span class="label">
                     <asp:Localize ID="lclObservations" runat="server" meta:resourcekey="lclObservations" /></span><span
                         class="entry">
-                        <asp:TextBox ID="txtObservations" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtObservationsResource1"></asp:TextBox>
+                        <asp:TextBox ID="txtObservations" runat="server" TextMode="MultiLine" Rows="3"
+                            Width="300px" Columns="16" meta:resourcekey="txtObservationsResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvObservations" runat="server" ControlToValidate="txtObservations"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
                             meta:resourcekey="rfvObservationsResource1"></asp:RequiredFieldValidator></span>

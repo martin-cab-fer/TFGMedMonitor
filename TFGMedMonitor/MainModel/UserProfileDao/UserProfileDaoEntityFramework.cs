@@ -46,13 +46,24 @@ namespace Model.UserProfileDao
         {
             DbSet<UserProfile> userProfiles = Context.Set<UserProfile>();
 
-            var result =
+            if (userType > 3 || userType < 1)
+            {
+                var result =
+                (from u in userProfiles
+                 orderby u.loginName
+                 select u).Skip(startIndex).Take(count).ToList();
+
+                return result;
+            } else
+            {
+                var result =
                 (from u in userProfiles
                  where u.userType == userType
                  orderby u.loginName
                  select u).Skip(startIndex).Take(count).ToList();
 
-            return result;
+                return result;
+            }
         }
     }
 }

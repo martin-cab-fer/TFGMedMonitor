@@ -36,6 +36,7 @@ namespace Web.Pages.User
             txtUserName.Text = uDets.LoginName;
             txtFirstName.Text = uDets.FirstName;
             txtSurname.Text = uDets.Lastname;
+            txtContact.Text = uDets.Email.ToString();
             switch (uDets.UserType)
             {
                 case 1:

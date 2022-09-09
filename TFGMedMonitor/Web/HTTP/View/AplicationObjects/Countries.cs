@@ -18,7 +18,7 @@ namespace Web.HTTP.View.AplicationObjects
         private static readonly ArrayList countries_es = new ArrayList();
         private static readonly ArrayList countries_en = new ArrayList();
         private static readonly ArrayList countries_gl = new ArrayList();
-        private static readonly ArrayList countrieCodes = new ArrayList();
+        private static readonly ArrayList countryCodes = new ArrayList();
         private static readonly Hashtable countries = new Hashtable();
 
 
@@ -44,9 +44,9 @@ namespace Web.HTTP.View.AplicationObjects
             countries_gl.Add(new ListItem("Estados Unidos", "US"));
             countries_gl.Add(new ListItem("Reino Unido", "UK"));
 
-            countrieCodes.Add("ES");
-            countrieCodes.Add("UK");
-            countrieCodes.Add("US");
+            countryCodes.Add("ES");
+            countryCodes.Add("UK");
+            countryCodes.Add("US");
 
             countries.Add("es", countries_es);
             countries.Add("en", countries_en);
@@ -58,7 +58,7 @@ namespace Web.HTTP.View.AplicationObjects
 
         public static ICollection GetCountryCodes()
         {
-            return countrieCodes;
+            return countryCodes;
         }
 
         public static ArrayList GetCountries(String languageCode)

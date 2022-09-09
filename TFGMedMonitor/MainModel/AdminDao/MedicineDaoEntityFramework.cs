@@ -62,10 +62,5 @@ namespace Model.AdminDao
                 return fResult;
             }
         }
-
-        public List<Medicine> FindByRegisterNumber (int regNumber)
-        {
-            return null;
-        }
     }
 }

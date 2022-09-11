@@ -17,7 +17,7 @@
                     <asp:Localize ID="lclPatientName" runat="server" meta:resourcekey="lclPatientName" />
                 </span><span
                         class="entry">
-                        <asp:TextBox ID="txtPatientName" runat="server" Width="100px" Columns="16"
+                        <asp:TextBox ID="txtPatientName" runat="server" Width="200px" Columns="16"
                             meta:resourcekey="txtPatientNameResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvPatientName" runat="server" ControlToValidate="txtPatientName"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"

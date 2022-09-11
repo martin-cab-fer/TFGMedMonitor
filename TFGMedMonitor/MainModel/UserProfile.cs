@@ -23,6 +23,7 @@ namespace Model
             this.Dose = new HashSet<Dose>();
             this.Patient = new HashSet<Patient>();
             this.Patient1 = new HashSet<Patient>();
+            this.UserAction = new HashSet<UserAction>();
         }
     
         public long usrId { get; set; }
@@ -47,5 +48,7 @@ namespace Model
         public virtual ICollection<Patient> Patient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patient1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAction> UserAction { get; set; }
     }
 }

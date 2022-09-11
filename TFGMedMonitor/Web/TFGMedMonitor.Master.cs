@@ -30,6 +30,8 @@ namespace Web
                     lnkProfile.Visible = false;
                 if (lnkMessages != null)
                     lnkMessages.Visible = false;
+                if (lnkActions != null)
+                    lnkActions.Visible = false;
 
             }
             else

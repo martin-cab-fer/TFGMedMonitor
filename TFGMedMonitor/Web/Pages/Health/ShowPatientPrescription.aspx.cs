@@ -191,7 +191,11 @@ namespace Web.Pages.Health
                     IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                     IHealthService healthService = iocManager.Resolve<IHealthService>();
 
-                    healthService.RemovePatientPrescription(targetP.prescriptionId);
+                    UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                    if (uD == null || uD.UserType < 2)
+                        return;
+
+                    healthService.RemovePatientPrescription(uD.LoginName, targetP.prescriptionId);
 
                     Response.Redirect(Response.ApplyAppPathModifier("~/Pages/Health/ShowPatientPrescription.aspx?startIndex=0&count=10"));
                 }

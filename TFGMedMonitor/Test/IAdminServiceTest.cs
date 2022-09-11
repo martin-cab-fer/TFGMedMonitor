@@ -65,9 +65,9 @@ namespace Test
                         country, userType));
         }
 
-        public long CreateValidPatient(string name)
+        public long CreateValidPatient(string user, string name)
         {
-            return adminService.CreatePatient(name, DateTime.Now, "");
+            return adminService.CreatePatient(user, name, DateTime.Now, "");
         }
 
         #region Additional test attributes
@@ -114,7 +114,10 @@ namespace Test
             {
                 DateTime t = DateTime.Now;
 
-                long medicineId = adminService.CreateMedicine(regNum, mName, lName, t, mStatus, t, ATCCode,
+                long u = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(u);
+
+                long medicineId = adminService.CreateMedicine(admin.LoginName, regNum, mName, lName, t, mStatus, t, ATCCode,
                     activePr, activePrN, comm, yellowT, observ, "", affectsC, supplyI);
                 Medicine m = medicineDao.Find(medicineId);
 
@@ -143,7 +146,10 @@ namespace Test
             {
                 DateTime t = DateTime.Now;
 
-                long medicineId = adminService.CreateMedicine(regNum, mName, lName, t, mStatus, t, ATCCode,
+                long u = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(u);
+
+                long medicineId = adminService.CreateMedicine(admin.LoginName, regNum, mName, lName, t, mStatus, t, ATCCode,
                     activePr, activePrN, comm, yellowT, observ, "", affectsC, supplyI);
                 Medicine p = medicineDao.Find(medicineId);
 
@@ -176,7 +182,10 @@ namespace Test
                 DateTime bDate = DateTime.Now;
                 string info = "null";
 
-                long patientId = adminService.CreatePatient(pName, bDate, info);
+                long u = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(u);
+
+                long patientId = adminService.CreatePatient(admin.LoginName, pName, bDate, info);
                 Patient p = patientDao.Find(patientId);
 
                 Assert.AreEqual(p.patientName, pName);
@@ -193,10 +202,13 @@ namespace Test
             {
                 long doctorId1 = CreateValidUser("doc1", 2);
                 long doctorId2 = CreateValidUser("doc2", 2);
-                long patientId = CreateValidPatient("patient");
+                long adminId = CreateValidUser("admin", 3);
 
                 UserProfileDetails doc1 = userService.FindUserProfileDetails(doctorId1);
                 UserProfileDetails doc2 = userService.FindUserProfileDetails(doctorId2);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
+                long patientId = CreateValidPatient(admin.LoginName, "patient");
                 PatientDetails pat = healthService.GetPatientDetails(patientId);
 
                 //Doctor assignation
@@ -226,10 +238,13 @@ namespace Test
             {
                 long employeeId1 = CreateValidUser("emp1", 1);
                 long employeeId2 = CreateValidUser("emp2", 1);
-                long patientId = CreateValidPatient("patient");
+                long adminId = CreateValidUser("admin", 3);
 
                 UserProfileDetails emp1 = userService.FindUserProfileDetails(employeeId1);
                 UserProfileDetails emp2 = userService.FindUserProfileDetails(employeeId2);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
+                long patientId = CreateValidPatient(admin.LoginName, "patient");
                 PatientDetails pat = healthService.GetPatientDetails(patientId);
 
                 //Employee assignation

@@ -24,11 +24,18 @@ namespace Model.AdminService
         [Inject]
         public IMedicineDao MedicineDao { private get; set; }
 
+        [Inject]
+        public IUserActionDao UserActionDao { private get; set; }
+
         [Transactional]
-        public long CreateMedicine(int regNum, string mName, string lName, DateTime authDate, string mStatus,
+        public long CreateMedicine(string user, int regNum, string mName, string lName, DateTime authDate, string mStatus,
             DateTime statusDate, string ATCCode, string activePr, int activePrN, bool commerc,
             bool yellowT, string observ, string subst, bool affectsC, bool supplyI)
         {
+            UserProfile u = UserProfileDao.FindByLoginName(user);
+            if (u == null || u.userType != 3)
+                return -1;
+
             if (regNum < 0 || mName == null || lName == null || authDate == null || mStatus == null ||
                 statusDate == null || ATCCode == null || activePr == null || activePrN <= 0 ||
                 observ == null)
@@ -54,6 +61,7 @@ namespace Model.AdminService
             m.supplyIssues = supplyI ? "SI" : "NO";
 
             MedicineDao.Create(m);
+            UserActionDao.LogUserAction(u, 7, m.medName, m.registerNumber);
             return m.medicineId;
         }
 
@@ -84,15 +92,19 @@ namespace Model.AdminService
         }
 
         [Transactional]
-        public long CreatePatient(string patientName, DateTime birthDate, string info)
+        public long CreatePatient(string user, string patientName, DateTime birthDate, string info)
         {
+            UserProfile u = UserProfileDao.FindByLoginName(user);
+            if (u == null || u.userType != 3)
+                return -1;
+
             Patient p = new Patient();
             p.patientName = patientName;
             p.birthDate = birthDate;
             p.info = info;
 
             PatientDao.Create(p);
-
+            UserActionDao.LogUserAction(u, 6, p.patientName, 0);
             return p.patientId;
         }
 
@@ -195,6 +207,28 @@ namespace Model.AdminService
                 messages.RemoveAt(count);
 
             return new ChatMessageBlock(messages, existMoreMessages);
+        }
+
+        public UserActionBlock GetUserActions(string user, int startIndex, int count)
+        {
+            long uId = -1;
+
+            if(user != null && user != "")
+            {
+                UserProfile u = UserProfileDao.FindByLoginName(user);
+                if (u != null)
+                    uId = u.usrId;
+            }
+
+            List<UserAction> actions =
+                UserActionDao.GetUserActions(uId, startIndex, count + 1);
+
+            bool existMoreActions = (actions.Count == count + 1);
+
+            if (existMoreActions)
+                actions.RemoveAt(count);
+
+            return new UserActionBlock(actions, existMoreActions);
         }
     }
 }

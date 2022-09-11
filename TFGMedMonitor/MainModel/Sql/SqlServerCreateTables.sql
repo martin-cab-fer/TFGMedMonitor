@@ -27,6 +27,11 @@ USE [medmonitor]
 
 /* ********** Drop Tables if already exist *********** */
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('[UserAction]') AND type in ('U'))
+DROP TABLE [UserAction]
+
+GO
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('[Dose]') AND type in ('U'))
 DROP TABLE [Dose]
 
@@ -180,7 +185,8 @@ CREATE TABLE Medicine (
 	affectsConduction varchar(2) NOT NULL,
 	supplyIssues varchar(2) NOT NULL,
 
-	CONSTRAINT [PK_Medicine] PRIMARY KEY (medicineId)
+	CONSTRAINT [PK_Medicine] PRIMARY KEY (medicineId),
+	CONSTRAINT [UniqueKey_Medicine] UNIQUE (registerNumber)
 )
 
 GO
@@ -207,6 +213,21 @@ CREATE TABLE Dose (
 	CONSTRAINT [PK_Dose] PRIMARY KEY (prescriptionId, administrationTime),
 	CONSTRAINT [ForeignKey_DoseP] FOREIGN KEY (prescriptionId) REFERENCES Prescription (prescriptionId) ON DELETE CASCADE,
 	CONSTRAINT [ForeignKey_DoseA] FOREIGN KEY (administrator) REFERENCES UserProfile (usrId),
+)
+
+GO
+
+CREATE TABLE UserAction (
+	actionId bigint IDENTITY(1,1) NOT NULL,
+	actionTime datetime NOT NULL,
+	actor bigint NOT NULL,
+	performedAction int NOT NULL,
+	stringVal varchar(60),
+	intVal bigint,
+	actionText varchar(255),
+
+	CONSTRAINT [PK_UserAction] PRIMARY KEY (actionId),
+	CONSTRAINT [ForeignKey_UserActionA] FOREIGN KEY (actor) REFERENCES UserProfile (usrId),
 )
 
 GO

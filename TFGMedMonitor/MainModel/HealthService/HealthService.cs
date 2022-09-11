@@ -29,6 +29,9 @@ namespace Model.HealthService
         [Inject]
         public IUserProfileDao UserProfileDao { private get; set; }
 
+        [Inject]
+        public IUserActionDao UserActionDao { private get; set; }
+
         [Transactional]
         public PatientBlock GetPatientList(long userId, int startIndex, int count)
         {
@@ -106,6 +109,7 @@ namespace Model.HealthService
                 observations = observations
             };
             AnalyticDao.Create(a);
+            UserActionDao.LogUserAction(at, 4, p.patientName, 0);
             return a;
         }
 
@@ -128,13 +132,12 @@ namespace Model.HealthService
         }
 
         [Transactional]
-        public Prescription AddPatientPrescription(string patient, long medicineId, int frequency, string admin)
+        public Prescription AddPatientPrescription(string user, string patient, long medicineId, int frequency, string admin)
         {
+            UserProfile uP = UserProfileDao.FindByLoginName(user);
             Patient p = PatientDao.FindByFullName(patient);
             Medicine m = MedicineDao.Find(medicineId);
-            if (p == null)
-                return null;
-            if (m == null)
+            if (uP == null || p == null || m == null)
                 return null;
 
             Prescription pr = new Prescription
@@ -147,16 +150,21 @@ namespace Model.HealthService
             };
 
             PrescriptionDao.Create(pr);
+            UserActionDao.LogUserAction(uP, 1, p.patientName, m.medicineId);
             return pr;
         }
 
         [Transactional]
-        public void RemovePatientPrescription(long prescriptionId)
+        public void RemovePatientPrescription(string user, long prescriptionId)
         {
+            UserProfile uP = UserProfileDao.FindByLoginName(user);
             Prescription pr = PrescriptionDao.Find(prescriptionId);
-            if (pr == null)
+            if (uP == null || pr == null)
                 return;
+
+            string patient = pr.Patient1.patientName;
             PrescriptionDao.Remove(prescriptionId);
+            UserActionDao.LogUserAction(uP, 2, patient, 0);
         }
 
         [Transactional]
@@ -195,6 +203,7 @@ namespace Model.HealthService
             };
 
             DoseDao.Create(d);
+            UserActionDao.LogUserAction(u, 3, pr.Patient1.patientName, pr.Medicine1.medicineId);
             return d;
         }
     }

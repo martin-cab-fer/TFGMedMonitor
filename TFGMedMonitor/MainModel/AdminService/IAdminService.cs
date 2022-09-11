@@ -23,8 +23,11 @@ namespace Model.AdminService
         [Inject]
         IMedicineDao MedicineDao { set; }
 
+        [Inject]
+        IUserActionDao UserActionDao { set; }
+
         [Transactional]
-        long CreateMedicine(int regNum, string mName, string lName, DateTime authDate, string mStatus,
+        long CreateMedicine(string user, int regNum, string mName, string lName, DateTime authDate, string mStatus,
             DateTime statusDate, string ATCCode, string activePr, int activePrN, bool commerc,
             bool yellowT, string observ, string subst, bool affectsC, bool supplyI);
 
@@ -32,7 +35,7 @@ namespace Model.AdminService
         MedicineBlock GetMedicineSearch(string name, List<string> activePrin, int startIndex, int count);
 
         [Transactional]
-        long CreatePatient(string patientName, DateTime birthDate, string info);
+        long CreatePatient(string user, string patientName, DateTime birthDate, string info);
 
         [Transactional]
         bool AssignDoctorToPatient(string doctor, string patient);
@@ -51,5 +54,8 @@ namespace Model.AdminService
 
         [Transactional]
         ChatMessageBlock GetChatMessages(string userName, int startIndex, int count);
+
+        [Transactional]
+        UserActionBlock GetUserActions(string user, int startIndex, int count);
     }
 }

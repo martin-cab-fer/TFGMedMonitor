@@ -46,10 +46,7 @@ namespace Web.Pages.Health
             Session["patientSearch"] = patients;
 
             if (patients == null || patients.Patients.Count == 0)
-            {
                 lblNoPatients.Visible = true;
-                return;
-            }
             else
                 lblNoPatients.Visible = false;
 
@@ -69,6 +66,9 @@ namespace Web.Pages.Health
 
                 }
             }
+
+            if (lblNoPatients.Visible == true)
+                return;
 
             FillPatientList(patients, startIndex, count, loggedIn);
         }

@@ -95,6 +95,18 @@
           <Property Name="frequency" Type="smallint" Nullable="false" />
           <Property Name="administration" Type="varchar" MaxLength="60" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserAction">
+          <Key>
+            <PropertyRef Name="actionId" />
+          </Key>
+          <Property Name="actionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="actionTime" Type="datetime" Nullable="false" />
+          <Property Name="actor" Type="bigint" Nullable="false" />
+          <Property Name="performedAction" Type="int" Nullable="false" />
+          <Property Name="stringVal" Type="varchar" MaxLength="60" />
+          <Property Name="intVal" Type="bigint" />
+          <Property Name="actionText" Type="varchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="usrId" />
@@ -271,6 +283,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ForeignKey_UserActionA">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="UserAction" Type="Self.UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="usrId" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="actor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TFGMedMonitorModelStoreContainer">
           <EntitySet Name="Analytic" EntityType="Self.Analytic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatMessage" EntityType="Self.ChatMessage" Schema="dbo" store:Type="Tables" />
@@ -280,6 +304,7 @@
           <EntitySet Name="PatientDAssign" EntityType="Self.PatientDAssign" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientEAssign" EntityType="Self.PatientEAssign" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prescription" EntityType="Self.Prescription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAction" EntityType="Self.UserAction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="ForeignKey_AnalyticA" Association="Self.ForeignKey_AnalyticA">
             <End Role="UserProfile" EntitySet="UserProfile" />
@@ -328,6 +353,10 @@
           <AssociationSet Name="ForeignKey_PrescriptionP" Association="Self.ForeignKey_PrescriptionP">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="Prescription" EntitySet="Prescription" />
+          </AssociationSet>
+          <AssociationSet Name="ForeignKey_UserActionA" Association="Self.ForeignKey_UserActionA">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserAction" EntitySet="UserAction" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -381,6 +410,11 @@
           <AssociationSet Name="PatientEAssign" Association="TFGMedMonitorModel.PatientEAssign">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <EntitySet Name="UserAction" EntityType="TFGMedMonitorModel.UserAction" />
+          <AssociationSet Name="ForeignKey_UserActionA" Association="TFGMedMonitorModel.ForeignKey_UserActionA">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserAction" EntitySet="UserAction" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Analytic">
@@ -490,6 +524,7 @@
           <NavigationProperty Name="Dose" Relationship="TFGMedMonitorModel.ForeignKey_DoseA" FromRole="UserProfile" ToRole="Dose" />
           <NavigationProperty Name="Patient" Relationship="TFGMedMonitorModel.PatientDAssign" FromRole="UserProfile" ToRole="Patient" />
           <NavigationProperty Name="Patient1" Relationship="TFGMedMonitorModel.PatientEAssign" FromRole="UserProfile" ToRole="Patient" />
+          <NavigationProperty Name="UserAction" Relationship="TFGMedMonitorModel.ForeignKey_UserActionA" FromRole="UserProfile" ToRole="UserAction" />
         </EntityType>
         <Association Name="ForeignKey_AnalyticA">
           <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
@@ -604,6 +639,31 @@
         <Association Name="PatientEAssign">
           <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="*" />
           <End Type="TFGMedMonitorModel.Patient" Role="Patient" Multiplicity="*" />
+        </Association>
+        <EntityType Name="UserAction">
+          <Key>
+            <PropertyRef Name="actionId" />
+          </Key>
+          <Property Name="actionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="actionTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actor" Type="Int64" Nullable="false" />
+          <Property Name="performedAction" Type="Int32" Nullable="false" />
+          <Property Name="stringVal" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="intVal" Type="Int64" />
+          <Property Name="actionText" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserProfile" Relationship="TFGMedMonitorModel.ForeignKey_UserActionA" FromRole="UserAction" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="ForeignKey_UserActionA">
+          <End Type="TFGMedMonitorModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="TFGMedMonitorModel.UserAction" Role="UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="usrId" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="actor" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -720,6 +780,19 @@
               <ScalarProperty Name="usrId" ColumnName="employee" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="UserAction">
+            <EntityTypeMapping TypeName="TFGMedMonitorModel.UserAction">
+              <MappingFragment StoreEntitySet="UserAction">
+                <ScalarProperty Name="actionText" ColumnName="actionText" />
+                <ScalarProperty Name="intVal" ColumnName="intVal" />
+                <ScalarProperty Name="stringVal" ColumnName="stringVal" />
+                <ScalarProperty Name="performedAction" ColumnName="performedAction" />
+                <ScalarProperty Name="actor" ColumnName="actor" />
+                <ScalarProperty Name="actionTime" ColumnName="actionTime" />
+                <ScalarProperty Name="actionId" ColumnName="actionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

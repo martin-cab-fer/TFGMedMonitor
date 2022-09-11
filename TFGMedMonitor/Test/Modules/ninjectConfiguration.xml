@@ -16,6 +16,9 @@
   <bind service="Model.AdminDao.IPatientDao, TFGMedMonitor.Model"
 		  to="Model.AdminDao.PatientDaoEntityFramework, TFGMedMonitor.Model" />
 
+  <bind service="Model.AdminDao.IUserActionDao, TFGMedMonitor.Model"
+		  to="Model.AdminDao.UserActionDaoEntityFramework, TFGMedMonitor.Model" />
+
   <bind service="Model.AdminService.IAdminService, TFGMedMonitor.Model"
 		  to="Model.AdminService.AdminService, TFGMedMonitor.Model" />
 

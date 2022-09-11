@@ -50,7 +50,7 @@ namespace Web.Pages.Health
                     if (freq <= 0)
                         return;
 
-                    healthService.AddPatientPrescription(pD.FullName, m.medicineId, freq, txtAdmin.Text);
+                    healthService.AddPatientPrescription(uD.LoginName, pD.FullName, m.medicineId, freq, txtAdmin.Text);
 
                     Response.Redirect(Response.ApplyAppPathModifier("./ShowPatientPrescription.aspx?startIndex=0&count=10"));
                 }

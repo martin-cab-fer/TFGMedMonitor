@@ -15,7 +15,7 @@
                 <span class="label">
                     <asp:Localize ID="lclPatient" runat="server" meta:resourcekey="lclPatient" /></span>
                     <span class="entry">
-                        <asp:Label ID="txtPatient" runat="server" Width="100px" Height="20px"
+                        <asp:Label ID="txtPatient" runat="server" Width="200px"
                             meta:resourcekey="txtPatientResource1"/>
                 </span>
             </div>

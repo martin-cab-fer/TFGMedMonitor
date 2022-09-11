@@ -39,6 +39,9 @@ namespace Test
             kernel.Bind<IPatientDao>().
                To<PatientDaoEntityFramework>();
 
+            kernel.Bind<IUserActionDao>().
+               To<UserActionDaoEntityFramework>();
+
             kernel.Bind<IAdminService>().
                 To<AdminService>();
 

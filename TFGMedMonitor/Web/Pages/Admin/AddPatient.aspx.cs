@@ -1,6 +1,7 @@
 ﻿using Es.Udc.DotNet.ModelUtil.IoC;
 using Model.AdminService;
 using Model.HealthService;
+using Model.UserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,12 @@ namespace Web.Pages.Admin
 
                 try
                 {
+                    UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                    if (uD == null || uD.UserType != 3)
+                        return;
+
                     DateTime bD = Convert.ToDateTime(txtDate.Text);
-                    long p = adminService.CreatePatient(txtPatientName.Text, bD, txtPatientInfo.Text);
+                    long p = adminService.CreatePatient(uD.LoginName, txtPatientName.Text, bD, txtPatientInfo.Text);
                     PatientDetails pD = healthService.GetPatientDetails(p);
                     Session["selectedPatient"] = pD;
                     string url = "~/Pages/Health/ShowPatientDetails.aspx";

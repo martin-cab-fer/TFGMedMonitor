@@ -29,6 +29,9 @@ namespace Model.HealthService
         [Inject]
         IUserProfileDao UserProfileDao { set; }
 
+        [Inject]
+        IUserActionDao UserActionDao { set; }
+
         [Transactional]
         PatientBlock GetPatientList(long userId, int startIndex, int count);
 
@@ -46,10 +49,10 @@ namespace Model.HealthService
         PrescriptionBlock GetPatientPrescription(string patient, int startIndex, int count);
 
         [Transactional]
-        Prescription AddPatientPrescription(string patient, long medicineId, int frequency, string admin);
+        Prescription AddPatientPrescription(string user, string patient, long medicineId, int frequency, string admin);
 
         [Transactional]
-        void RemovePatientPrescription(long prescriptionId);
+        void RemovePatientPrescription(string user, long prescriptionId);
 
         [Transactional]
         DoseBlock GetPatientDoses(long prescriptionId, int startIndex, int count);

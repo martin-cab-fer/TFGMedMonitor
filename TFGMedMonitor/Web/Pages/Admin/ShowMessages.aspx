@@ -17,7 +17,7 @@
                 <asp:BoundField DataField="date" HeaderText="<%$ Resources:, date %>"
                     ItemStyle-Width="100px"/>
                 <asp:BoundField DataField="title" HeaderText="<%$ Resources:, title %>"
-                    ItemStyle-Width="100px"/>
+                    ItemStyle-Width="200px"/>
                 <asp:BoundField DataField="message" HeaderText="<%$ Resources:, message %>"
                     ItemStyle-Width="500px" ItemStyle-Height="60px"/>
             </Columns>

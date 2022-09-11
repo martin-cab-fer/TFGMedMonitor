@@ -41,6 +41,10 @@ namespace Web.HTTP.Util.IoC
             kernel.Bind<IPatientDao>().
                To<PatientDaoEntityFramework>();
 
+            /* UserActionDao */
+            kernel.Bind<IUserActionDao>().
+               To<UserActionDaoEntityFramework>();
+
             /* AdminService */
             kernel.Bind<IAdminService>().
                 To<AdminService>();

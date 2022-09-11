@@ -131,12 +131,18 @@
   <ItemGroup>
     <Compile Include="AdminDao\IChatMessageDao.cs" />
     <Compile Include="AdminDao\ChatMessageDaoEntityFramework.cs" />
+    <Compile Include="AdminDao\IUserActionDao.cs" />
     <Compile Include="AdminDao\PatientDaoEntityFramework.cs" />
     <Compile Include="AdminDao\IPatientDao.cs" />
+    <Compile Include="AdminDao\UserActionDaoEntityFramework.cs" />
     <Compile Include="AdminService\AdminService.cs" />
     <Compile Include="AdminService\ChatMessageBlock.cs" />
     <Compile Include="AdminService\IAdminService.cs" />
+    <Compile Include="AdminService\UserActionBlock.cs" />
     <Compile Include="HealthService\PatientDetails.cs" />
+    <Compile Include="UserAction.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserService\UserBlock.cs" />
     <Compile Include="HealthService\PatientBlock.cs" />
     <Compile Include="Analytic.cs">

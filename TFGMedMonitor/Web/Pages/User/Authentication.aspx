@@ -15,7 +15,7 @@
                 <span class="label">
                     <asp:Localize ID="lclLogin" runat="server" meta:resourcekey="lclLogin" /></span><span
                         class="entry">
-                        <asp:TextBox ID="txtLogin" runat="server" Width="100" Columns="16"></asp:TextBox>
+                        <asp:TextBox ID="txtLogin" runat="server" Width="150" Columns="16"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvLogin" runat="server"
                             ControlToValidate="txtLogin" Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"/>
                         <asp:Label ID="lblLoginError" runat="server" ForeColor="Red" Style="position: relative"
@@ -27,7 +27,7 @@
                 <span class="label">
                     <asp:Localize ID="lclPassword" runat="server" meta:resourcekey="lclPassword" /></span><span
                         class="entry">
-                        <asp:TextBox TextMode="Password" ID="txtPassword" runat="server" Width="100" Columns="16"></asp:TextBox>
+                        <asp:TextBox TextMode="Password" ID="txtPassword" runat="server" Width="150" Columns="16"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvPassword" runat="server"
                             ControlToValidate="txtPassword" Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"/>
                         <asp:Label ID="lblPasswordError" runat="server" ForeColor="Red" Style="position: relative"

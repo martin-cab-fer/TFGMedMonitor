@@ -34,7 +34,7 @@
                     <asp:Localize ID="lclAdmin" runat="server" meta:resourcekey="lclAdmin" /></span><span
                         class="entry">
                         <asp:TextBox ID="txtAdmin" runat="server"
-                            Width="100px" Columns="16" meta:resourcekey="txtAdminResource1"></asp:TextBox>
+                            Width="300px" Columns="16" meta:resourcekey="txtAdminResource1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvNotes" runat="server" ControlToValidate="txtAdmin"
                             Display="Dynamic" Text="<%$ Resources:Common, mandatoryField %>"
                             meta:resourcekey="rfvAdminResource1"></asp:RequiredFieldValidator></span>

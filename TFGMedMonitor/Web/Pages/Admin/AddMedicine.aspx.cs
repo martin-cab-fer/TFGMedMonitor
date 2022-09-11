@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Web.HTTP.Session;
 using System.Data.Entity.Validation;
+using Model.UserService;
 
 namespace Web.Pages.Admin
 {
@@ -63,6 +64,10 @@ namespace Web.Pages.Admin
                         return;
                     }
 
+                    UserProfileDetails uD = SessionManager.FindUserProfileDetails(Context);
+                    if (uD == null || uD.UserType != 3)
+                        return;
+
                     IIoCManager iocManager = (IIoCManager)HttpContext.Current.Application["managerIoC"];
                     IAdminService adminService = iocManager.Resolve<IAdminService>();
 
@@ -75,7 +80,7 @@ namespace Web.Pages.Admin
 
                     string ATC = txtATCCode.Text.Substring(0, Math.Min(txtATCCode.Text.Length, 7));
 
-                    adminService.CreateMedicine(regN, txtMedName.Text, txtLabName.Text, authD, txtMedStatus.Text, statusD,
+                    adminService.CreateMedicine(uD.LoginName, regN, txtMedName.Text, txtLabName.Text, authD, txtMedStatus.Text, statusD,
                         ATC, txtActivePrin.Text, actPrinList.Count, txtCommerc.Checked, txtYellowT.Checked,
                         txtObservations.Text, txtSubst.Text, txtAffectsC.Checked, txtSupplyI.Checked);
 

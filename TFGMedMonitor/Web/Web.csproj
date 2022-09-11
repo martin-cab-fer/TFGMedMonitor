@@ -172,11 +172,13 @@
     <Content Include="Pages\User\CreateUser.aspx" />
     <Content Include="Pages\User\Logout.aspx" />
     <Content Include="Pages\User\Profile.aspx" />
+    <Content Include="Pages\User\ShowUserActions.aspx" />
     <Content Include="Pages\User\ShowUsers.aspx" />
     <Content Include="Pages\User\UpdateUserProfile.aspx" />
     <Content Include="TFGMedMonitor.Master" />
     <Content Include="Web.config" />
     <Content Include="Pages\User\App_LocalResources\ShowUsers.aspx.resx" />
+    <Content Include="Pages\User\App_LocalResources\ShowUserActions.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\Common.Designer.cs">
@@ -363,6 +365,13 @@
     </Compile>
     <Compile Include="Pages\User\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\User\ShowUserActions.aspx.cs">
+      <DependentUpon>ShowUserActions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\User\ShowUserActions.aspx.designer.cs">
+      <DependentUpon>ShowUserActions.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\User\ShowUsers.aspx.cs">
       <DependentUpon>ShowUsers.aspx</DependentUpon>

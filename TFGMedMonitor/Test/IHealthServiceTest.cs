@@ -45,9 +45,9 @@ namespace Test
                         country, userType));
         }
 
-        public long CreateValidMedicine()
+        public long CreateValidMedicine(string admin)
         {
-            return adminService.CreateMedicine(99999, "mock", "mock Ltd", DateTime.Now, "Autorizado",
+            return adminService.CreateMedicine(admin, 99999, "mock", "mock Ltd", DateTime.Now, "Autorizado",
                 DateTime.Now, "N01BB99", "cocacola", 1, true, true, "none", "", false, false);
         }
 
@@ -90,12 +90,15 @@ namespace Test
         {
             using (var scope = new TransactionScope())
             {
+                long adminId = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
                 DateTime t = DateTime.Now;
-                long patientId1 = adminService.CreatePatient("paco", t, "info");
+                long patientId1 = adminService.CreatePatient(admin.LoginName, "paco", t, "info");
 
-                long patientId2 = adminService.CreatePatient("pedro", t, "info");
+                long patientId2 = adminService.CreatePatient(admin.LoginName, "pedro", t, "info");
 
-                long medicineId = CreateValidMedicine();
+                long medicineId = CreateValidMedicine(admin.LoginName);
 
                 long doctorId = CreateValidUser("juan", 2);
 
@@ -105,13 +108,13 @@ namespace Test
 
                 UserProfileDetails doc = userService.FindUserProfileDetails(doctorId);
 
-                Prescription pr1 = healthService.AddPatientPrescription(pat1.FullName, medicineId,
+                Prescription pr1 = healthService.AddPatientPrescription(doc.LoginName, pat1.FullName, medicineId,
                     2, "pills");
 
-                Prescription pr2 = healthService.AddPatientPrescription(pat2.FullName, medicineId,
+                Prescription pr2 = healthService.AddPatientPrescription(doc.LoginName, pat2.FullName, medicineId,
                     2, "intravenous");
 
-                Prescription pr3 = healthService.AddPatientPrescription(pat2.FullName, medicineId,
+                Prescription pr3 = healthService.AddPatientPrescription(doc.LoginName, pat2.FullName, medicineId,
                     4, "pills");
 
                 Analytic a = healthService.AddPatientAnalytic(pat1.FullName, doc.LoginName, 55, "bloodletting", "all ok");
@@ -135,7 +138,11 @@ namespace Test
             using (var scope = new TransactionScope())
             {
                 DateTime t = DateTime.Now;
-                long patientId = adminService.CreatePatient("paco", t, "info");
+
+                long adminId = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
+                long patientId = adminService.CreatePatient(admin.LoginName, "paco", t, "info");
 
                 PatientDetails p = healthService.GetPatientDetails(patientId);
 
@@ -154,7 +161,11 @@ namespace Test
             using (var scope = new TransactionScope())
             {
                 DateTime t = DateTime.Now;
-                long patientId = adminService.CreatePatient("paco", t, "info");
+
+                long adminId = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
+                long patientId = adminService.CreatePatient(admin.LoginName, "paco", t, "info");
 
                 long doctorId = CreateValidUser("juan", 2);
 
@@ -182,13 +193,17 @@ namespace Test
             using (var scope = new TransactionScope())
             {
                 DateTime t = DateTime.Now;
-                long patientId = adminService.CreatePatient("paco", t, "info");
 
-                long medicineId = CreateValidMedicine();
+                long adminId = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
+                long patientId = adminService.CreatePatient(admin.LoginName, "paco", t, "info");
+
+                long medicineId = CreateValidMedicine(admin.LoginName);
 
                 PatientDetails pat = healthService.GetPatientDetails(patientId);
 
-                Prescription pr = healthService.AddPatientPrescription(pat.FullName, medicineId,
+                Prescription pr = healthService.AddPatientPrescription(admin.LoginName, pat.FullName, medicineId,
                     2, "pills");
 
                 PatientDetails p = healthService.GetPatientDetails(patientId);
@@ -204,9 +219,13 @@ namespace Test
             using (var scope = new TransactionScope())
             {
                 DateTime t = DateTime.Now;
-                long patientId = adminService.CreatePatient("paco", t, "info");
 
-                long medicineId = CreateValidMedicine();
+                long adminId = CreateValidUser("admin", 3);
+                UserProfileDetails admin = userService.FindUserProfileDetails(adminId);
+
+                long patientId = adminService.CreatePatient(admin.LoginName, "paco", t, "info");
+
+                long medicineId = CreateValidMedicine(admin.LoginName);
 
                 long doctorId = CreateValidUser("juan", 2);
 
@@ -214,7 +233,7 @@ namespace Test
 
                 PatientDetails pat = healthService.GetPatientDetails(patientId);
 
-                Prescription pr = healthService.AddPatientPrescription(pat.FullName, medicineId,
+                Prescription pr = healthService.AddPatientPrescription(doctor.LoginName, pat.FullName, medicineId,
                     2, "pills");
 
                 Dose d = healthService.AddPatientDose(pr.prescriptionId, doctor.LoginName, "all ok");

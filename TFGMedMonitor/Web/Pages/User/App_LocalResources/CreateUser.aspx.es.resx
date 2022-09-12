@@ -117,52 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lclActivePrin.Text" xml:space="preserve">
-    <value>Active principles</value>
+  <data name="btnRegister.Text" xml:space="preserve">
+    <value>Registrar</value>
   </data>
-  <data name="lclAffectsC.Text" xml:space="preserve">
-    <value>Affects conduction?</value>
+  <data name="cvPasswordCheck.Text" xml:space="preserve">
+    <value>Las contraseñas son distintas</value>
   </data>
-  <data name="lclATCCode.Text" xml:space="preserve">
-    <value>ATC code</value>
+  <data name="lblLoginError.Text" xml:space="preserve">
+    <value>El usuario ya existe</value>
   </data>
-  <data name="lclAuthDate.Text" xml:space="preserve">
-    <value>Authorization date</value>
+  <data name="lclCountry.Text" xml:space="preserve">
+    <value>País</value>
   </data>
-  <data name="lclCommerc.Text" xml:space="preserve">
-    <value>Commercialized?</value>
+  <data name="lclEmail.Text" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="lclLabName.Text" xml:space="preserve">
-    <value>Laboratory name</value>
+  <data name="lclFirstName.Text" xml:space="preserve">
+    <value>Nombre</value>
   </data>
-  <data name="lclMedName.Text" xml:space="preserve">
-    <value>Medicine name</value>
+  <data name="lclLanguage.Text" xml:space="preserve">
+    <value>Lenguaje</value>
   </data>
-  <data name="lclMedStatus.Text" xml:space="preserve">
-    <value>Medicine status</value>
+  <data name="lclMenuExplanation.Text" xml:space="preserve">
+    <value>Creación de usuario</value>
   </data>
-  <data name="lclNewActPrin.Text" xml:space="preserve">
-    <value>Add new principle</value>
+  <data name="lclPassword.Text" xml:space="preserve">
+    <value>Contraseña</value>
   </data>
-  <data name="lclObservations.Text" xml:space="preserve">
-    <value>Observations</value>
+  <data name="lclRetypePassword.Text" xml:space="preserve">
+    <value>Reescribir contraseña</value>
   </data>
-  <data name="lclRegNum.Text" xml:space="preserve">
-    <value>Registration nº</value>
+  <data name="lclSurname.Text" xml:space="preserve">
+    <value>Apellidos</value>
   </data>
-  <data name="lclStatusDate.Text" xml:space="preserve">
-    <value>Status date</value>
+  <data name="lclUserName.Text" xml:space="preserve">
+    <value>Nombre de usuario</value>
   </data>
-  <data name="lclSubst.Text" xml:space="preserve">
-    <value>Substitutions</value>
+  <data name="lclUserType.Text" xml:space="preserve">
+    <value>Tipo de usuario</value>
   </data>
-  <data name="lclSupplyI.Text" xml:space="preserve">
-    <value>Supply issues?</value>
-  </data>
-  <data name="lclYellowT.Text" xml:space="preserve">
-    <value>Yellow triangle?</value>
+  <data name="lnkUserExists.Text" xml:space="preserve">
+    <value>Mirar si existe el usuario</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
-    <value>Agarimo - Medicine details</value>
+    <value>Agarimo - Creación de usuario</value>
+  </data>
+  <data name="revEmail.ErrorMessage" xml:space="preserve">
+    <value>Sintaxis de email incorrecta</value>
   </data>
 </root>

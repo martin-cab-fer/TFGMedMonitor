@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{3159E4DA-CDA4-4100-80D7-4649D9558B13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D48EBFAD-CB51-4380-A2DC-58FF16B8A663} = {D48EBFAD-CB51-4380-A2DC-58FF16B8A663}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{D48EBFAD-CB51-4380-A2DC-58FF16B8A663}"
 EndProject
@@ -34,7 +37,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {20A4D72B-3118-4E92-922A-CA5E53DD865C}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {20A4D72B-3118-4E92-922A-CA5E53DD865C}
 	EndGlobalSection
 EndGlobal

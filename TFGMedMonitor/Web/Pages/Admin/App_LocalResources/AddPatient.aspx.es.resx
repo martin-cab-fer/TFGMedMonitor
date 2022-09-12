@@ -117,52 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lclActivePrin.Text" xml:space="preserve">
-    <value>Active principles</value>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Añadir</value>
   </data>
-  <data name="lclAffectsC.Text" xml:space="preserve">
-    <value>Affects conduction?</value>
+  <data name="lclBirthDate.Text" xml:space="preserve">
+    <value>Fecha de nacimiento</value>
   </data>
-  <data name="lclATCCode.Text" xml:space="preserve">
-    <value>ATC code</value>
+  <data name="lclPatientInfo.Text" xml:space="preserve">
+    <value>Información de diagnóstico</value>
   </data>
-  <data name="lclAuthDate.Text" xml:space="preserve">
-    <value>Authorization date</value>
-  </data>
-  <data name="lclCommerc.Text" xml:space="preserve">
-    <value>Commercialized?</value>
-  </data>
-  <data name="lclLabName.Text" xml:space="preserve">
-    <value>Laboratory name</value>
-  </data>
-  <data name="lclMedName.Text" xml:space="preserve">
-    <value>Medicine name</value>
-  </data>
-  <data name="lclMedStatus.Text" xml:space="preserve">
-    <value>Medicine status</value>
-  </data>
-  <data name="lclNewActPrin.Text" xml:space="preserve">
-    <value>Add new principle</value>
-  </data>
-  <data name="lclObservations.Text" xml:space="preserve">
-    <value>Observations</value>
-  </data>
-  <data name="lclRegNum.Text" xml:space="preserve">
-    <value>Registration nº</value>
-  </data>
-  <data name="lclStatusDate.Text" xml:space="preserve">
-    <value>Status date</value>
-  </data>
-  <data name="lclSubst.Text" xml:space="preserve">
-    <value>Substitutions</value>
-  </data>
-  <data name="lclSupplyI.Text" xml:space="preserve">
-    <value>Supply issues?</value>
-  </data>
-  <data name="lclYellowT.Text" xml:space="preserve">
-    <value>Yellow triangle?</value>
+  <data name="lclPatientName.Text" xml:space="preserve">
+    <value>Nombre del paciente</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
-    <value>Agarimo - Medicine details</value>
+    <value>Agarimo - Creación de pacientes</value>
   </data>
 </root>

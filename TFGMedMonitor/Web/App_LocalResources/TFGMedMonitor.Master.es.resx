@@ -117,52 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lclActivePrin.Text" xml:space="preserve">
-    <value>Active principles</value>
+  <data name="lblWelcome.Hello.Text" xml:space="preserve">
+    <value>Bienvenido</value>
   </data>
-  <data name="lclAffectsC.Text" xml:space="preserve">
-    <value>Affects conduction?</value>
+  <data name="lblWelcome.Text" xml:space="preserve">
+    <value>Bienvenido a Agarimo</value>
   </data>
-  <data name="lclATCCode.Text" xml:space="preserve">
-    <value>ATC code</value>
+  <data name="lclFooter.Text" xml:space="preserve">
+    <value>Martín Cabana Fernández</value>
   </data>
-  <data name="lclAuthDate.Text" xml:space="preserve">
-    <value>Authorization date</value>
+  <data name="lclPageTitle.Text" xml:space="preserve">
+    <value>Agarimo</value>
   </data>
-  <data name="lclCommerc.Text" xml:space="preserve">
-    <value>Commercialized?</value>
+  <data name="lnkActions.Text" xml:space="preserve">
+    <value>Acciones de usuario</value>
   </data>
-  <data name="lclLabName.Text" xml:space="preserve">
-    <value>Laboratory name</value>
+  <data name="lnkAuthenticate.Text" xml:space="preserve">
+    <value>Autenticación</value>
   </data>
-  <data name="lclMedName.Text" xml:space="preserve">
-    <value>Medicine name</value>
+  <data name="lnkLogout.Text" xml:space="preserve">
+    <value>Salir</value>
   </data>
-  <data name="lclMedStatus.Text" xml:space="preserve">
-    <value>Medicine status</value>
+  <data name="lnkMedicineSearch.Text" xml:space="preserve">
+    <value>Buscar medicinas</value>
   </data>
-  <data name="lclNewActPrin.Text" xml:space="preserve">
-    <value>Add new principle</value>
+  <data name="lnkMessages.Text" xml:space="preserve">
+    <value>Mis mensajes</value>
   </data>
-  <data name="lclObservations.Text" xml:space="preserve">
-    <value>Observations</value>
+  <data name="lnkPatientSearch.Text" xml:space="preserve">
+    <value>Buscar pacientes</value>
   </data>
-  <data name="lclRegNum.Text" xml:space="preserve">
-    <value>Registration nº</value>
+  <data name="lnkProfile.Text" xml:space="preserve">
+    <value>Mi perfil</value>
   </data>
-  <data name="lclStatusDate.Text" xml:space="preserve">
-    <value>Status date</value>
+  <data name="lnkUpdate.Text" xml:space="preserve">
+    <value>Actualizar usuario</value>
   </data>
-  <data name="lclSubst.Text" xml:space="preserve">
-    <value>Substitutions</value>
-  </data>
-  <data name="lclSupplyI.Text" xml:space="preserve">
-    <value>Supply issues?</value>
-  </data>
-  <data name="lclYellowT.Text" xml:space="preserve">
-    <value>Yellow triangle?</value>
-  </data>
-  <data name="Page.Title" xml:space="preserve">
-    <value>Agarimo - Medicine details</value>
+  <data name="lnkUserSearch.Text" xml:space="preserve">
+    <value>Buscar usuarios</value>
   </data>
 </root>

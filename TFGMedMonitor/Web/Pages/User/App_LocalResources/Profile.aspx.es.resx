@@ -117,52 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lclActivePrin.Text" xml:space="preserve">
-    <value>Active principles</value>
+  <data name="Admin" xml:space="preserve">
+    <value>Administrador</value>
   </data>
-  <data name="lclAffectsC.Text" xml:space="preserve">
-    <value>Affects conduction?</value>
+  <data name="btnMessage.Text" xml:space="preserve">
+    <value>Mandar mensaje</value>
   </data>
-  <data name="lclATCCode.Text" xml:space="preserve">
-    <value>ATC code</value>
+  <data name="Doctor" xml:space="preserve">
+    <value>Doctor</value>
   </data>
-  <data name="lclAuthDate.Text" xml:space="preserve">
-    <value>Authorization date</value>
+  <data name="Employee" xml:space="preserve">
+    <value>Empleado</value>
   </data>
-  <data name="lclCommerc.Text" xml:space="preserve">
-    <value>Commercialized?</value>
+  <data name="lclContact.Text" xml:space="preserve">
+    <value>Email de contacto</value>
   </data>
-  <data name="lclLabName.Text" xml:space="preserve">
-    <value>Laboratory name</value>
+  <data name="lclFirstName.Text" xml:space="preserve">
+    <value>Nombre</value>
   </data>
-  <data name="lclMedName.Text" xml:space="preserve">
-    <value>Medicine name</value>
+  <data name="lclSurname.Text" xml:space="preserve">
+    <value>Apellidos</value>
   </data>
-  <data name="lclMedStatus.Text" xml:space="preserve">
-    <value>Medicine status</value>
+  <data name="lclUserName.Text" xml:space="preserve">
+    <value>Nombre de usuario</value>
   </data>
-  <data name="lclNewActPrin.Text" xml:space="preserve">
-    <value>Add new principle</value>
-  </data>
-  <data name="lclObservations.Text" xml:space="preserve">
-    <value>Observations</value>
-  </data>
-  <data name="lclRegNum.Text" xml:space="preserve">
-    <value>Registration nº</value>
-  </data>
-  <data name="lclStatusDate.Text" xml:space="preserve">
-    <value>Status date</value>
-  </data>
-  <data name="lclSubst.Text" xml:space="preserve">
-    <value>Substitutions</value>
-  </data>
-  <data name="lclSupplyI.Text" xml:space="preserve">
-    <value>Supply issues?</value>
-  </data>
-  <data name="lclYellowT.Text" xml:space="preserve">
-    <value>Yellow triangle?</value>
+  <data name="lclUserType.Text" xml:space="preserve">
+    <value>Tipo de usuario</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
-    <value>Agarimo - Medicine details</value>
+    <value>Agarimo - Perfil</value>
   </data>
 </root>

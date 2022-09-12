@@ -51,7 +51,7 @@ namespace Web.Pages.Health
                 lblNoPatients.Visible = false;
 
             bool loggedIn = SessionManager.IsUserAuthenticated(Context);
-            if (!Page.IsPostBack)
+            if (!Page.IsPostBack && loggedIn)
             {
                 try
                 {
